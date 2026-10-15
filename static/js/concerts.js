@@ -81,7 +81,7 @@ function render() {
                 isUpcoming && displayTime(concert.time),
                 concert.venue, concert.city,
                 concert.price && `Ticket: ${concert.price}`,
-                concert.companions && `With ${concert.companions}`
+                concert.companions && (/^(alone|solo)$/i.test(concert.companions) ? 'Went solo' : `With ${concert.companions}`)
             ].filter(Boolean);
             const rating = concert.rating ? `<span class="concert-rating" aria-label="${escapeHtml(concert.rating)} out of 10">${escapeHtml(concert.rating)}/10</span>` : '';
             const songList = (title, songs) => songs && songs.length ? `<p class="concert-songs"><span class="concert-label">${title}</span>${[].concat(songs).map(escapeHtml).join(' · ')}</p>` : '';

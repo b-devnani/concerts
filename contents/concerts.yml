@@ -142,6 +142,7 @@ concerts:
     genre: Saxophone jam
     status: Attended
     rating: 9
+    companions: Alone
     price: Free
   - artist: Santi (K.O.T.B listening party)
     date: 2026-10-10
