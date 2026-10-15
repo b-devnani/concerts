@@ -114,6 +114,7 @@ concerts:
     genre: Blues
     status: Attended
     rating: 6
+    companions: Tinu
     price: Free
   - artist: Afro+ Fest
     date: 2026-09-04
