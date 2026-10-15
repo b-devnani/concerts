@@ -106,7 +106,7 @@ main { display: grid; gap: 3rem; padding-block: 2.5rem 4.5rem; }
 .show-meta { color: var(--muted); font-size: .92rem; }
 .show-actions { align-items: center; display: flex; flex-wrap: wrap; font-size: .92rem; gap: .55rem 1rem; margin-top: .45rem; }
 .countdown { background: var(--gold); border-radius: 3px; color: var(--gold-ink); font-family: var(--label); font-size: .72rem; letter-spacing: .1em; padding: .2rem .5rem; text-transform: uppercase; }
-.play { align-items: center; background: none; border: 0; color: var(--ink); cursor: pointer; display: inline-flex; font: inherit; gap: .5rem; padding: 0; text-decoration: none; }
+.play { align-items: center; background: none; border: 0; color: var(--ink); cursor: pointer; display: inline-flex; font: inherit; gap: .5rem; padding: 0; text-align: left; text-decoration: none; }
 .play .disc { background: var(--accent); border-radius: 50%; color: var(--accent-ink); display: grid; flex: none; font-size: .7rem; height: 2rem; place-items: center; width: 2rem; }
 .play .song { font-weight: 700; }
 .play:hover .song { text-decoration: underline; }
