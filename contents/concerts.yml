@@ -14,6 +14,7 @@
 #   link          tickets or event page
 #   song          a song you love by them (upcoming shows get a play button)
 #   spotify       Spotify track link for that song, e.g. https://open.spotify.com/track/...
+#   length        that song's length, e.g. "3:27" (shown on the player before it plays)
 concerts:
   - artist: Ezra Collective
     date: 2026-11-18
@@ -27,6 +28,7 @@ concerts:
     link: https://www.axs.com/events/1493867/ezra-collective-tickets?skin=websterhall
     song: No One's Watching Me (feat. Olivia Dean)
     spotify: https://open.spotify.com/track/1omK6ocXd3Z19wiFpJmQ4J
+    length: "4:22"
   - artist: Jorja Smith
     date: 2026-11-21
     time: "20:00"
@@ -38,6 +40,7 @@ concerts:
     link: https://www.ticketmaster.com/event/Z7r9jZ1AAZbbt
     song: On My Mind (Jorja Smith X Preditah)
     spotify: https://open.spotify.com/track/1OxL1FWSEd7QmJoWLRP2NO
+    length: "3:02"
   - artist: Maleek Berry
     date: 2026-11-25
     # time: "20:00"
@@ -50,6 +53,7 @@ concerts:
     link: https://posh.vip/f/ef604
     song: Lost In The World
     spotify: https://open.spotify.com/track/6W2oq6ZRRnxNc1Pdpm1XKC
+    length: "3:17"
   - artist: Brent Faiyaz
     date: 2026-12-03
     time: "20:00"
@@ -62,6 +66,7 @@ concerts:
     link: https://www.barclayscenter.com/events/detail/brent-faiyaz-2026
     song: Stay Down
     spotify: https://open.spotify.com/track/4mwiRPRAUSSFD6lJ86m98B
+    length: "3:27"
   - artist: Dave
     date: 2026-05-01
     venue: Brooklyn Paramount

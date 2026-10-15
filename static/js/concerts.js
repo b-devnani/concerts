@@ -32,25 +32,49 @@
         return `${hours % 12 || 12}${minutes ? ':' + String(minutes).padStart(2, '0') : ''} ${hours < 12 ? 'AM' : 'PM'}`;
     }
 
-    function spotifyEmbed(url) {
-        const match = String(url || '').match(/open\.spotify\.com\/(?:intl-[a-z-]+\/)?(track|album|playlist)\/([A-Za-z0-9]+)/);
-        return match ? `https://open.spotify.com/embed/${match[1]}/${match[2]}` : '';
+    function trackUri(url) {
+        const match = String(url || '').match(/open\.spotify\.com\/(?:intl-[a-z-]+\/)?track\/([A-Za-z0-9]+)/);
+        return match ? `spotify:track:${match[1]}` : '';
     }
 
-    function playButton(concert, index) {
-        if (!concert.song && !concert.spotify) {
-            return PREVIEW ? '<span class="play tbd"><span class="disc" aria-hidden="true">▶</span><span>Song TBD</span></span>' : '';
-        }
-        const label = escapeHtml(concert.song || 'Play on Spotify');
-        const embed = spotifyEmbed(concert.spotify);
-        if (embed && !PREVIEW) {
-            return `<button class="play" type="button" data-embed="${escapeHtml(embed)}" data-player="player-${index}" aria-expanded="false"><span class="disc" aria-hidden="true">▶</span><span class="song">${label}</span></button>`;
-        }
-        const href = concert.spotify || `https://open.spotify.com/search/${encodeURIComponent(`${concert.artist} ${concert.song}`)}`;
-        return `<a class="play" href="${escapeHtml(href)}" target="_blank" rel="noopener"><span class="disc" aria-hidden="true">▶</span><span class="song">${label}</span></a>`;
+    function clock(seconds) {
+        const total = Math.max(0, Math.floor(seconds || 0));
+        return `${Math.floor(total / 60)}:${String(total % 60).padStart(2, '0')}`;
     }
 
-    function upcomingRow(concert, index) {
+    function parseLength(value) {
+        if (!value) return 0;
+        const [minutes, seconds] = String(value).split(':').map(Number);
+        return minutes * 60 + (seconds || 0);
+    }
+
+    const ICONS = '<svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"/></svg><svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 5h4v14h-4zM13.5 5h4v14h-4z"/></svg>';
+
+    // A song card with its own play/pause button, seek bar and times. On the live site it drives a hidden Spotify embed.
+    function songPlayer(concert) {
+        const uri = trackUri(concert.spotify);
+        if (!concert.song && !uri) {
+            return PREVIEW ? '<div class="player tbd"><span class="pp" aria-hidden="true">' + ICONS + '</span><div class="pl-main"><div class="pl-title">Song TBD</div></div></div>' : '';
+        }
+        const song = escapeHtml(concert.song || 'Play on Spotify');
+        const href = escapeHtml(concert.spotify || `https://open.spotify.com/search/${encodeURIComponent(`${concert.artist} ${concert.song}`)}`);
+        const length = parseLength(concert.length);
+        const live = uri && !PREVIEW;
+        const button = live
+            ? `<button class="pp" type="button" aria-label="Play ${song}">${ICONS}</button>`
+            : `<a class="pp" href="${href}" target="_blank" rel="noopener" aria-label="Play ${song} on Spotify">${ICONS}</a>`;
+        return `<div class="player"${live ? ` data-uri="${uri}" data-length="${length}"` : ''}>
+            ${button}
+            <div class="pl-main">
+                <div class="pl-top"><span class="pl-title">${song}</span><a class="pl-src" href="${href}" target="_blank" rel="noopener">Spotify ↗</a></div>
+                <div class="pl-bar"><span class="pl-cur">0:00</span><input class="pl-seek" type="range" min="0" max="${length || 100}" step="1" value="0" aria-label="Seek in ${song}"${live ? '' : ' disabled'}><span class="pl-dur">${length ? clock(length) : '--:--'}</span></div>
+                <div class="pl-note" hidden></div>
+            </div>
+            ${live ? '<div class="pl-embed"><div></div></div>' : ''}
+        </div>`;
+    }
+
+    function upcomingRow(concert) {
         const date = parseDate(concert.date);
         const where = [concert.venue, concert.city, displayTime(concert.time)].filter(Boolean).map(escapeHtml).join(' · ');
         const extra = [concert.companions && `With ${escapeHtml(concert.companions)}`, concert.notes && escapeHtml(concert.notes)].filter(Boolean).join(' · ');
@@ -61,8 +85,8 @@
                 <h3 class="show-artist">${escapeHtml(concert.artist)}</h3>
                 <div class="show-meta">${where}</div>
                 ${extra ? `<div class="show-meta">${extra}</div>` : ''}
-                <div class="show-actions"><span class="countdown">${countdown(daysUntil(concert.date))}</span>${playButton(concert, index)}${tickets}</div>
-                <div class="player" id="player-${index}" hidden></div>
+                <div class="show-actions"><span class="countdown">${countdown(daysUntil(concert.date))}</span>${tickets}</div>
+                ${songPlayer(concert)}
             </div>
         </li>`;
     }
@@ -112,17 +136,123 @@
         reviewList.innerHTML = past.length ? past.map(reviewCard).join('') : '<div class="empty">No reviews yet.</div>';
     }
 
-    upcomingList.addEventListener('click', event => {
-        const button = event.target.closest('button.play');
-        if (!button) return;
-        const player = document.getElementById(button.dataset.player);
-        if (!player.firstChild) {
-            player.innerHTML = `<iframe src="${escapeHtml(button.dataset.embed)}" title="Spotify player" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`;
+    // Spotify's embed API: https://developer.spotify.com/documentation/embeds/references/iframe-api
+    let spotifyApi = null;
+    function loadSpotifyApi() {
+        if (!spotifyApi) {
+            spotifyApi = new Promise((resolve, reject) => {
+                window.onSpotifyIframeApiReady = resolve;
+                const script = document.createElement('script');
+                script.src = 'https://open.spotify.com/embed/iframe-api/v1';
+                script.async = true;
+                script.onerror = reject;
+                document.head.appendChild(script);
+            });
         }
-        const opening = player.hidden;
-        player.hidden = !opening;
-        button.setAttribute('aria-expanded', String(opening));
-        button.querySelector('.disc').textContent = opening ? '■' : '▶';
+        return spotifyApi;
+    }
+
+    function controllerFor(player) {
+        if (!player.controllerPromise) {
+            player.controllerPromise = loadSpotifyApi().then(api => new Promise(resolve => {
+                api.createController(player.querySelector('.pl-embed > div'), { uri: player.dataset.uri, width: '100%', height: 80 }, controller => {
+                    controller.addListener('playback_update', event => showProgress(player, event.data));
+                    controller.addListener('ready', () => resolve(controller));
+                    setTimeout(() => resolve(controller), 4000);
+                });
+            }));
+        }
+        return player.controllerPromise;
+    }
+
+    function setBar(player, position, duration) {
+        const seek = player.querySelector('.pl-seek');
+        if (duration) {
+            seek.max = duration;
+            player.querySelector('.pl-dur').textContent = clock(duration);
+        }
+        seek.value = position;
+        seek.style.setProperty('--pct', `${(position / (Number(seek.max) || 1)) * 100}%`);
+        player.querySelector('.pl-cur').textContent = clock(position);
+    }
+
+    function showProgress(player, data) {
+        const duration = data.duration / 1000;
+        const position = Math.min(data.position / 1000, duration || Infinity);
+        const ended = duration > 0 && position >= duration - 0.3;
+        const playing = !data.isPaused && !ended;
+        player.started = player.started || playing;
+        player.ended = ended;
+        player.classList.toggle('playing', playing);
+        player.classList.toggle('loading', Boolean(data.isBuffering));
+        player.querySelector('.pp').setAttribute('aria-label', `${playing ? 'Pause' : 'Play'} ${player.querySelector('.pl-title').textContent}`);
+        if (playing) clearTimeout(player.watchdog);
+        if (!player.dragging) setBar(player, ended ? 0 : position, duration);
+        const full = Number(player.dataset.length);
+        const note = player.querySelector('.pl-note');
+        if (full && duration && duration < full - 5) {
+            note.textContent = 'Preview. Sign in to Spotify in this browser to hear the full song.';
+            note.hidden = false;
+        }
+    }
+
+    function pauseOthers(current) {
+        document.querySelectorAll('.player.playing').forEach(player => {
+            if (player !== current && player.controllerPromise) player.controllerPromise.then(controller => controller.pause());
+        });
+    }
+
+    // If Spotify won't start from our button (some phones block it), show Spotify's own player instead.
+    function armWatchdog(player) {
+        clearTimeout(player.watchdog);
+        player.watchdog = setTimeout(() => {
+            if (player.classList.contains('playing')) return;
+            player.classList.remove('loading');
+            player.classList.add('show-embed');
+        }, 6000);
+    }
+
+    async function togglePlayer(player) {
+        pauseOthers(player);
+        if (!player.controllerPromise) player.classList.add('loading');
+        const controller = await controllerFor(player);
+        if (player.classList.contains('playing')) {
+            controller.pause();
+        } else if (!player.started || player.ended) {
+            armWatchdog(player);
+            controller.play();
+        } else {
+            controller.resume();
+        }
+    }
+
+    upcomingList.addEventListener('click', event => {
+        const button = event.target.closest('.player[data-uri] .pp');
+        if (button) togglePlayer(button.closest('.player'));
+    });
+
+    upcomingList.addEventListener('input', event => {
+        if (!event.target.matches('.pl-seek')) return;
+        const player = event.target.closest('.player');
+        player.dragging = true;
+        setBar(player, Number(event.target.value), 0);
+    });
+
+    upcomingList.addEventListener('change', async event => {
+        if (!event.target.matches('.pl-seek')) return;
+        const player = event.target.closest('.player');
+        if (!player.dataset.uri) return;
+        const target = Number(event.target.value);
+        player.dragging = false;
+        pauseOthers(player);
+        const controller = await controllerFor(player);
+        if (!player.started) {
+            armWatchdog(player);
+            controller.play();
+            setTimeout(() => controller.seek(target), 800);
+        } else {
+            controller.seek(target);
+        }
     });
 
     if (Array.isArray(window.CONCERTS_DATA)) {
