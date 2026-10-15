@@ -127,6 +127,7 @@ concerts:
     status: Attended
     rating: 10
     price: "$600"
+    companions: Saahith, Sparsh, Swe & more
     notes: All three days. Davido on Friday, Alkaline on Saturday, Wizkid on Sunday.
   - artist: World's Biggest Saxophone Meetup
     date: 2026-09-26
