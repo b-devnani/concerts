@@ -1,0 +1,53 @@
+# Add concert entries here. The page is read-only and loads this file.
+# Shows dated today or later appear under "Upcoming"; earlier ones under "Past".
+# Example:
+#   - artist: Artist name
+#     date: 2026-10-31
+#     time: "20:00"
+#     venue: Venue name
+#     city: City
+#     country: Country
+#     genre: Genre
+#     status: Attended
+#     rating: 5
+#     price: "$75"
+#     companions: Friends
+#     notes: A short review or memory.
+#     link: https://example.com/event
+concerts:
+  - artist: Ezra Collective
+    date: 2026-11-18
+    time: "20:00"
+    venue: Webster Hall
+    city: New York
+    country: USA
+    genre: Jazz
+    # price: "$"
+    # companions:
+  - artist: Jorja Smith
+    date: 2026-11-21
+    time: "20:00"
+    venue: Kings Theatre
+    city: Brooklyn
+    country: USA
+    genre: R&B, Soul
+    # price: "$"
+    # companions:
+  - artist: Maleek Berry
+    date: 2026-11-25
+    # time: "20:00"
+    # venue:
+    city: New York
+    country: USA
+    genre: Afrobeats
+    # price: "$"
+    # companions:
+  - artist: Brent Faiyaz
+    date: 2026-12-03
+    time: "20:00"
+    venue: Barclays Center
+    city: Brooklyn
+    country: USA
+    genre: R&B
+    # price: "$"
+    # companions:
