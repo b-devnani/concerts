@@ -125,6 +125,7 @@ concerts:
     country: USA
     genre: Afrobeats, Dancehall
     status: Attended
+    rating: 10
     notes: All three days. Davido on Friday, Alkaline on Saturday, Wizkid on Sunday.
   - artist: World's Biggest Saxophone Meetup
     date: 2026-09-26
