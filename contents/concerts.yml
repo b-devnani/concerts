@@ -1,20 +1,19 @@
-# Add concert entries here. The page is read-only and loads this file.
-# Shows dated today or later appear under "Upcoming"; earlier ones under "Past".
-# Example:
-#   - artist: Artist name
-#     date: 2026-10-31
-#     end_date: 2026-11-02   # optional, for multi-day festivals
-#     time: "20:00"
-#     venue: Venue name
-#     city: City
-#     country: Country
-#     genre: Genre
-#     status: Attended
-#     rating: 5
-#     price: "$75"
-#     companions: Friends
-#     notes: A short review or memory.
-#     link: https://example.com/event
+# Every show lives here. The page reads this file.
+# Shows dated today or later appear under "Coming up"; earlier ones become reviews.
+#
+# Fields (all optional except artist and date):
+#   artist, date (YYYY-MM-DD), end_date (multi-day festivals), time ("20:00"),
+#   venue, city, country, genre,
+#   rating        score out of 10
+#   price         what you paid, e.g. "$35" or Free
+#   companions    who you went with ("Alone" shows as "Went solo")
+#   highlights    standout songs or moments
+#   wishlist      songs you wish they played
+#   review        your write-up; shown behind "Read review", exactly as typed
+#   notes         short info shown on the card (e.g. "Doors 7 PM, 16+.")
+#   link          tickets or event page
+#   song          a song you love by them (upcoming shows get a play button)
+#   spotify       Spotify track link for that song, e.g. https://open.spotify.com/track/...
 concerts:
   - artist: Ezra Collective
     date: 2026-11-18

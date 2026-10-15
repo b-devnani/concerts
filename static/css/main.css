@@ -1,34 +1,78 @@
-.header {
-    border-bottom: solid 2px var(--concert-coral);
-    z-index: 10000;
+/* Paper, ink and clay: a review feed with a dark masthead, a "coming up" rail and scored reviews. */
+:root {
+    --paper: #f6f1e8;
+    --card: #fffdf8;
+    --ink: #1f2421;
+    --muted: #59615b;
+    --rule: rgba(31, 36, 33, .16);
+    --accent: #d85c46;
+    --accent-ink: #fffdf8;
+    --gold: #f4c95d;
+    --gold-ink: #1f2421;
+    --hero: #1f2421;
+    --hero-ink: #f6f1e8;
+    --hero-muted: rgba(246, 241, 232, .7);
+    --hero-rule: rgba(246, 241, 232, .22);
+    --serif: "Newsreader", Georgia, "Times New Roman", serif;
+    --sans: "Mulish", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --label: "Kanit", "Arial Narrow", sans-serif;
 }
 
-.bg-bottom {
-    background-color: var(--concert-ink);
+@media (prefers-color-scheme: dark) {
+    :root {
+        --paper: #171a18;
+        --card: #1f2421;
+        --ink: #f1ebe0;
+        --muted: #a7aea6;
+        --rule: rgba(246, 241, 232, .14);
+        --accent: #e8735e;
+        --accent-ink: #171a18;
+        --hero: #0f1210;
+        color-scheme: dark;
+    }
 }
 
-.concerts-page {
-    --concert-ink: #1f2421;
-    --concert-paper: #f6f1e8;
-    --concert-coral: #d85c46;
-    --concert-yellow: #f4c95d;
-    background: var(--concert-paper);
-    color: var(--concert-ink);
-    min-height: 100vh;
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
 }
 
-.concerts-page .header { background: var(--concert-paper); }
+.container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding-left: max(20px, env(safe-area-inset-left, 0px));
+    padding-right: max(20px, env(safe-area-inset-right, 0px));
+}
 
-.concerts-hero {
-    background: #1f2421;
-    color: var(--concert-paper);
-    padding: 9rem 0 5rem;
-    position: relative;
+a { color: inherit; text-underline-offset: 3px; }
+a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.kicker, .label {
+    color: var(--accent);
+    font-family: var(--label);
+    font-size: .75rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+}
+
+/* masthead */
+.hero {
+    background: var(--hero);
+    color: var(--hero-ink);
     overflow: hidden;
+    padding: 4.5rem 0 3rem;
+    position: relative;
 }
 
-.concerts-hero::after {
-    border: 1px solid rgba(246, 241, 232, .3);
+.hero::after {
+    border: 1px solid var(--hero-rule);
     border-radius: 50%;
     content: "";
     height: 28rem;
@@ -38,107 +82,70 @@
     width: 28rem;
 }
 
-.concerts-kicker,
-.concert-label {
-    color: var(--concert-coral);
-    font-family: Kanit, sans-serif;
-    font-size: .75rem;
-    letter-spacing: .12em;
-    text-transform: uppercase;
+.hero .container { position: relative; z-index: 1; }
+.wordmark { font-family: var(--serif); font-size: clamp(3.4rem, 13vw, 6.2rem); font-weight: 600; line-height: .9; margin: .6rem 0 .5rem; }
+.wordmark span { color: var(--accent); }
+.tagline { color: var(--hero-muted); font-size: 1.15rem; margin: 0; }
+.stats { border-top: 1px solid var(--hero-rule); color: var(--hero-muted); display: flex; flex-wrap: wrap; gap: .4rem 1.75rem; margin-top: 1.75rem; padding-top: 1rem; }
+.stats strong { color: var(--gold); font-size: 1.5rem; font-variant-numeric: tabular-nums; font-weight: 700; margin-right: .3rem; }
+
+/* sections */
+main { display: grid; gap: 3rem; padding-block: 2.5rem 4.5rem; }
+.section-head { border-bottom: 2px solid var(--accent); margin-bottom: .25rem; padding-bottom: .5rem; }
+.section-head h2 { font-family: var(--serif); font-size: 2rem; font-weight: 600; line-height: 1.1; margin: .2rem 0 0; }
+
+/* coming up */
+.rail { list-style: none; margin: 0; padding: 0; }
+.show { border-bottom: 1px solid var(--rule); display: grid; gap: .2rem 1.1rem; grid-template-columns: 3.4rem minmax(0, 1fr); padding: 1.15rem 0; }
+.when { line-height: 1; padding-top: .2rem; text-align: center; }
+.when .mon { color: var(--accent); font-family: var(--label); font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; }
+.when .day { font-family: var(--serif); font-size: 2.1rem; font-variant-numeric: tabular-nums; font-weight: 600; margin: .1rem 0; }
+.when .dow { color: var(--muted); font-size: .75rem; }
+.show-main { display: grid; gap: .2rem; min-width: 0; }
+.show-artist { font-family: var(--serif); font-size: 1.45rem; font-weight: 600; line-height: 1.15; margin: 0; overflow-wrap: anywhere; }
+.show-meta { color: var(--muted); font-size: .92rem; }
+.show-actions { align-items: center; display: flex; flex-wrap: wrap; font-size: .92rem; gap: .55rem 1rem; margin-top: .45rem; }
+.countdown { background: var(--gold); border-radius: 3px; color: var(--gold-ink); font-family: var(--label); font-size: .72rem; letter-spacing: .1em; padding: .2rem .5rem; text-transform: uppercase; }
+.play { align-items: center; background: none; border: 0; color: var(--ink); cursor: pointer; display: inline-flex; font: inherit; gap: .5rem; padding: 0; text-decoration: none; }
+.play .disc { background: var(--accent); border-radius: 50%; color: var(--accent-ink); display: grid; flex: none; font-size: .7rem; height: 2rem; place-items: center; width: 2rem; }
+.play .song { font-weight: 700; }
+.play:hover .song { text-decoration: underline; }
+.play.tbd { color: var(--muted); cursor: default; }
+.play.tbd .disc { background: transparent; border: 1.5px dashed var(--muted); color: var(--muted); }
+.player { margin-top: .6rem; }
+.player iframe { border: 0; border-radius: 12px; display: block; height: 80px; width: 100%; }
+
+/* reviews */
+.review { border-bottom: 1px solid var(--rule); display: grid; gap: .9rem; padding: 1.75rem 0; }
+.review-head { align-items: start; display: grid; gap: 1rem; grid-template-columns: auto minmax(0, 1fr); }
+.score { background: var(--card); border: 2.5px solid var(--ink); display: grid; height: 4.6rem; line-height: 1; place-content: center; text-align: center; width: 4.6rem; }
+.score b { font-family: var(--serif); font-size: 2.3rem; font-variant-numeric: tabular-nums; font-weight: 600; }
+.score small { color: var(--muted); font-size: .7rem; margin-top: .15rem; }
+.review.best .score { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.review.best .score small { color: var(--accent-ink); opacity: .85; }
+.review-kicker { display: flex; flex-wrap: wrap; gap: .25rem .75rem; }
+.badge { background: var(--gold); border-radius: 2px; color: var(--gold-ink); padding: 0 .4rem; }
+.review-title { font-family: var(--serif); font-size: clamp(1.6rem, 5.6vw, 2.2rem); font-weight: 600; line-height: 1.08; margin: .3rem 0 .15rem; overflow-wrap: anywhere; text-wrap: balance; }
+.review-sub { color: var(--muted); font-size: .98rem; }
+.byline { color: var(--muted); display: flex; flex-wrap: wrap; font-size: .9rem; gap: .25rem 1rem; }
+.byline b { color: var(--ink); font-weight: 700; }
+.sets { display: grid; gap: .6rem; margin: 0; }
+.set { display: grid; gap: .75rem; grid-template-columns: 8.5rem minmax(0, 1fr); }
+.set dt { color: var(--accent); font-family: var(--label); font-size: .72rem; letter-spacing: .12em; padding-top: .2rem; text-transform: uppercase; }
+.set dd { margin: 0; }
+.set.miss dd { color: var(--muted); }
+.review-body summary { color: var(--accent); cursor: pointer; font-family: var(--label); font-size: .78rem; letter-spacing: .12em; list-style: none; text-transform: uppercase; width: fit-content; }
+.review-body summary::-webkit-details-marker { display: none; }
+.review-body summary::after { content: " +"; }
+.review-body[open] summary::after { content: " −"; }
+.review-text { display: grid; font-family: var(--serif); font-size: 1.12rem; gap: .6rem; line-height: 1.6; margin-top: .6rem; max-width: 62ch; }
+.review-text p { margin: 0; }
+.empty { border: 1px dashed var(--rule); color: var(--muted); margin-top: 1rem; padding: 2rem 1rem; text-align: center; }
+
+.footer { background: var(--hero); color: var(--hero-muted); font-size: .85rem; padding: 2rem 0; text-align: center; }
+
+@media (max-width: 480px) {
+    .score { height: 3.9rem; width: 3.9rem; }
+    .score b { font-size: 1.9rem; }
+    .set { gap: .1rem; grid-template-columns: minmax(0, 1fr); }
 }
-
-.concerts-hero h1 {
-    font-size: clamp(3rem, 8vw, 7rem);
-    line-height: .9;
-    max-width: 8em;
-    position: relative;
-    z-index: 1;
-}
-
-.concerts-hero p {
-    color: rgba(246, 241, 232, .7);
-    max-width: 34rem;
-    position: relative;
-    z-index: 1;
-}
-
-.concerts-workspace { padding: 3rem 0 6rem; }
-
-.concert-toolbar {
-    align-items: end;
-    border-bottom: 1px solid rgba(31, 36, 33, .2);
-    display: flex;
-    gap: 1rem;
-    justify-content: space-between;
-    margin-bottom: 1rem;
-    padding-bottom: 1rem;
-}
-
-.concert-toolbar .form-control,
-.concert-toolbar .form-select {
-    background: transparent;
-    border-color: rgba(31, 36, 33, .25);
-    border-radius: 0;
-}
-
-.concert-button {
-    background: transparent;
-    border: 1px solid rgba(31, 36, 33, .25);
-    color: var(--concert-ink);
-    padding: .375rem .75rem;
-}
-
-.concert-button:hover { border-color: var(--concert-coral); color: var(--concert-coral); }
-
-.concert-section { margin-top: 3rem; }
-.concert-section-heading { border-bottom: 2px solid var(--concert-coral); margin-bottom: 0.5rem; padding-bottom: 0.5rem; }
-.concert-section-heading h2 { font-size: 2rem; margin: .25rem 0 0; }
-
-.concert-card {
-    background: #fffdf8;
-    border-left: 5px solid var(--concert-coral);
-    border-top: 1px solid rgba(31, 36, 33, .15);
-    margin-bottom: 1rem;
-    padding: 1.25rem 1.5rem;
-}
-
-.concert-card h2 { font-size: 1.7rem; margin-bottom: .25rem; }
-
-.concert-card-meta {
-    color: #59615b;
-    display: flex;
-    flex-wrap: wrap;
-    gap: .5rem 1.25rem;
-    margin: .75rem 0 0;
-}
-
-.concert-card-meta span::before { color: var(--concert-coral); content: "•"; margin-right: .45rem; }
-.concert-empty { border: 1px dashed rgba(31, 36, 33, .35); color: #59615b; padding: 3rem 1rem; text-align: center; }
-.concert-stat { border-top: 1px solid rgba(246, 241, 232, .25); color: rgba(246, 241, 232, .7); margin-top: 2rem; padding-top: 1rem; }
-.concert-stat strong { color: var(--concert-yellow); font-size: 1.5rem; }
-
-@media (max-width: 767px) {
-    .concerts-hero { padding-top: 8rem; }
-    .concert-toolbar { align-items: stretch; flex-direction: column; }
-    .concerts-page .container { padding-left: 1rem !important; padding-right: 1rem !important; }
-}
-
-@media (min-width: 768px) {
-    .concert-toolbar .d-flex { flex-wrap: nowrap !important; }
-    .concert-toolbar .form-control { width: 16rem; }
-    .concert-toolbar .form-select { width: auto; }
-}
-
-.concert-card-top { align-items: baseline; display: flex; gap: 1rem; justify-content: space-between; }
-.concert-rating { color: var(--concert-coral); font-family: Kanit, sans-serif; font-size: 1.15rem; white-space: nowrap; }
-.concert-songs { margin: .85rem 0 0; }
-.concert-songs .concert-label { display: block; margin-bottom: .1rem; }
-.concert-notes { display: grid; gap: .4rem; margin-top: .85rem; }
-.concert-notes p { margin: 0; }
-.concert-review { margin-top: .85rem; }
-.concert-review summary { color: var(--concert-coral); cursor: pointer; font-family: Kanit, sans-serif; font-size: .8rem; letter-spacing: .12em; list-style: none; text-transform: uppercase; width: fit-content; }
-.concert-review summary::-webkit-details-marker { display: none; }
-.concert-review summary::after { content: " +"; }
-.concert-review[open] summary::after { content: " −"; }
-.concert-review summary:focus-visible { outline: 2px solid var(--concert-coral); outline-offset: 2px; }
-.concert-review .concert-notes { margin-top: .5rem; }
