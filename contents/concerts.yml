@@ -90,6 +90,7 @@ concerts:
     status: Attended
     rating: 7
     price: Free
+    companions: Chinasa
   - artist: Chance the Rapper
     date: 2026-08-08
     time: "19:00"
