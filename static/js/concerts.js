@@ -76,7 +76,8 @@ function render() {
         }
         target.innerHTML = section.map(concert => {
         const metadata = [
-            displayDate(concert.date), displayTime(concert.time), concert.venue,
+            concert.end_date ? `${displayDate(concert.date)} – ${displayDate(concert.end_date)}` : displayDate(concert.date),
+            displayTime(concert.time), concert.venue,
             [concert.city, concert.country].filter(Boolean).join(', '), concert.genre,
             concert.status, concert.price && `Ticket: ${concert.price}`,
             concert.companions

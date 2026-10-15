@@ -3,6 +3,7 @@
 # Example:
 #   - artist: Artist name
 #     date: 2026-10-31
+#     end_date: 2026-11-02   # optional, for multi-day festivals
 #     time: "20:00"
 #     venue: Venue name
 #     city: City
@@ -53,7 +54,7 @@ concerts:
     notes: I Spent The Night With Brent Faiyaz tour.
     link: https://www.barclayscenter.com/events/detail/brent-faiyaz-2026
   - artist: Dave
-    date: 2026-04-30
+    date: 2026-05-01
     venue: Brooklyn Paramount
     city: Brooklyn
     country: USA
@@ -94,11 +95,13 @@ concerts:
     price: Free
   - artist: Afro+ Fest
     date: 2026-09-04
+    end_date: 2026-09-06
     venue: Northwest Stadium Complex
     city: Landover (DC)
     country: USA
     genre: Afrobeats, Dancehall
     status: Attended
+    notes: All three days. Davido on Friday, Alkaline on Saturday, Wizkid on Sunday.
   - artist: World's Biggest Saxophone Meetup
     date: 2026-09-26
     time: "12:00"
