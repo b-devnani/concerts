@@ -75,6 +75,11 @@ concerts:
     country: USA
     genre: Afrobeats, Alté
     status: Attended
+    rating: 10
+    price: "$35"
+    companions: Loads of friends
+    highlights: [Falling, Wanted You, SPORT, Gangsta Fear]
+    wishlist: [Better Days, Tipsy, Desire]
   - artist: Ayra Starr (Starr Girl listening party)
     date: 2026-08-05
     time: "19:00"
