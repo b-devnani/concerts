@@ -103,6 +103,7 @@ concerts:
     rating: 7
     price: "$50"
     companions: Ghosh & Priya
+    highlights: [Blessings, All We Got, Finish Line]
   - artist: Blues BBQ Festival
     date: 2026-08-15
     time: "13:00"
