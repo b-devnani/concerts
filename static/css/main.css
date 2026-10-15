@@ -133,3 +133,5 @@
 .concert-rating { color: var(--concert-coral); font-family: Kanit, sans-serif; font-size: 1.15rem; white-space: nowrap; }
 .concert-songs { margin: .85rem 0 0; }
 .concert-songs .concert-label { display: block; margin-bottom: .1rem; }
+.concert-notes { display: grid; gap: .4rem; margin-top: .85rem; }
+.concert-notes p { margin: 0; }
