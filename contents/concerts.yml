@@ -51,3 +51,66 @@ concerts:
     genre: R&B
     # price: "$"
     # companions:
+  - artist: Dave
+    date: 2026-04-30
+    venue: Brooklyn Paramount
+    city: Brooklyn
+    country: USA
+    genre: UK Rap
+    status: Attended
+  - artist: Odunsi (The Engine)
+    date: 2026-06-12
+    time: "18:00"
+    venue: SOB's
+    city: New York
+    country: USA
+    genre: Afrobeats, Alté
+    status: Attended
+  - artist: Ayra Starr (Starr Girl listening party)
+    date: 2026-08-05
+    time: "19:00"
+    venue: The DL (rooftop)
+    city: New York
+    country: USA
+    genre: Afrobeats
+    status: Attended
+  - artist: Chance the Rapper
+    date: 2026-08-08
+    time: "19:00"
+    venue: Ravinia
+    city: Highland Park (Chicago)
+    country: USA
+    genre: Hip-Hop
+    status: Attended
+  - artist: Blues BBQ Festival
+    date: 2026-08-15
+    time: "13:00"
+    venue: Pier 76, Hudson River Park
+    city: New York
+    country: USA
+    genre: Blues
+    status: Attended
+    price: Free
+  - artist: Afro+ Fest
+    date: 2026-09-04
+    venue: Northwest Stadium Complex
+    city: Landover (DC)
+    country: USA
+    genre: Afrobeats, Dancehall
+    status: Attended
+  - artist: World's Biggest Saxophone Meetup
+    date: 2026-09-26
+    time: "12:00"
+    venue: Washington Square Park
+    city: New York
+    country: USA
+    genre: Saxophone jam
+    status: Attended
+    price: Free
+  - artist: Santi (K.O.T.B listening party)
+    date: 2026-10-10
+    venue: Le Père
+    city: New York
+    country: USA
+    genre: Alté
+    status: Attended
