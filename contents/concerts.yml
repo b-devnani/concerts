@@ -65,8 +65,8 @@ concerts:
     rating: 9
     price: "~$60"
     companions: Deep, Pelumi & Nem
-    highlights: [The Boy Who Played The Harp, System, Verdansk, Screwface Capital]
-    wishlist: [Law Of Attraction, Heart Attack, Lazarus]
+    highlights: "The Boy Who Played The Harp, System, Verdansk, Screwface Capital"
+    wishlist: "Law Of Attraction, Heart Attack, Lazarus"
   - artist: Odunsi (The Engine)
     date: 2026-06-12
     time: "18:00"
@@ -78,8 +78,8 @@ concerts:
     rating: 10
     price: "$35"
     companions: Loads of friends
-    highlights: [Falling, Wanted You, SPORT, Gangsta Fear]
-    wishlist: [Better Days, Tipsy, Desire]
+    highlights: "falling, wanted you, SPORT, Gangsta Fear"
+    wishlist: "Better Days, Tipsy, Desire"
   - artist: Ayra Starr (Starr Girl listening party)
     date: 2026-08-05
     time: "19:00"
@@ -91,7 +91,7 @@ concerts:
     rating: 7
     price: Free
     companions: Chinasa
-    highlights: ["Ms Paper (a madness on first listen)"]
+    highlights: "Ms Paper was a madness on first listen"
   - artist: Chance the Rapper
     date: 2026-08-08
     time: "19:00"
@@ -103,8 +103,8 @@ concerts:
     rating: 7
     price: "$50"
     companions: Ghosh & Priya
-    highlights: [Blessings, All We Got, Finish Line, Sunday Candy]
-    wishlist: ["Same Drugs (not doing it was criminal)", "Blessings (Reprise)"]
+    highlights: "Blessings, All We Got, Finish Line, Sunday candy"
+    wishlist: "NOT DOING SAME DRUGS WAS CRIMINAL, Blessings (other version)"
   - artist: Blues BBQ Festival
     date: 2026-08-15
     time: "13:00"
@@ -114,9 +114,10 @@ concerts:
     genre: Blues
     status: Attended
     rating: 6
-    companions: Tinu
-    notes: Food was gas. Had kimchi brisket. Saw a really old couple dancing really whimsically and thought it was relationship goals.
     price: Free
+    companions: Tinu
+    review: |-
+      Food was gas. Had kimchi brisket. Saw a really old couple dancing really whimsical and thought it was relationship goals
   - artist: Afro+ Fest
     date: 2026-09-04
     end_date: 2026-09-06
@@ -128,11 +129,12 @@ concerts:
     rating: 10
     price: "$600"
     companions: Saahith, Sparsh, Swe & more
-    notes: |
-      Kwamz Original with Kelvin Momo on Day 2 was the most insane DJ set ever. I still think about it from time to time.
-      Olamide was back to back to back bangers, so fulfilling. He was the only artist I hadn't seen before.
-      Ruger was reallllly good.
-      Lowkey the crowd for Davido was hype asf, but that was Day 1 energies coming out.
+    review: |-
+      Kwamz Original w Kelvin Momo on Day 2 had the most insane DJ set ever. I still think abt it from time to time
+      Olamide back to back to back bangers was so fulfilling. He was the only artist I hadn’t seen before
+      Ruger was reallllly good
+
+      Lowkey crowd for davido was hype asf but that was day 1 energies coming out
   - artist: World's Biggest Saxophone Meetup
     date: 2026-09-26
     time: "12:00"
@@ -142,12 +144,10 @@ concerts:
     genre: Saxophone jam
     status: Attended
     rating: 9
-    companions: Alone
-    notes: |
-      The whole experience reminded me how much I love NYC.
-      It didn't seem like something that was supposed to be (or could be) perfectly organized. Very impressive to see how someone gathered every young saxophonist in the city and pulled that off.
-      In unison, they all sounded really fkn good.
     price: Free
+    companions: Alone
+    review: |-
+      Whole experience reminded me how much I love nyc. It didn’t seem like something that was supposed to be (or could be) perfectly organized. Very impressive to see how someone gathered every young saxophonist in the city and pulled that off. In Unison, they all sounded really fkn good
   - artist: Santi (K.O.T.B listening party)
     date: 2026-10-10
     venue: Le Père
@@ -158,4 +158,4 @@ concerts:
     rating: 7
     price: Free
     companions: Kwesi, Adwoa & more
-    highlights: [Rapid Fire, Murvlana, Sparky]
+    highlights: "Rapid Fire, Murvlana and Sparky"

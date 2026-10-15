@@ -84,10 +84,12 @@ function render() {
                 concert.companions && (/^(alone|solo)$/i.test(concert.companions) ? 'Went solo' : `With ${concert.companions}`)
             ].filter(Boolean);
             const rating = concert.rating ? `<span class="concert-rating" aria-label="${escapeHtml(concert.rating)} out of 10">${escapeHtml(concert.rating)}/10</span>` : '';
-            const songList = (title, songs) => songs && songs.length ? `<p class="concert-songs"><span class="concert-label">${title}</span>${[].concat(songs).map(escapeHtml).join(' · ')}</p>` : '';
+            const songList = (title, songs) => songs && songs.length ? `<p class="concert-songs"><span class="concert-label">${title}</span>${[].concat(songs).map(escapeHtml).join(', ')}</p>` : '';
+            const paragraphs = text => String(text).split('\n').filter(line => line.trim()).map(line => `<p>${escapeHtml(line)}</p>`).join('');
+            const review = concert.review ? `<details class="concert-review"><summary>Read review</summary><div class="concert-notes">${paragraphs(concert.review)}</div></details>` : '';
             const notes = concert.notes ? `<div class="concert-notes">${String(concert.notes).split('\n').filter(line => line.trim()).map(line => `<p>${escapeHtml(line)}</p>`).join('')}</div>` : '';
             const link = /^https?:\/\//i.test(concert.link || '') ? `<a href="${escapeHtml(concert.link)}" target="_blank" rel="noopener">${isUpcoming ? 'Tickets' : 'Event details'} <i class="bi-box-arrow-up-right"></i></a>` : '';
-            return `<article class="concert-card"><div class="concert-card-top"><span class="concert-label">${escapeHtml(concert.genre || '')}</span>${rating}</div><h2>${escapeHtml(concert.artist)}</h2><div class="concert-card-meta">${metadata.map(item => `<span>${escapeHtml(item)}</span>`).join('')}</div>${songList('Highlights', concert.highlights)}${songList('Wish they played', concert.wishlist)}${notes}${link ? `<div class="mt-3">${link}</div>` : ''}</article>`;
+            return `<article class="concert-card"><div class="concert-card-top"><span class="concert-label">${escapeHtml(concert.genre || '')}</span>${rating}</div><h2>${escapeHtml(concert.artist)}</h2><div class="concert-card-meta">${metadata.map(item => `<span>${escapeHtml(item)}</span>`).join('')}</div>${songList('Highlights', concert.highlights)}${songList('Wish they played', concert.wishlist)}${notes}${review}${link ? `<div class="mt-3">${link}</div>` : ''}</article>`;
         }).join('');
     }
 

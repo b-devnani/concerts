@@ -135,3 +135,10 @@
 .concert-songs .concert-label { display: block; margin-bottom: .1rem; }
 .concert-notes { display: grid; gap: .4rem; margin-top: .85rem; }
 .concert-notes p { margin: 0; }
+.concert-review { margin-top: .85rem; }
+.concert-review summary { color: var(--concert-coral); cursor: pointer; font-family: Kanit, sans-serif; font-size: .8rem; letter-spacing: .12em; list-style: none; text-transform: uppercase; width: fit-content; }
+.concert-review summary::-webkit-details-marker { display: none; }
+.concert-review summary::after { content: " +"; }
+.concert-review[open] summary::after { content: " −"; }
+.concert-review summary:focus-visible { outline: 2px solid var(--concert-coral); outline-offset: 2px; }
+.concert-review .concert-notes { margin-top: .5rem; }
