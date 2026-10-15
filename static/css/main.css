@@ -1,33 +1,33 @@
-/* Paper, ink and clay: a review feed with a dark masthead, a "coming up" rail and scored reviews. */
+/* Moss and ochre: a review feed with a moss-green masthead, a "coming up" rail and square score boxes. */
 :root {
-    --paper: #f6f1e8;
-    --card: #fffdf8;
-    --ink: #1f2421;
-    --muted: #59615b;
-    --rule: rgba(31, 36, 33, .16);
-    --accent: #d85c46;
-    --accent-ink: #fffdf8;
-    --gold: #f4c95d;
-    --gold-ink: #1f2421;
-    --hero: #1f2421;
-    --hero-ink: #f6f1e8;
-    --hero-muted: rgba(246, 241, 232, .7);
-    --hero-rule: rgba(246, 241, 232, .22);
-    --serif: "Newsreader", Georgia, "Times New Roman", serif;
-    --sans: "Mulish", system-ui, -apple-system, "Segoe UI", sans-serif;
-    --label: "Kanit", "Arial Narrow", sans-serif;
+    --paper: #eee8da;
+    --card: #faf7ef;
+    --ink: #26301f;
+    --muted: #5e6852;
+    --rule: rgba(38, 48, 31, .17);
+    --accent: #b0601c;
+    --accent-ink: #faf7ef;
+    --gold: #dcb64d;
+    --gold-ink: #26301f;
+    --hero: #2c3a24;
+    --hero-ink: #f2ecdc;
+    --hero-muted: rgba(242, 236, 220, .72);
+    --hero-rule: rgba(242, 236, 220, .22);
+    --serif: "Young Serif", Georgia, "Times New Roman", serif;
+    --sans: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --label: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
     :root {
-        --paper: #171a18;
-        --card: #1f2421;
-        --ink: #f1ebe0;
-        --muted: #a7aea6;
-        --rule: rgba(246, 241, 232, .14);
-        --accent: #e8735e;
-        --accent-ink: #171a18;
-        --hero: #0f1210;
+        --paper: #191d16;
+        --card: #222820;
+        --ink: #ece6d6;
+        --muted: #a9b19c;
+        --rule: rgba(236, 230, 214, .14);
+        --accent: #d88a45;
+        --accent-ink: #191d16;
+        --hero: #11150e;
         color-scheme: dark;
     }
 }
@@ -149,3 +149,8 @@ main { display: grid; gap: 3rem; padding-block: 2.5rem 4.5rem; }
     .score b { font-size: 1.9rem; }
     .set { gap: .1rem; grid-template-columns: minmax(0, 1fr); }
 }
+
+/* Young Serif ships in one weight; label text gets a little more weight to hold up in the sans. */
+.wordmark, .section-head h2, .show-artist, .when .day, .review-title, .score b { font-weight: 400; }
+.kicker, .label, .countdown, .set dt, .review-body summary, .when .mon { font-weight: 600; letter-spacing: .1em; }
+.hero::after { border-radius: 0; transform: rotate(18deg); }
