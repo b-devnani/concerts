@@ -23,7 +23,7 @@ concerts:
     city: New York
     country: USA
     genre: Jazz
-    companions: "Friends: TBD"
+    companions: TBD
     notes: Doors 7 PM, 16+.
     link: https://www.axs.com/events/1493867/ezra-collective-tickets?skin=websterhall
   - artist: Jorja Smith
@@ -33,7 +33,7 @@ concerts:
     city: Brooklyn
     country: USA
     genre: R&B, Soul
-    companions: "Friends: TBD"
+    companions: TBD
     link: https://www.ticketmaster.com/event/Z7r9jZ1AAZbbt
   - artist: Maleek Berry
     date: 2026-11-25
@@ -42,7 +42,7 @@ concerts:
     city: New York
     country: USA
     genre: Afrobeats
-    companions: "Friends: TBD"
+    companions: TBD
     notes: One Night Special with Maleek Berry, presented by Duke Concept.
     link: https://posh.vip/f/ef604
   - artist: Brent Faiyaz
@@ -52,7 +52,7 @@ concerts:
     city: Brooklyn
     country: USA
     genre: R&B
-    companions: "Friends: TBD"
+    companions: TBD
     notes: I Spent The Night With Brent Faiyaz tour.
     link: https://www.barclayscenter.com/events/detail/brent-faiyaz-2026
   - artist: Dave
@@ -62,6 +62,11 @@ concerts:
     country: USA
     genre: UK Rap
     status: Attended
+    rating: 9
+    price: "~$60"
+    companions: Deep, Pelumi & Nem
+    highlights: [The Boy Who Played The Harp, System, Verdansk, Screwface Capital]
+    wishlist: [Law Of Attraction, Heart Attack, Lazarus]
   - artist: Odunsi (The Engine)
     date: 2026-06-12
     time: "18:00"

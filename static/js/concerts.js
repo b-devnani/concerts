@@ -74,18 +74,20 @@ function render() {
             target.innerHTML = `<div class="concert-empty"><strong>${query ? `No ${sectionName.toLowerCase()} shows match that search.` : `No ${sectionName.toLowerCase()} concerts yet.`}</strong><br><span>Concert entries can be added to <code>contents/concerts.yml</code>.</span></div>`;
             return;
         }
+        const isUpcoming = sectionName === 'Upcoming';
         target.innerHTML = section.map(concert => {
-        const metadata = [
-            concert.end_date ? `${displayDate(concert.date)} – ${displayDate(concert.end_date)}` : displayDate(concert.date),
-            displayTime(concert.time), concert.venue,
-            [concert.city, concert.country].filter(Boolean).join(', '), concert.genre,
-            concert.status, concert.price && `Ticket: ${concert.price}`,
-            concert.companions
-        ].filter(Boolean);
-        const rating = concert.rating ? `<span class="concert-rating" aria-label="${escapeHtml(concert.rating)} out of 5 stars">${'★'.repeat(Number(concert.rating))}${'☆'.repeat(5 - Number(concert.rating))}</span>` : '';
-        const notes = concert.notes ? `<p class="mt-3 mb-0">${escapeHtml(concert.notes)}</p>` : '';
-        const link = /^https?:\/\//i.test(concert.link || '') ? `<a href="${escapeHtml(concert.link)}" target="_blank" rel="noopener">Event details <i class="bi-box-arrow-up-right"></i></a>` : '';
-            return `<article class="concert-card"><div class="concert-label">${escapeHtml(concert.status || 'Concert')} ${rating}</div><h2>${escapeHtml(concert.artist)}</h2><div class="concert-card-meta">${metadata.map(item => `<span>${escapeHtml(item)}</span>`).join('')}</div>${notes}${link ? `<div class="mt-3">${link}</div>` : ''}</article>`;
+            const metadata = [
+                concert.end_date ? `${displayDate(concert.date)} – ${displayDate(concert.end_date)}` : displayDate(concert.date),
+                isUpcoming && displayTime(concert.time),
+                concert.venue, concert.city,
+                concert.price && `Ticket: ${concert.price}`,
+                concert.companions && `With ${concert.companions}`
+            ].filter(Boolean);
+            const rating = concert.rating ? `<span class="concert-rating" aria-label="${escapeHtml(concert.rating)} out of 10">${escapeHtml(concert.rating)}/10</span>` : '';
+            const songList = (title, songs) => songs && songs.length ? `<p class="concert-songs"><span class="concert-label">${title}</span>${[].concat(songs).map(escapeHtml).join(' · ')}</p>` : '';
+            const notes = concert.notes ? `<p class="mt-3 mb-0">${escapeHtml(concert.notes)}</p>` : '';
+            const link = /^https?:\/\//i.test(concert.link || '') ? `<a href="${escapeHtml(concert.link)}" target="_blank" rel="noopener">${isUpcoming ? 'Tickets' : 'Event details'} <i class="bi-box-arrow-up-right"></i></a>` : '';
+            return `<article class="concert-card"><div class="concert-card-top"><span class="concert-label">${escapeHtml(concert.genre || '')}</span>${rating}</div><h2>${escapeHtml(concert.artist)}</h2><div class="concert-card-meta">${metadata.map(item => `<span>${escapeHtml(item)}</span>`).join('')}</div>${songList('Highlights', concert.highlights)}${songList('Wish they played', concert.wishlist)}${notes}${link ? `<div class="mt-3">${link}</div>` : ''}</article>`;
         }).join('');
     }
 
