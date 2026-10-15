@@ -113,6 +113,7 @@ concerts:
     country: USA
     genre: Blues
     status: Attended
+    rating: 6
     price: Free
   - artist: Afro+ Fest
     date: 2026-09-04
