@@ -36,7 +36,7 @@ concerts:
   - artist: Maleek Berry
     date: 2026-11-25
     # time: "20:00"
-    # venue:
+    venue: SOB's
     city: New York
     country: USA
     genre: Afrobeats
