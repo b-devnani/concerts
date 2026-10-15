@@ -100,6 +100,7 @@ concerts:
     country: USA
     genre: Hip-Hop
     status: Attended
+    rating: 7
   - artist: Blues BBQ Festival
     date: 2026-08-15
     time: "13:00"
