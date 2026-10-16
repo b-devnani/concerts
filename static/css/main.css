@@ -1,33 +1,35 @@
-/* Moss and ochre: a review feed with a moss-green masthead, a "coming up" rail and square score boxes. */
+/* Off Track Radio guidelines: black and white only, Oswald for display and labels, Archivo for reading,
+   and the stacked-bar pattern in the masthead. Laid out as a review feed with a "coming up" rail. */
 :root {
-    --paper: #eee8da;
-    --card: #faf7ef;
-    --ink: #26301f;
-    --muted: #5e6852;
-    --rule: rgba(38, 48, 31, .17);
-    --accent: #b0601c;
-    --accent-ink: #faf7ef;
-    --gold: #dcb64d;
-    --gold-ink: #26301f;
-    --hero: #2c3a24;
-    --hero-ink: #f2ecdc;
-    --hero-muted: rgba(242, 236, 220, .72);
-    --hero-rule: rgba(242, 236, 220, .22);
-    --serif: "Young Serif", Georgia, "Times New Roman", serif;
-    --sans: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
-    --label: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --paper: #ffffff;
+    --card: #ffffff;
+    --ink: #000000;
+    --muted: #5c5c5c;
+    --rule: rgba(0, 0, 0, .16);
+    --accent: #000000;
+    --accent-ink: #ffffff;
+    --gold: #000000;
+    --gold-ink: #ffffff;
+    --hero: #000000;
+    --hero-ink: #ffffff;
+    --hero-muted: rgba(255, 255, 255, .72);
+    --hero-rule: rgba(255, 255, 255, .25);
+    --serif: "Oswald", "Arial Narrow", Impact, sans-serif;
+    --sans: "Archivo", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --label: "Oswald", "Arial Narrow", sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
     :root {
-        --paper: #191d16;
-        --card: #222820;
-        --ink: #ece6d6;
-        --muted: #a9b19c;
-        --rule: rgba(236, 230, 214, .14);
-        --accent: #d88a45;
-        --accent-ink: #191d16;
-        --hero: #11150e;
+        --paper: #000000;
+        --card: #0d0d0d;
+        --ink: #ffffff;
+        --muted: #a6a6a6;
+        --rule: rgba(255, 255, 255, .18);
+        --accent: #ffffff;
+        --accent-ink: #000000;
+        --gold: #ffffff;
+        --gold-ink: #000000;
         color-scheme: dark;
     }
 }
@@ -173,7 +175,29 @@ main { display: grid; gap: 3rem; padding-block: 2.5rem 4.5rem; }
     .set { gap: .1rem; grid-template-columns: minmax(0, 1fr); }
 }
 
-/* Young Serif ships in one weight; label text gets a little more weight to hold up in the sans. */
-.wordmark, .section-head h2, .show-artist, .when .day, .review-title, .score b { font-weight: 400; }
-.kicker, .label, .countdown, .set dt, .review-body summary, .when .mon { font-weight: 600; letter-spacing: .1em; }
-.hero::after { border-radius: 0; transform: rotate(18deg); }
+/* Off Track Radio type: Oswald set in caps for anything that announces, Archivo for anything you read. */
+.wordmark, .section-head h2, .show-artist, .review-title { font-weight: 700; letter-spacing: -.005em; text-transform: uppercase; }
+.wordmark { font-size: clamp(3.8rem, 17vw, 7.5rem); line-height: .88; }
+.wordmark span { color: inherit; }
+.tagline { font-family: var(--serif); font-size: 1.3rem; font-weight: 300; letter-spacing: .02em; text-transform: uppercase; }
+.stats strong { color: var(--hero-ink); font-family: var(--serif); font-size: 1.8rem; }
+.when .day, .score b { font-weight: 700; }
+.kicker, .label, .countdown, .set dt, .review-body summary, .when .mon { font-weight: 500; letter-spacing: .14em; }
+.hero .kicker { color: var(--hero-muted); }
+.countdown, .badge { border-radius: 0; }
+.review-text { font-family: var(--sans); font-size: 1.05rem; }
+.player, .score { border-radius: 0; }
+.hero { border-bottom: 1px solid var(--rule); }
+.hero::after {
+    background: url("../img/otr-bars.png") right center / contain no-repeat;
+    border: 0;
+    border-radius: 0;
+    height: 100%;
+    right: 0;
+    top: 0;
+    width: min(40%, 22rem);
+}
+@media (max-width: 600px) {
+    .hero { padding-bottom: 4.5rem; }
+    .hero::after { background-position: left bottom; background-repeat: repeat-x; background-size: auto 100%; bottom: 0; height: 2.5rem; top: auto; width: 100%; }
+}
