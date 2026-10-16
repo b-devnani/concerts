@@ -176,10 +176,11 @@ main { display: grid; gap: 3rem; padding-block: 2.5rem 4.5rem; }
 }
 
 /* Off Track Radio type: Oswald set in caps for anything that announces, Archivo for anything you read. */
-.wordmark, .section-head h2, .show-artist, .review-title { font-weight: 700; letter-spacing: -.005em; text-transform: uppercase; }
+/* Brand book: headings Oswald Bold at -2% tracking, subheadings Oswald Thin at -2%, body Archivo Regular. */
+.wordmark, .section-head h2, .show-artist, .review-title { font-weight: 700; letter-spacing: -.02em; text-transform: uppercase; }
 .wordmark { font-size: clamp(3.8rem, 17vw, 7.5rem); line-height: .88; }
 .wordmark span { color: inherit; }
-.tagline { font-family: var(--serif); font-size: 1.3rem; font-weight: 300; letter-spacing: .02em; text-transform: uppercase; }
+.tagline { font-family: var(--serif); font-size: 1.45rem; font-weight: 200; letter-spacing: -.02em; text-transform: uppercase; }
 .stats strong { color: var(--hero-ink); font-family: var(--serif); font-size: 1.8rem; }
 .when .day, .score b { font-weight: 700; }
 .kicker, .label, .countdown, .set dt, .review-body summary, .when .mon { font-weight: 500; letter-spacing: .14em; }
