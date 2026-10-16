@@ -22,7 +22,7 @@
     const daysUntil = value => Math.round((parseDate(value) - noon) / DAY);
     const isUpcoming = concert => daysUntil(concert.end_date || concert.date) >= 0;
     const format = (date, options) => date.toLocaleDateString('en-US', options);
-    const countdown = days => days === 0 ? 'Tonight' : days === 1 ? 'Tomorrow' : `In ${days} days`;
+    const countdown = days => days === 0 ? 'Tonight!' : days === 1 ? 'Tomorrow!' : `${days} days to go`;
     const asText = value => Array.isArray(value) ? value.join(', ') : String(value);
     const paragraphs = text => String(text).split('\n').filter(line => line.trim()).map(line => `<p>${escapeHtml(line)}</p>`).join('');
 
@@ -66,6 +66,7 @@
         return `<div class="player"${live ? ` data-uri="${uri}" data-length="${length}"` : ''}>
             ${button}
             <div class="pl-main">
+                <span class="pl-label">A song I love by them</span>
                 <div class="pl-top"><span class="pl-title">${song}</span><a class="pl-src" href="${href}" target="_blank" rel="noopener">Spotify ↗</a></div>
                 <div class="pl-bar"><span class="pl-cur">0:00</span><input class="pl-seek" type="range" min="0" max="${length || 100}" step="1" value="0" aria-label="Seek in ${song}"${live ? '' : ' disabled'}><span class="pl-dur">${length ? clock(length) : '--:--'}</span></div>
                 <div class="pl-note" hidden></div>
@@ -77,7 +78,8 @@
     function upcomingRow(concert) {
         const date = parseDate(concert.date);
         const where = [concert.venue, concert.city, displayTime(concert.time)].filter(Boolean).map(escapeHtml).join(' · ');
-        const extra = [concert.companions && `With ${escapeHtml(concert.companions)}`, concert.notes && escapeHtml(concert.notes)].filter(Boolean).join(' · ');
+        const company = !concert.companions ? '' : /^tbd$/i.test(concert.companions) ? "Who's coming with me: TBD" : `Going with ${escapeHtml(concert.companions)}`;
+        const extra = [company, concert.notes && escapeHtml(concert.notes)].filter(Boolean).join(' · ');
         const tickets = /^https?:\/\//i.test(concert.link || '') ? `<a href="${escapeHtml(concert.link)}" target="_blank" rel="noopener">Tickets ↗</a>` : '';
         return `<li class="show">
             <div class="when"><div class="mon">${format(date, { month: 'short' })}</div><div class="day">${date.getDate()}</div><div class="dow">${format(date, { weekday: 'short' })}</div></div>
@@ -91,6 +93,24 @@
         </li>`;
     }
 
+    // The first sentence of a review, word for word, used as the pull quote.
+    function openingLine(text) {
+        const line = String(text).split('\n').find(part => part.trim()) || '';
+        const match = line.match(/^.*?[.!?](?=\s|$)/);
+        return (match ? match[0] : line).trim();
+    }
+
+    // "I went with Deep, Pelumi & Nem and paid ~$60."
+    function story(concert) {
+        const company = concert.companions;
+        const price = concert.price && String(concert.price).trim();
+        const who = !company ? '' : /^(alone|solo)$/i.test(company) ? 'I went solo' : `I went with <b>${escapeHtml(company)}</b>`;
+        const paid = !price ? '' : /^free\b/i.test(price) ? 'got in free' : `paid <b>${escapeHtml(price)}</b>`;
+        if (who && paid) return `${who} and ${paid}.`;
+        if (who) return `${who}.`;
+        return paid ? `I ${paid}.` : '';
+    }
+
     function reviewCard(concert) {
         const date = parseDate(concert.date);
         const when = concert.end_date
@@ -98,23 +118,25 @@
             : format(date, { month: 'short', day: 'numeric', year: 'numeric' });
         const rating = Number(concert.rating);
         const best = rating === 10;
-        const who = !concert.companions ? '' : /^(alone|solo)$/i.test(concert.companions) ? 'Went solo' : `With <b>${escapeHtml(concert.companions)}</b>`;
-        const byline = [`By <b>Bhagya</b>`, escapeHtml(when), concert.price && `Ticket <b>${escapeHtml(concert.price)}</b>`, who].filter(Boolean);
         const sets = [];
-        if (concert.highlights) sets.push(`<div class="set"><dt>Standouts</dt><dd>${escapeHtml(asText(concert.highlights))}</dd></div>`);
-        if (concert.wishlist) sets.push(`<div class="set miss"><dt>Didn't play</dt><dd>${escapeHtml(asText(concert.wishlist))}</dd></div>`);
-        const review = concert.review ? `<details class="review-body"><summary>Read review</summary><div class="review-text">${paragraphs(concert.review)}</div></details>` : '';
+        if (concert.highlights) sets.push(`<div class="set"><dt>The highlights</dt><dd>${escapeHtml(asText(concert.highlights))}</dd></div>`);
+        if (concert.wishlist) sets.push(`<div class="set miss"><dt>I wish they'd played</dt><dd>${escapeHtml(asText(concert.wishlist))}</dd></div>`);
+        const opening = concert.review ? openingLine(concert.review) : '';
+        const fullReview = concert.review && String(concert.review).trim() !== opening;
+        const review = fullReview ? `<details class="review-body"><summary>Read my review</summary><div class="review-text">${paragraphs(concert.review)}</div></details>` : '';
         const notes = concert.notes ? `<div class="review-text">${paragraphs(concert.notes)}</div>` : '';
+        const sentence = story(concert);
         return `<article class="review${best ? ' best' : ''}">
             <div class="review-head">
                 <div class="score" aria-label="${rating ? `${rating} out of 10` : 'Not rated yet'}"><b>${rating || '–'}</b><small>/ 10</small></div>
                 <div>
-                    <div class="review-kicker label"><span>${escapeHtml(concert.genre || '')}</span>${best ? '<span class="badge">Best live show</span>' : ''}</div>
+                    <div class="review-kicker label"><span>${escapeHtml(concert.genre || '')}</span>${best ? '<span class="badge">A perfect 10</span>' : ''}</div>
                     <h3 class="review-title">${escapeHtml(concert.artist)}</h3>
-                    <div class="review-sub">${escapeHtml(concert.venue)}, ${escapeHtml(concert.city)}</div>
+                    <div class="review-sub">${escapeHtml(concert.venue)}, ${escapeHtml(concert.city)} · ${escapeHtml(when)}</div>
                 </div>
             </div>
-            <div class="byline">${byline.map(item => `<span>${item}</span>`).join('')}</div>
+            ${opening ? `<blockquote class="pull">“${escapeHtml(opening)}”</blockquote>` : ''}
+            ${sentence ? `<p class="story">${sentence}</p>` : ''}
             ${sets.length ? `<dl class="sets">${sets.join('')}</dl>` : ''}
             ${notes}${review}
         </article>`;
@@ -127,12 +149,12 @@
         const average = rated.length ? rated.reduce((total, concert) => total + Number(concert.rating), 0) / rated.length : 0;
 
         document.getElementById('stats').innerHTML = [
-            `<span><strong>${upcoming.length}</strong>coming up</span>`,
-            `<span><strong>${past.length}</strong>reviewed</span>`,
-            rated.length ? `<span><strong>${average.toFixed(1)}</strong>average score</span>` : ''
+            `<span><strong>${upcoming.length}</strong>shows coming up</span>`,
+            `<span><strong>${past.length}</strong>shows reviewed</span>`,
+            rated.length ? `<span><strong>${average.toFixed(1)}</strong>my average score</span>` : ''
         ].join('');
 
-        upcomingList.innerHTML = upcoming.length ? upcoming.map(upcomingRow).join('') : '<li class="empty">Nothing booked yet.</li>';
+        upcomingList.innerHTML = upcoming.length ? upcoming.map(upcomingRow).join('') : '<li class="empty">Nothing booked yet. Soon.</li>';
         reviewList.innerHTML = past.length ? past.map(reviewCard).join('') : '<div class="empty">No reviews yet.</div>';
     }
 

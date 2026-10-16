@@ -4,8 +4,8 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="description" content="Bhagya's live music reviews: every show scored out of 10, plus what's coming up." />
-    <title>Bhagya · Live Reviews</title>
+    <meta name="description" content="Bhagya's live music diary: every show I go to, who I went with, the songs that hit, and what I thought." />
+    <title>Bhagya · Live Music Diary</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎶</text></svg>" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -17,9 +17,10 @@
 <body>
     <header class="hero">
         <div class="container">
-            <div class="kicker">Personal archive / live music</div>
+            <div class="label">My live music diary</div>
             <h1 class="wordmark">Bhagya<span>.</span></h1>
-            <p class="tagline">Live reviews. Every show scored out of 10.</p>
+            <p class="tagline">Every show I go to, and how it really felt.</p>
+            <p class="intro">Hi, I'm Bhagya. I'm usually a short-and-sweet person, but live music gets more out of me. This is where I keep every show: who I went with, what I paid, the songs that hit, the ones I'm still waiting to hear, and a score out of 10.</p>
             <div class="stats" id="stats"></div>
         </div>
     </header>
@@ -27,23 +28,28 @@
     <main class="container">
         <section aria-labelledby="upcoming-title">
             <div class="section-head">
-                <span class="label">Next on the calendar</span>
-                <h2 id="upcoming-title">Coming up</h2>
+                <span class="label">Counting down</span>
+                <h2 id="upcoming-title">What's next</h2>
+                <p>Tickets in hand. Each one comes with a song I love by them, so press play and get in the mood with me.</p>
             </div>
             <ol class="rail" id="upcoming"></ol>
         </section>
 
         <section aria-labelledby="reviews-title">
             <div class="section-head">
-                <span class="label">The archive</span>
-                <h2 id="reviews-title">Reviews</h2>
+                <span class="label">Been there</span>
+                <h2 id="reviews-title">Shows I've been to</h2>
+                <p>Newest first. Tap "Read my review" for the full story, in my own words.</p>
             </div>
             <div class="feed" id="reviews"></div>
         </section>
     </main>
 
     <footer class="footer">
-        <div class="container">&copy; Bhagya 2026</div>
+        <div class="container">
+            <p>See you at the next one.</p>
+            <small>&copy; Bhagya 2026</small>
+        </div>
     </footer>
 
     <script src="static/js/concerts.js"></script>
