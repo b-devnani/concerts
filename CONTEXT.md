@@ -4,6 +4,20 @@ A personal record of every show Bhagya goes to: what's coming up, and what Bhagy
 
 ## Language
 
+### The record
+
+**Side A**:
+The now side: summer arc playing, the upcoming shows, then this year's past shows.
+_Avoid_: Home, main page, tab
+
+**Side B**:
+The all-time side: the die-peacefully list, the tag-along list, then the artists I've seen.
+_Avoid_: Archive, second page, tab
+
+**Summer arc**:
+Bhagya's Spotify playlist; a random song from it plays at the top of side A.
+_Avoid_: Station, radio, mix
+
 ### Shows
 
 **Show**:
@@ -73,7 +87,7 @@ Every artist Bhagya has ever seen live, from before the diary began until now, e
 _Avoid_: Seen list, everyone I've seen, lifetime list
 
 **Punch**:
-One time Bhagya saw an artist live, like a hole punched in a card. It can carry the year, a score and the place, if Bhagya remembers them. Seeing the artist a show is for adds a punch; at a festival every artist gets one; openers never do.
+One time Bhagya saw an artist live, like a hole punched in a card. It can carry the year, a score and the place, if Bhagya remembers them. Seeing the artist a show is for adds a punch; at a festival, only the artists Bhagya says they saw get one; openers never do. Each punch gets its own score.
 _Avoid_: Sighting, count, visit
 
 **Die-peacefully list**:
@@ -81,5 +95,5 @@ The artists Bhagya still needs to see, shown under Bhagya's own heading, "Artist
 _Avoid_: Bucket list, wishlist (a wishlist is songs, not artists)
 
 **Tag-along list**:
-Artists Bhagya wouldn't mind seeing if the chance came up, shown under Bhagya's own heading, "artists i wouldnt mind tagging along to see". It can include artists Bhagya has already seen.
+Artists Bhagya wouldn't mind seeing if the chance came up, shown under Bhagya's own heading, "artists i wouldnt mind tagging along to see". It can include artists Bhagya has already seen; an artist leaves it the next time Bhagya sees them.
 _Avoid_: Maybe list (a Maybe is an upcoming show), second list
