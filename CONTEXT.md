@@ -102,5 +102,5 @@ _Avoid_: Maybe list (a Maybe is an upcoming show), second list
 Bhagya's top five artists, in Bhagya's order, shown on the introduction page next to the intro text: just the photo and name, no count or score. More fav artists can follow in no order, including ones Bhagya hasn't seen yet.
 
 **Fav concerts**:
-Bhagya's top five performances, in Bhagya's order, also on the introduction page. Each is one punch (artist, year and place) and shows its venue, year and score.
+Bhagya's top five performances, ranked by Bhagya (ties allowed: 1, 1, 1, 4, 5), also on the introduction page. Each is one punch (artist, year and place) and shows its venue, year and score, and opens to a short review in Bhagya's own words.
 _Avoid_: Best shows, top 10s

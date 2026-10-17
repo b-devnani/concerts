@@ -5,8 +5,8 @@
 #   artist's own styling (as on Spotify), so this list is the one place names aren't as typed.
 # fav_artists, fav_concerts: Bhagya's top fives, in Bhagya's order, shown on the about page. fav_artists_also: more fav
 #   artists, in no order (they can include artists Bhagya hasn't seen yet, like Rihanna). Names are as in seen; the page
-#   shows each artist's own styling (Aminé, Odunsi (The Engine)). A fav concert is one performance (artist, year, place) and the
-#   venue the page shows for it.
+#   shows each artist's own styling (Aminé, Odunsi (The Engine)). A fav concert is one performance (artist, year, place), the
+#   venue the page shows for it, Bhagya's rank (ties allowed: 1, 1, 1, 4, 5) and a short review, exactly as typed.
 # punch_details: what Bhagya remembers about older punches (year, score out of 10, place, note), keyed by the name as typed in seen.
 #   Punches from diary shows fill themselves in; these are the ones from before the diary.
 seen:
@@ -139,25 +139,41 @@ fav_artists_also:
   - "SZA"
 fav_concerts:
   - artist: "Rema"
+    rank: 1
     year: 2022
     place: "NYC"
     venue: "Irving Plaza"
+    review: |-
+      best concert i've ever attended. this was just when the raves & roses album dropped. energy in the room was 10/10 all night. He did Dirty, Runaway and FYN - songs i dont think ill ever hear live again. At the end, he did Calm Down and left, but ran back screaming to perform Woman. Entire crowd lost their marbles
   - artist: "Amine"
+    rank: 1
     year: 2022
     place: "Stanford"
     venue: "Frost Amphitheater"
+    review: |-
+      went bar for bar with him on SHINE. lost my voice that day. met him afterwards and thanked him for the entire discography, especially ONEPOINTFIVE.
   - artist: "Snoh Aalegra"
+    rank: 1
     year: 2022
     place: "NYC"
     venue: "Radio City Music Hall"
+    review: |-
+      this concert has a special place in my heart bc it was my first time in new york city. that entire week was prolly why i moved to nyc. everyone was dressed so boujee and looked so mature. snoh can hit every note. that is my mother fr
   - artist: "Odeal"
+    rank: 4
     year: 2024
     place: "SOB's"
     venue: "SOB's"
+    review: |-
+      no words. i think every friend of mine knows.
+      fun fact: i almost did not have tickets for this bc it had sold out.
   - artist: "Mr Eazi"
+    rank: 5
     year: 2021
     place: "LID"
     venue: "Lost in Riddim"
+    review: |-
+      zaga whatttttt. this performance was the beginning of it all. it's the reason i have spent thousands of dollars and the reason why the poor 5'2" girl behind me cannot see the stage.
 punch_details:
   "A Boogie With a Hoodie":
     - year: 2023
