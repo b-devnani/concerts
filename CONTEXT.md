@@ -7,7 +7,7 @@ A personal record of every show Bhagya goes to: what's coming up, and what Bhagy
 ### The record
 
 **Side A**:
-The now side: summer arc playing, the upcoming shows, then this year's past shows.
+The now side: Bhagya's introduction first, a small summer arc player, the upcoming shows, then this year's past shows.
 _Avoid_: Home, main page, tab
 
 **Side B**:
