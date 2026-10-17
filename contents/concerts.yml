@@ -1,0 +1,173 @@
+# Every show lives here. The page reads this file.
+# Shows dated today or later appear under "Coming up"; earlier ones become reviews.
+#
+# Fields (all optional except artist and date):
+#   artist, date (YYYY-MM-DD), end_date (multi-day festivals), time ("20:00"),
+#   venue, city, country, genre,
+#   rating        score out of 10
+#   price         what you paid, e.g. "$35" or Free
+#   companions    who you went with ("Alone" shows as "Went solo")
+#   highlights    standout songs or moments
+#   wishlist      songs you wish they played
+#   review        your write-up; shown behind "Read review", exactly as typed
+#   notes         short info shown on the card (e.g. "Doors 7 PM, 16+.")
+#   link          tickets or event page
+#   song          a song you love by them (upcoming shows get a play button)
+#   spotify       Spotify track link for that song, e.g. https://open.spotify.com/track/...
+#   length        that song's length, e.g. "3:27" (shown on the player before it plays)
+concerts:
+  - artist: Ezra Collective
+    date: 2026-11-18
+    time: "20:00"
+    venue: Webster Hall
+    city: New York
+    country: USA
+    genre: Jazz
+    companions: TBD
+    notes: Doors 7 PM, 16+.
+    link: https://www.axs.com/events/1493867/ezra-collective-tickets?skin=websterhall
+    song: No One's Watching Me (feat. Olivia Dean)
+    spotify: https://open.spotify.com/track/1omK6ocXd3Z19wiFpJmQ4J
+    length: "4:22"
+  - artist: Jorja Smith
+    date: 2026-11-21
+    time: "20:00"
+    venue: Kings Theatre
+    city: Brooklyn
+    country: USA
+    genre: R&B, Soul
+    companions: TBD
+    link: https://www.ticketmaster.com/event/Z7r9jZ1AAZbbt
+    song: On My Mind (Jorja Smith X Preditah)
+    spotify: https://open.spotify.com/track/1OxL1FWSEd7QmJoWLRP2NO
+    length: "3:02"
+  - artist: Maleek Berry
+    date: 2026-11-25
+    # time: "20:00"
+    venue: SOB's
+    city: New York
+    country: USA
+    genre: Afrobeats
+    companions: TBD
+    notes: One Night Special with Maleek Berry, presented by Duke Concept.
+    link: https://posh.vip/f/ef604
+    song: Lost In The World
+    spotify: https://open.spotify.com/track/6W2oq6ZRRnxNc1Pdpm1XKC
+    length: "3:17"
+  - artist: Brent Faiyaz
+    date: 2026-12-03
+    time: "20:00"
+    venue: Barclays Center
+    city: Brooklyn
+    country: USA
+    genre: R&B
+    companions: TBD
+    notes: I Spent The Night With Brent Faiyaz tour.
+    link: https://www.barclayscenter.com/events/detail/brent-faiyaz-2026
+    song: Stay Down
+    spotify: https://open.spotify.com/track/4mwiRPRAUSSFD6lJ86m98B
+    length: "3:27"
+  - artist: Dave
+    date: 2026-05-01
+    venue: Brooklyn Paramount
+    city: Brooklyn
+    country: USA
+    genre: UK Rap
+    status: Attended
+    rating: 9
+    price: "~$60"
+    companions: Deep, Pelumi & Nem
+    highlights: "The Boy Who Played The Harp, System, Verdansk, Screwface Capital"
+    wishlist: "Law Of Attraction, Heart Attack, Lazarus"
+  - artist: Odunsi (The Engine)
+    date: 2026-06-12
+    time: "18:00"
+    venue: SOB's
+    city: New York
+    country: USA
+    genre: Afrobeats, Alté
+    status: Attended
+    rating: 10
+    price: "$35"
+    companions: Loads of friends
+    highlights: "falling, wanted you, SPORT, Gangsta Fear"
+    wishlist: "Better Days, Tipsy, Desire"
+  - artist: Ayra Starr (Starr Girl listening party)
+    date: 2026-08-05
+    time: "19:00"
+    venue: The DL (rooftop)
+    city: New York
+    country: USA
+    genre: Afrobeats
+    status: Attended
+    rating: 7
+    price: Free
+    companions: Chinasa
+    highlights: "Ms Paper was a madness on first listen"
+  - artist: Chance the Rapper
+    date: 2026-08-08
+    time: "19:00"
+    venue: Ravinia
+    city: Highland Park (Chicago)
+    country: USA
+    genre: Hip-Hop
+    status: Attended
+    rating: 7
+    price: "$50"
+    companions: Ghosh & Priya
+    highlights: "Blessings, All We Got, Finish Line, Sunday candy"
+    wishlist: "NOT DOING SAME DRUGS WAS CRIMINAL, Blessings (other version)"
+  - artist: Blues BBQ Festival
+    date: 2026-08-15
+    time: "13:00"
+    venue: Pier 76, Hudson River Park
+    city: New York
+    country: USA
+    genre: Blues
+    status: Attended
+    rating: 6
+    price: Free
+    companions: Tinu
+    review: |-
+      Food was gas. Had kimchi brisket. Saw a really old couple dancing really whimsical and thought it was relationship goals
+  - artist: Afro+ Fest
+    date: 2026-09-04
+    end_date: 2026-09-06
+    venue: Northwest Stadium Complex
+    city: Landover (DC)
+    country: USA
+    genre: Afrobeats, Dancehall
+    status: Attended
+    rating: 10
+    price: "$600"
+    companions: Saahith, Sparsh, Swe & more
+    review: |-
+      Kwamz Original w Kelvin Momo on Day 2 had the most insane DJ set ever. I still think abt it from time to time
+      Olamide back to back to back bangers was so fulfilling. He was the only artist I hadn’t seen before
+      Ruger was reallllly good
+
+      Lowkey crowd for davido was hype asf but that was day 1 energies coming out
+  - artist: World's Biggest Saxophone Meetup
+    date: 2026-09-26
+    time: "12:00"
+    venue: Washington Square Park
+    city: New York
+    country: USA
+    genre: Saxophone jam
+    status: Attended
+    rating: 9
+    price: Free
+    companions: Alone
+    review: |-
+      Whole experience reminded me how much I love nyc. It didn’t seem like something that was supposed to be (or could be) perfectly organized. Very impressive to see how someone gathered every young saxophonist in the city and pulled that off. In Unison, they all sounded really fkn good
+  - artist: Santi (K.O.T.B listening party)
+    date: 2026-10-10
+    venue: Le Père
+    city: New York
+    country: USA
+    genre: Alté
+    status: Attended
+    rating: 7
+    price: Free
+    companions: Kwesi, Adwoa & more
+    highlights: "Rapid Fire, Murvlana and Sparky"
