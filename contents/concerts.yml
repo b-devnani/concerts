@@ -20,6 +20,7 @@
 #   pronoun       he or she, for "Wish He Performed" / "Wish She Performed" (leave out for bands and festivals)
 #   song          your favorite song by the artist (upcoming shows get a play button)
 #   spotify       Spotify track link for that song, e.g. https://open.spotify.com/track/...
+#   preview       Spotify's 30-second clip of that song, which the player plays; python3 tools/clips.py fills it in
 #   length        that song's length, e.g. "3:27" (shown on the player before it plays)
 concerts:
   - artist: Kaytranada
@@ -36,6 +37,7 @@ concerts:
     link: https://pacha-nyc.com/event/kaytranada-30-10-2026
     song: 4EVA (KAYTRAMINÉ, with Aminé)
     spotify: https://open.spotify.com/track/2S4HEo4LCcIbU1AcEQ4RQZ
+    preview: "https://p.scdn.co/mp3-preview/e1f802f7647ba29c779c76e6353ecf5b554e560b"
     length: "3:10"
   - artist: Ezra Collective
     date: 2026-11-18
@@ -49,6 +51,7 @@ concerts:
     link: https://www.axs.com/events/1493867/ezra-collective-tickets?skin=websterhall
     song: No One's Watching Me (feat. Olivia Dean)
     spotify: https://open.spotify.com/track/1omK6ocXd3Z19wiFpJmQ4J
+    preview: "https://p.scdn.co/mp3-preview/099548f886b3490272c450477add5cfddf9548b8"
     length: "4:22"
   - artist: Jorja Smith
     pronoun: she
@@ -63,6 +66,7 @@ concerts:
     link: https://www.ticketmaster.com/event/Z7r9jZ1AAZbbt
     song: On My Mind (Jorja Smith X Preditah)
     spotify: https://open.spotify.com/track/1OxL1FWSEd7QmJoWLRP2NO
+    preview: "https://p.scdn.co/mp3-preview/7a3522c99853c3cf6758ebe2037775b2a3ba4581"
     length: "3:02"
   - artist: Maleek Berry
     pronoun: he
@@ -77,6 +81,7 @@ concerts:
     link: https://posh.vip/f/ef604
     song: Lost In The World
     spotify: https://open.spotify.com/track/6W2oq6ZRRnxNc1Pdpm1XKC
+    preview: "https://p.scdn.co/mp3-preview/1a8374d83ca654e20e717ca40d4246d94f7d7053"
     length: "3:17"
   - artist: Brent Faiyaz
     pronoun: he
@@ -91,6 +96,7 @@ concerts:
     link: https://www.barclayscenter.com/events/detail/brent-faiyaz-2026
     song: Stay Down
     spotify: https://open.spotify.com/track/4mwiRPRAUSSFD6lJ86m98B
+    preview: "https://p.scdn.co/mp3-preview/d0056d615a9424260de01a36bb3e1ea570056fef"
     length: "3:27"
   - artist: Dave
     pronoun: he

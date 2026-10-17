@@ -28,7 +28,6 @@
     return `${mon(c.date)} ${day(c.date)}, ${y}`;
   };
   const clock = t => { if (!t) return ''; const [h, m] = String(t).split(':').map(Number); return `${h % 12 || 12}${m ? ':' + String(m).padStart(2, '0') : ''} ${h < 12 ? 'AM' : 'PM'}`; };
-  const secs = len => { const [m, s] = String(len || '').split(':').map(Number); return m * 60 + (s || 0) || 0; };
 
   /* ---------- names, photos and made-up covers ---------- */
   // an artist's photo lives at static/img/artists/<slug>.jpg, e.g. "Aminé" → amine.jpg, "D’Banj" → dbanj.jpg
@@ -65,7 +64,7 @@
     const up = shows.filter(isUp).sort((a, b) => utc(a.date) - utc(b.date)).map(c => ({
       artist: c.artist, date: c.date, time: c.time, venue: c.venue, city: c.city,
       maybe: String(c.status || '').toLowerCase() === 'maybe', friends: c.companions, tickets: c.link,
-      song: c.song, songId: trackId(c.spotify), length: c.length, photo: artistPhoto(c.artist)
+      song: c.song, songId: trackId(c.spotify), preview: c.preview || null, length: c.length, photo: artistPhoto(c.artist)
     }));
     const past = shows.filter(c => !isUp(c)).sort((a, b) => utc(b.date) - utc(a.date)).map(c => ({
       artist: c.artist, date: c.date, endDate: c.end_date || null, venue: c.venue, city: c.city, genre: c.genre,
@@ -107,7 +106,7 @@
       const p = a.punches.find(p => p && String(p.year) === String(fc.year) && p.place === fc.place) || {};
       return { name: fc.artist, photo: artistPhoto(fc.artist), year: fc.year, place: fc.venue || fc.place, score: p.score ?? null, rank: fc.rank, review: fc.review };
     });
-    const songOf = s => s && { title: s.title, artists: s.artists, id: trackId(s.spotify), length: s.length };
+    const songOf = s => s && { title: s.title, artists: s.artists, id: trackId(s.spotify), preview: s.preview || null, length: s.length };
     const intro = introDoc || {};
     return {
       intro: intro.intro || '', me: intro.photo || null, hollup: songOf(intro.hollup), credits: intro.credits || '',
@@ -157,7 +156,7 @@
   function upRow(s, i) {
     const n = daysFrom(s.date);
     const cd = n === 0 ? 'tonight' : n === 1 ? 'tomorrow' : n < 0 ? 'on now' : `${n} days`;
-    const tix = /^https?:\/\//.test(s.tickets || '') ? `<a href="${esc(s.tickets)}" target="_blank" rel="noopener">Tickets ↗</a>` : '';
+    const tix = /^https?:\/\//.test(s.tickets || '') ? `<a class="mx-tix" href="${esc(s.tickets)}" target="_blank" rel="noopener">Tickets</a>` : '';
     return `<li class="mx-up${s.maybe ? ' is-maybe' : ''}">
       <div class="mx-cal" aria-hidden="true"><span>${mon(s.date)}</span><b>${day(s.date)}</b><span>${dowOf(s.date)}</span></div>
       <div>
@@ -413,27 +412,28 @@
   }
 
   /* ---------- the player: the bar at the bottom is the only one ---------- */
-  // Songs play through Spotify's embed (docs/adr/0002): visitors who aren't signed in hear Spotify's 30-second clip.
+  // It plays Spotify's own 30-second clip of each song (the song's `preview` link) in the page, so nothing else ever
+  // shows up to play it (docs/adr/0002). A song without a clip opens on Spotify instead.
   let queue = [], cur = null;
   const history = [];
-  const state = { on: false, started: false, uri: null };
-  const uriOf = s => 'spotify:track:' + s.id;
+  const audio = new Audio();
+  audio.preload = 'none';
+  let loaded = null; // the id of the song in the audio element
   function randomSong() { let s = cur; while (queue.length > 1 && s === cur) s = queue[Math.floor(Math.random() * queue.length)]; return s || queue[0]; }
   function mini() {
     return `<div class="pl-mini-swipe" aria-roledescription="swipe to change song" tabindex="0"><span class="pl-mini-cover"></span><div style="min-width:0"><div class="pl-mini-t"></div><div class="pl-mini-a"></div></div></div>
       <button class="pl-icon pl-mini-next" type="button" aria-label="Next song">${NEXT}</button>
       <button class="pl-mini-play" type="button">${PLAY}</button>
-      <span class="pl-mini-hint" aria-hidden="true">swipe for another</span>
       <span class="pl-mini-bar" aria-hidden="true"><i></i></span>`;
   }
   const songFor = key => {
     if (key === 'hollup') return D.hollup;
     const s = /^up-\d+$/.test(key || '') ? D.up[Number(key.slice(3))] : null;
-    return s && s.songId ? { title: s.song, artists: s.artist, id: s.songId, length: s.length } : null;
+    return s && s.songId ? { title: s.song, artists: s.artist, id: s.songId, preview: s.preview, length: s.length } : null;
   };
   function showState() {
     if (!cur) return;
-    const on = state.on && state.uri === uriOf(cur);
+    const on = !audio.paused && loaded === cur.id;
     const btn = $('.pl-mini-play');
     btn.innerHTML = on ? PAUSE : PLAY;
     btn.classList.toggle('is-on', on);
@@ -444,101 +444,91 @@
       b.classList.toggle('is-on', Boolean(mine));
     });
   }
+  // a song's album art lives at static/img/songs/<Spotify track id>.jpg
+  const songArt = id => `static/img/songs/${encodeURIComponent(id)}.jpg`;
   function paintSong() {
     if (!cur) return;
-    $('.pl-mini-cover').innerHTML = `<span class="pl-cover pl-cv" data-seed="${esc(cur.id)}"><b>${esc([...cur.title][0] || '')}</b></span>`;
+    const id = cur.id;
+    $('.pl-mini-cover').innerHTML = art('pl-cover', id, [...cur.title][0] || '', songArt(id), '', true);
     paint($('.pl-mini-cover [data-seed]'));
     $('.pl-mini-t').textContent = cur.title;
     $('.pl-mini-a').textContent = cur.artists;
     $('.pl-mini-bar i').style.setProperty('--pct', '0%');
-    // the song's colour tints the header, the about page and the player
-    root.style.setProperty('--hc', look(cur.id).c);
+    // the song's colour tints the header, the about page and the player: a made-up one first, then the album art's own
+    root.style.setProperty('--hc', look(id).c);
+    const img = $('.pl-mini-cover img');
+    if (img) {
+      const tint = () => { const c = artColour(img); if (c && cur && cur.id === id) root.style.setProperty('--hc', c); };
+      if (img.complete && img.naturalWidth) tint(); else img.addEventListener('load', tint, { once: true });
+    }
     showState();
+  }
+  // keeps the colour's hue but lifts dull or very dark ones, so the header reads like Spotify's (greys stay grey)
+  function lively(r, g, b) {
+    r /= 255; g /= 255; b /= 255;
+    const max = Math.max(r, g, b), min = Math.min(r, g, b), l0 = (max + min) / 2, d = max - min;
+    let h = 0, s0 = d ? d / (1 - Math.abs(2 * l0 - 1)) : 0;
+    if (d) h = max === r ? ((g - b) / d) % 6 : max === g ? (b - r) / d + 2 : (r - g) / d + 4;
+    const s = s0 < 0.08 ? s0 : Math.max(s0, 0.45), l = Math.min(Math.max(l0, 0.34), 0.58);
+    const c = (1 - Math.abs(2 * l - 1)) * s, x = c * (1 - Math.abs((h % 2 + 2) % 2 - 1)), m = l - c / 2;
+    const [R, G, B] = h < 1 ? [c, x, 0] : h < 2 ? [x, c, 0] : h < 3 ? [0, c, x] : h < 4 ? [0, x, c] : h < 5 ? [x, 0, c] : [c, 0, x];
+    const hex = v => Math.round((v + m) * 255).toString(16).padStart(2, '0');
+    return `#${hex(R)}${hex(G)}${hex(B)}`;
+  }
+  // the album art's main colour: an average that leans on its most colourful, mid-bright pixels
+  function artColour(img) {
+    try {
+      const cv = document.createElement('canvas'); cv.width = cv.height = 24;
+      const cx = cv.getContext('2d', { willReadFrequently: true });
+      cx.drawImage(img, 0, 0, 24, 24);
+      const px = cx.getImageData(0, 0, 24, 24).data;
+      let r = 0, g = 0, b = 0, w = 0;
+      for (let i = 0; i < px.length; i += 4) {
+        const R = px[i], G = px[i + 1], B = px[i + 2], max = Math.max(R, G, B), min = Math.min(R, G, B);
+        const sat = max ? (max - min) / max : 0, lum = (0.299 * R + 0.587 * G + 0.114 * B) / 255;
+        const k = 0.02 + sat * sat * (lum > 0.12 && lum < 0.9 ? 1 : 0.15);
+        r += R * k; g += G * k; b += B * k; w += k;
+      }
+      return lively(r / w, g / w, b / w);
+    } catch (err) {
+      return null;
+    }
   }
   function setSong(s, record = true) {
     if (!s || (cur && s.id === cur.id)) return;
     if (record && cur) history.push(cur);
-    const keepPlaying = state.on;
+    const keepPlaying = !audio.paused;
     cur = s; paintSong();
-    if (keepPlaying) startPlaying();
+    if (keepPlaying) play(); else audio.pause();
   }
   const nextSong = () => setSong(randomSong());
   const prevSong = () => { if (history.length) setSong(history.pop(), false); };
 
-  // Spotify's embed API: https://developer.spotify.com/documentation/embeds/references/iframe-api
-  let apiPromise = null, apiFailed = false, ctrlPromise = null, onReady = null, watchdog = 0;
-  function loadApi() {
-    if (!apiPromise) {
-      apiPromise = new Promise((resolve, reject) => {
-        window.onSpotifyIframeApiReady = resolve;
-        const script = document.createElement('script');
-        script.src = 'https://open.spotify.com/embed/iframe-api/v1';
-        script.async = true;
-        script.onerror = () => reject(new Error('Spotify did not load'));
-        document.head.appendChild(script);
-        setTimeout(() => reject(new Error('Spotify took too long')), 10000);
-      });
-      apiPromise.catch(() => { apiFailed = true; });
-    }
-    return apiPromise;
-  }
-  function controller() {
-    if (!ctrlPromise) {
-      ctrlPromise = loadApi().then(api => new Promise(resolve => {
-        state.uri = uriOf(cur);
-        api.createController($('.mx-embed > div'), { uri: state.uri, width: '100%', height: 80 }, c => {
-          c.addListener('ready', () => { if (onReady) { const f = onReady; onReady = null; f(); } resolve(c); });
-          c.addListener('playback_update', e => progress(e.data));
-          setTimeout(() => resolve(c), 4000);
-        });
-      }));
-    }
-    return ctrlPromise;
-  }
-  function progress(d) {
-    const dur = d.duration / 1000, pos = Math.min(d.position / 1000, dur || Infinity);
-    const ended = dur > 0 && pos >= dur - 0.3;
-    state.on = !d.isPaused && !ended;
-    if (state.on) { state.started = true; clearTimeout(watchdog); $('.mx-dock').classList.remove('show-embed'); $('.pl-mini-play').classList.remove('is-loading'); }
-    $('.pl-mini-bar i').style.setProperty('--pct', `${dur && !ended ? pos / dur * 100 : 0}%`);
-    const full = secs(cur && cur.length);
-    if (full && dur && dur < full - 5) $('.pl-mini-hint').textContent = '30s preview · swipe for another';
-    showState();
-  }
-  async function startPlaying() {
-    const uri = uriOf(cur), btn = $('.pl-mini-play');
-    btn.classList.add('is-loading');
-    try {
-      const c = await controller();
-      if (state.uri !== uri) {
-        state.uri = uri; state.started = false;
-        await new Promise(res => { onReady = res; c.loadUri(uri); setTimeout(() => { if (onReady === res) { onReady = null; res(); } }, 1500); });
-      }
-      // some phones won't let a page start Spotify: if nothing plays, show Spotify's own player to tap instead
-      clearTimeout(watchdog);
-      watchdog = setTimeout(() => { if (!state.on) { btn.classList.remove('is-loading'); $('.mx-dock').classList.add('show-embed'); } }, 6000);
-      c.play();
-    } catch (err) {
-      // Spotify couldn't load here, so the play button opens the song on Spotify instead
-      btn.classList.remove('is-loading');
-      apiFailed = true;
-    }
-  }
-  async function togglePlay() {
+  // play() runs inside the tap itself, which is what lets phones start the sound
+  function play() {
     if (!cur) return;
-    if (apiFailed) return window.open(track(cur.id), '_blank', 'noopener');
-    if (state.on && state.uri === uriOf(cur)) { (await controller()).pause(); return; }
-    if (state.started && state.uri === uriOf(cur)) { (await controller()).resume(); return; }
-    startPlaying();
+    if (!cur.preview) { audio.pause(); window.open(track(cur.id), '_blank', 'noopener'); return; }
+    if (loaded !== cur.id) { audio.src = cur.preview; loaded = cur.id; }
+    $('.pl-mini-play').classList.add('is-loading');
+    audio.play().catch(() => $('.pl-mini-play').classList.remove('is-loading'));
+  }
+  function togglePlay() {
+    if (cur && loaded === cur.id && !audio.paused) audio.pause(); else play();
   }
   function playSong(s) {
     if (!s || !s.id) return;
     if (cur && s.id === cur.id) return togglePlay();
     if (cur) history.push(cur);
     cur = s; paintSong();
-    if (apiFailed) return window.open(track(s.id), '_blank', 'noopener');
-    startPlaying();
+    play();
   }
+  const bar = () => { const d = audio.duration; $('.pl-mini-bar i').style.setProperty('--pct', `${d ? audio.currentTime / d * 100 : 0}%`); };
+  audio.addEventListener('timeupdate', bar);
+  audio.addEventListener('playing', () => { $('.pl-mini-play').classList.remove('is-loading'); showState(); });
+  audio.addEventListener('waiting', () => $('.pl-mini-play').classList.add('is-loading'));
+  audio.addEventListener('pause', showState);
+  audio.addEventListener('ended', () => { audio.currentTime = 0; bar(); showState(); });
+  audio.addEventListener('error', () => { $('.pl-mini-play').classList.remove('is-loading'); showState(); });
 
   function wireSwipe() {
     const sw = $('.pl-mini-swipe');
@@ -612,8 +602,6 @@
       cur = queue[Math.floor(Math.random() * queue.length)] || null;
       if (!cur) $('.pl-mini-in').hidden = true;
       recolor(); paintSong(); wireSwipe();
-      // get Spotify ready in the background, so the first tap on play can start the song straight away
-      if (cur) setTimeout(() => loadApi().catch(() => {}), 1200);
     })
     .catch(() => {
       $('.pl-a').innerHTML = '<p class="empty" style="padding: 80px 16px">The concert list could not be loaded. Check that the files in <code>contents/</code> are there.</p>';
