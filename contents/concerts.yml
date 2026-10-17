@@ -7,7 +7,7 @@
 #   status        Maybe for a show you might go to (it gets a "Maybe" tag); leave out when you're definitely going
 #   rating        score out of 10
 #   price         what you paid, e.g. "$35" or Free
-#   companions    who you went with ("Alone" shows as "Went solo")
+#   companions    your friends, exactly as you typed them ("Alone" shows as "I went solo")
 #   highlights    standout songs or moments
 #   wishlist      songs you wish the artist played
 #   review        your write-up; shown behind "Read review", exactly as typed
@@ -89,8 +89,8 @@ concerts:
     genre: UK Rap
     status: Attended
     rating: 9
-    price: "~$60"
-    companions: Deep, Pelumi & Nem
+    price: "$60 ish"
+    companions: Deep, Pelumi n nem
     highlights: "The Boy Who Played The Harp, System, Verdansk, Screwface Capital"
     wishlist: "Law Of Attraction, Heart Attack, Lazarus"
   - artist: Odunsi (The Engine)
@@ -104,7 +104,7 @@ concerts:
     status: Attended
     rating: 10
     price: "$35"
-    companions: Loads of friends
+    companions: loads of friends
     highlights: "falling, wanted you, SPORT, Gangsta Fear"
     wishlist: "Better Days, Tipsy, Desire"
   - artist: Ayra Starr (Starr Girl listening party)
@@ -131,7 +131,7 @@ concerts:
     status: Attended
     rating: 7
     price: "$50"
-    companions: Ghosh & Priya
+    companions: Ghosh n Priya
     highlights: "Blessings, All We Got, Finish Line, Sunday candy"
     wishlist: "NOT DOING SAME DRUGS WAS CRIMINAL, Blessings (other version)"
   - artist: Blues BBQ Festival
@@ -157,7 +157,7 @@ concerts:
     status: Attended
     rating: 10
     price: "$600"
-    companions: Saahith, Sparsh, Swe & more
+    companions: Saahith sparsh swe n more
     review: |-
       Kwamz Original w Kelvin Momo on Day 2 had the most insane DJ set ever. I still think abt it from time to time
       Olamide back to back to back bangers was so fulfilling. He was the only artist I hadn’t seen before
@@ -187,5 +187,5 @@ concerts:
     status: Attended
     rating: 7
     price: Free
-    companions: Kwesi, Adwoa & more
+    companions: Kwesi Adwoa n more
     highlights: "Rapid Fire, Murvlana and Sparky"
