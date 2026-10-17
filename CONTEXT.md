@@ -7,7 +7,7 @@ A personal record of every show Bhagya goes to: what's upcoming, and what Bhagya
 ### The record
 
 **Side A**:
-The now side: Bhagya's introduction first, a small summer arc player, the upcoming shows, then this year's past shows.
+The now side: a small summer arc player, the upcoming shows, then this year's past shows. The introduction opens from a button in its top-left corner.
 _Avoid_: Home, main page, tab
 
 **Side B**:
@@ -15,7 +15,7 @@ The all-time side: the die-peacefully list, the tag-along list, then the artists
 _Avoid_: Archive, second page, tab
 
 **Introduction**:
-Bhagya's own words near the top of side A, telling visitors from Instagram who Bhagya is and how the obsession started, exactly as typed.
+Bhagya's own words, telling visitors from Instagram who Bhagya is and how the obsession started, exactly as typed. It has its own page, opened from the top-left button on side A.
 _Avoid_: Bio, about, intro text
 
 **Summer arc**:
