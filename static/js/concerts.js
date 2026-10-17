@@ -1,293 +1,611 @@
 (function () {
-    // In a preview (an artifact), data is inlined and Spotify can't be embedded, so play buttons link out instead.
-    const PREVIEW = window.CONCERTS_PREVIEW === true;
-    const DAY = 864e5;
-    const upcomingList = document.getElementById('upcoming');
-    const reviewList = document.getElementById('reviews');
+  const root = document.getElementById('app');
+  const $ = (s, el = root) => el.querySelector(s);
+  const $$ = (s, el = root) => [...el.querySelectorAll(s)];
+  const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const DOW = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const PLAY = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.8v14.4L19 12z"/></svg>';
+  const PAUSE = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 5h4v14h-4zM13.5 5h4v14h-4z"/></svg>';
+  const NEXT = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5.5v13l9.5-6.5zM16.5 5.5h2.2v13h-2.2z"/></svg>';
+  const STAR = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2 14.6 9l6.2.6-4.7 4.1 1.4 6.1L12 16.6l-5.5 3.2 1.4-6.1-4.7-4.1L9.4 9z"/></svg>';
+  const NOTE = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4.5v10.2a3.3 3.3 0 1 0 2 3V8.4l7-1.6v6.1a3.3 3.3 0 1 0 2 3V3.6z"/></svg>';
 
-    function escapeHtml(value) {
-        return String(value ?? '').replace(/[&<>'"]/g, character => ({
-            '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
-        }[character]));
+  /* ---------- dates ---------- */
+  // js-yaml reads 2026-10-30 as a Date at UTC midnight; everything here works on "YYYY-MM-DD" strings
+  const iso = v => v instanceof Date ? v.toISOString().slice(0, 10) : (v == null ? '' : String(v));
+  const now = new Date();
+  const TODAY = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+  const parts = s => String(s).split('-').map(Number);
+  const utc = s => { const [y, m, d] = parts(s); return Date.UTC(y, m - 1, d); };
+  const daysFrom = s => Math.round((utc(s) - utc(TODAY)) / 864e5);
+  const dowOf = s => DOW[new Date(utc(s)).getUTCDay()];
+  const mon = s => MON[parts(s)[1] - 1];
+  const day = s => parts(s)[2];
+  const when = c => {
+    const [y] = parts(c.date);
+    if (c.endDate) return `${mon(c.date)} ${day(c.date)} – ${mon(c.endDate) === mon(c.date) ? '' : mon(c.endDate) + ' '}${day(c.endDate)}, ${y}`;
+    return `${mon(c.date)} ${day(c.date)}, ${y}`;
+  };
+  const clock = t => { if (!t) return ''; const [h, m] = String(t).split(':').map(Number); return `${h % 12 || 12}${m ? ':' + String(m).padStart(2, '0') : ''} ${h < 12 ? 'AM' : 'PM'}`; };
+  const secs = len => { const [m, s] = String(len || '').split(':').map(Number); return m * 60 + (s || 0) || 0; };
+
+  /* ---------- names, photos and made-up covers ---------- */
+  // an artist's photo lives at static/img/artists/<slug>.jpg, e.g. "Aminé" → amine.jpg, "D’Banj" → dbanj.jpg
+  const slug = name => String(name).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
+    .replace(/[’'`]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  const artistPhoto = name => name ? `static/img/artists/${slug(name)}.jpg` : null;
+  const trackId = url => (String(url || '').match(/track\/([A-Za-z0-9]+)/) || [])[1] || null;
+  const track = id => 'https://open.spotify.com/track/' + encodeURIComponent(id);
+  const hash = s => { let h = 7; for (const ch of String(s)) h = (h * 31 + ch.codePointAt(0)) >>> 0; return h; };
+  const inkOf = c => { const n = parseInt(c.slice(1), 16), r = n >> 16, g = (n >> 8) & 255, b = n & 255; return (0.299 * r + 0.587 * g + 0.114 * b) > 160 ? '#0f0f10' : '#ffffff'; };
+  const initials = name => String(name).split('(')[0].trim().split(/\s+/).slice(0, 2).map(w => [...w][0] || '').join('').toUpperCase();
+  const asText = v => Array.isArray(v) ? v.join(', ') : String(v);
+  const COLORS = ['#2d5bff', '#ff3d8b', '#ff8a1f', '#8b5cff', '#d4f02a', '#14b8a6', '#ff4d3d', '#00a8ff', '#f72585', '#ffd60a', '#4c3bff', '#ff6bd6'];
+  const PATS = ['pat-rings', 'pat-diag', 'pat-circles'];
+  const look = seed => { const h = hash(seed), c = COLORS[h % COLORS.length]; return { c, k: inkOf(c), pat: PATS[(h >>> 3) % PATS.length] }; };
+  const paint = el => {
+    const L = look(el.dataset.seed);
+    el.style.setProperty('--c', L.c); el.style.setProperty('--k', L.k);
+    if (el.dataset.solid == null) { el.classList.remove(...PATS); el.classList.add(L.pat); }
+  };
+  const recolor = (el = root) => $$('[data-seed]', el).forEach(paint);
+  const photo = (src, alt) => src ? `<img src="${esc(src)}" alt="${esc(alt)}" loading="lazy" decoding="async">` : '';
+  const art = (cls, seed, label, src, alt, solid) =>
+    `<span class="${cls} pl-cv ph${src ? ' has-photo' : ''}" data-seed="${esc(seed)}"${solid ? ' data-solid' : ''}><b>${esc(label)}</b>${photo(src, alt)}</span>`;
+  root.addEventListener('error', e => {
+    const t = e.target;
+    if (t && t.tagName === 'IMG' && root.contains(t)) { const box = t.closest('.ph, .pl-face'); if (box) box.classList.remove('has-photo'); t.remove(); }
+  }, true);
+
+  /* ---------- the data, from the YAML files in contents/ ---------- */
+  function build(showsDoc, lists, introDoc, playlistDoc) {
+    const shows = (Array.isArray(showsDoc) ? showsDoc : showsDoc.concerts || []).map(c => ({ ...c, date: iso(c.date), end_date: iso(c.end_date) }));
+    const isUp = c => (c.end_date || c.date) >= TODAY;
+    const up = shows.filter(isUp).sort((a, b) => utc(a.date) - utc(b.date)).map(c => ({
+      artist: c.artist, date: c.date, time: c.time, venue: c.venue, city: c.city,
+      maybe: String(c.status || '').toLowerCase() === 'maybe', friends: c.companions, tickets: c.link,
+      song: c.song, songId: trackId(c.spotify), length: c.length, photo: artistPhoto(c.artist)
+    }));
+    const past = shows.filter(c => !isUp(c)).sort((a, b) => utc(b.date) - utc(a.date)).map(c => ({
+      artist: c.artist, date: c.date, endDate: c.end_date || null, venue: c.venue, city: c.city, genre: c.genre,
+      score: c.rating, price: c.price, friends: c.companions, pronoun: String(c.pronoun || '').trim().toLowerCase(),
+      highlights: c.highlights, wishlist: c.wishlist, review: c.review, hook: c.hook,
+      photo: c.photo || null, artistPhoto: c.seen_as ? artistPhoto(c.seen_as) : null
+    }));
+
+    // every artist I've seen: "(x3)" is how many times; a past show adds its performance to the artist in its seen_as
+    const known = {};
+    const add = (name, row) => (known[name] = known[name] || []).push(row);
+    shows.filter(c => !isUp(c) && c.seen_as).forEach(c => add(String(c.seen_as), { year: c.date.slice(0, 4), score: c.rating ?? null, place: c.place || null }));
+    Object.entries(lists.punch_details || {}).forEach(([name, rows]) => (rows || []).forEach(r =>
+      add(name, { year: r.year != null ? String(r.year) : null, score: r.score ?? null, place: r.place || null, note: r.note || null })));
+    // oldest first; a performance with no year is an older memory, so it goes first
+    Object.values(known).forEach(rows => rows.sort((a, b) => (a.year || '0000').localeCompare(b.year || '0000')));
+    const seen = (lists.seen || []).map(raw => {
+      const m = String(raw).match(/^(.*?)\s*\(x(\d+)\)\s*$/);
+      let name = m ? m[1] : String(raw), note = null;
+      const count = m ? Number(m[2]) : 1;
+      const n = name.match(/^(.*?)\s*\((.*)\)\s*$/);
+      if (n) { name = n[1]; note = n[2]; }
+      const punches = [...(known[name] || []), ...Array(count).fill(null)].slice(0, count);
+      if (count === 1 && !note) note = (punches.find(p => p && p.note) || {}).note || null;
+      return { name, note, count, punches, photo: artistPhoto(name) };
+    });
+    const checklist = block => ({
+      title: (block || {}).title || '',
+      artists: ((block || {}).artists || []).map(raw => {
+        const typed = String(raw), name = typed.replace(/\s*✅️?/g, '').trim();
+        const n = name.match(/^(.*?)\s*\((.*)\)\s*$/);
+        return { typed, name: n ? n[1] : name, seen: typed.includes('✅'), photo: artistPhoto(n ? n[1] : name) };
+      })
+    });
+    // favourites name artists in their own styling; "Aminé" finds "Amine" in seen by its slug
+    const bySlug = Object.fromEntries(seen.map(a => [slug(a.name), a]));
+    const favConcerts = (lists.fav_concerts || []).map(fc => {
+      const a = bySlug[slug(fc.artist)] || { punches: [] };
+      const p = a.punches.find(p => p && String(p.year) === String(fc.year) && p.place === fc.place) || {};
+      return { name: fc.artist, photo: artistPhoto(fc.artist), year: fc.year, place: fc.venue || fc.place, score: p.score ?? null, rank: fc.rank, review: fc.review };
+    });
+    const songOf = s => s && { title: s.title, artists: s.artists, id: trackId(s.spotify), length: s.length };
+    const intro = introDoc || {};
+    return {
+      intro: intro.intro || '', me: intro.photo || null, hollup: songOf(intro.hollup), credits: intro.credits || '',
+      songs: ((playlistDoc || {}).songs || []).map(songOf).filter(s => s.id),
+      up, past, seen,
+      dieList: checklist(lists.need_to_see), tagAlong: checklist(lists.tag_along),
+      favArtists: (lists.fav_artists || []).map(name => ({ name, photo: artistPhoto(name) })),
+      favArtistsAlso: (lists.fav_artists_also || []).map(name => ({ name, photo: artistPhoto(name) })),
+      favConcerts,
+      totals: { artists: seen.length, performances: seen.reduce((n, a) => n + a.count, 0) }
+    };
+  }
+
+  /* ---------- side A ---------- */
+  let D = null;
+  const thisYear = () => parts(TODAY)[0];
+  const seenThisYear = () => D.past.filter(s => parts(s.date)[0] === thisYear()).length;
+  function tiles() {
+    const most = D.seen.slice().sort((a, b) => b.count - a.count || a.name.localeCompare(b.name))[0];
+    const years = D.seen.flatMap(a => a.punches).filter(p => p && p.year).map(p => Number(p.year));
+    const backs = [['artists', D.totals.artists], ['performances', D.totals.performances], most ? [most.name, '×' + most.count] : ['', ''], ['live since', years.length ? Math.min(...years) : thisYear()]];
+    const upTile = s => s && { seed: s.artist, small: s.artist, big: `${mon(s.date)} ${day(s.date)}`, photo: s.photo };
+    const pastTile = s => s && { seed: s.artist, small: s.artist, big: `${s.score}/10`, photo: s.artistPhoto || s.photo };
+    // the next two shows and the two latest past shows, preferring past shows that have an artist photo
+    const shown = [...new Set([...D.past.filter(s => s.artistPhoto), ...D.past])];
+    const fronts = [upTile(D.up[0]), pastTile(shown[0]), pastTile(shown[1]), upTile(D.up[1])];
+    const spare = [...D.up.slice(2).map(upTile), ...shown.slice(2).map(pastTile)];
+    return fronts.map((t, i) => ({ ...(t || spare.shift() || { seed: 'tile' + i, small: '', big: '' }), backSmall: backs[i][0], backBig: String(backs[i][1]) }));
+  }
+  const mosaic = () => tiles().map(t => `<span class="pl-tile"><span class="pl-face pl-cv${t.photo ? ' has-photo' : ''}" data-seed="${esc(t.seed)}">${photo(t.photo, '')}<small>${esc(t.small)}</small><b>${esc(t.big)}</b></span><span class="pl-face back"><small>${esc(t.backSmall)}</small><b>${esc(t.backBig)}</b></span></span>`).join('');
+
+  function introHtml() {
+    let songDone = false;
+    const word = D.hollup && D.hollup.id ? new RegExp(`\\b${D.hollup.title.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`) : null;
+    return String(D.intro).split('\n\n').map(par => {
+      let h = esc(par);
+      h = h.replace('click here', 'click <button class="pl-song-link" type="button" data-flip="b" aria-label="See every show and the lists">here</button>');
+      if (word && !songDone && word.test(h)) {
+        songDone = true;
+        h = h.replace(word, `<button class="pl-song-link" type="button" data-song="hollup" aria-label="Play ${esc(D.hollup.title)}">${esc(D.hollup.title)}</button>`);
+      }
+      return `<p>${h.replace(/\n/g, '<br>')}</p>`;
+    }).join('');
+  }
+
+  function upRow(s, i) {
+    const n = daysFrom(s.date);
+    const cd = n === 0 ? 'tonight' : n === 1 ? 'tomorrow' : n < 0 ? 'on now' : `${n} days`;
+    const tix = /^https?:\/\//.test(s.tickets || '') ? `<a href="${esc(s.tickets)}" target="_blank" rel="noopener">Tickets ↗</a>` : '';
+    return `<li class="mx-up${s.maybe ? ' is-maybe' : ''}">
+      <div class="mx-cal" aria-hidden="true"><span>${mon(s.date)}</span><b>${day(s.date)}</b><span>${dowOf(s.date)}</span></div>
+      <div>
+        <div class="mx-top">${art('mx-thumb', s.artist, initials(s.artist), s.photo, s.artist, true)}<h3>${esc(s.artist)}</h3>${s.maybe ? '<span class="mx-chip is-maybe">Maybe</span>' : ''}</div>
+        <span class="mx-meta">${mon(s.date)} ${day(s.date)} · ${esc(s.venue)} · ${esc(s.city)}${s.time ? ' · ' + esc(clock(s.time)) : ''}</span>
+        <div class="mx-line"><span class="mx-chip">${esc(cd)}</span><span>friends: ${esc(s.friends || 'TBD')}</span>${tix}</div>
+        ${s.songId ? `<button class="mx-fav" type="button" data-song="up-${i}" aria-label="Play ${esc(s.song)}"><i>${PLAY}</i><span>${esc(s.song)}</span>${s.length ? `<em>${esc(s.length)}</em>` : ''}</button>` : ''}
+      </div></li>`;
+  }
+
+  function pastRow(s, i) {
+    const sc = Number(s.score);
+    return `<li><button type="button" class="mx-past" data-i="${i}" aria-haspopup="dialog">
+      ${art('mx-cov', s.artist, initials(s.artist), s.photo, s.artist)}
+      <span class="mx-main"><b>${esc(s.artist)}</b><span class="mx-meta">${esc(when(s))} · ${esc(s.venue)}</span>${s.hook ? `<span class="mx-hl mx-hook">${esc(s.hook)}</span>` : s.highlights ? `<span class="mx-hl">${esc(asText(s.highlights))}</span>` : ''}</span>
+      <span class="mx-score" aria-label="${sc} out of 10"><b>${sc || '–'}</b><small>/10</small></span>
+    </button></li>`;
+  }
+
+  function sideA() {
+    return `<header class="pl-head">
+        <button class="pl-mosaic" type="button" aria-label="Turn the cover over">${mosaic()}</button>
+        <h1 class="pl-title">concerts</h1>
+        <p class="pl-meta"><b>${D.up.length}</b> upcoming · <b>${seenThisYear()}</b> seen this year</p>
+      </header>
+      <section class="mx-blk" aria-label="Upcoming">
+        <h2 class="mx-h"><span class="pl-lt">upcoming</span> <small>${D.up.length} ${D.up.length === 1 ? 'show' : 'shows'}</small></h2>
+        <ol class="mx-list">${D.up.length ? D.up.map(upRow).join('') : '<li class="empty">Nothing booked yet.</li>'}</ol>
+      </section>
+      <section class="mx-blk" aria-label="Been there">
+        <h2 class="mx-h"><span class="pl-lt">been there</span> <small>${thisYear()}</small></h2>
+        <ol class="mx-list">${D.past.map(pastRow).join('')}</ol>
+      </section>`;
+  }
+
+  /* ---------- a past show's sheet ---------- */
+  let sheetFrom = null;
+  function story(c) {
+    const f = c.friends, p = c.price && String(c.price).trim();
+    const who = !f ? '' : /^(alone|solo)$/i.test(f) ? 'I went solo' : `I went with <b>${esc(f)}</b>`;
+    const paid = !p ? '' : /^free\b/i.test(p) ? 'got in free' : `paid <b>${esc(p)}</b>`;
+    if (who && paid) return `${who} and ${paid}.`;
+    if (who) return `${who}.`;
+    return paid ? `I ${paid}.` : '';
+  }
+  function openSheet(i, from) {
+    const s = D.past[i]; if (!s) return;
+    const sc = Number(s.score);
+    const wish = s.pronoun === 'he' ? 'Wish He Performed' : s.pronoun === 'she' ? 'Wish She Performed' : "Wish I'd Heard";
+    const sets = [];
+    if (s.highlights) sets.push(`<div><dt>The highlights</dt><dd>${esc(asText(s.highlights))}</dd></div>`);
+    if (s.wishlist) sets.push(`<div><dt>${wish}</dt><dd>${esc(asText(s.wishlist))}</dd></div>`);
+    const review = s.review ? `<details class="mx-rev"><summary>Read my review</summary>${String(s.review).split('\n').filter(l => l.trim()).map(l => `<p>${esc(l)}</p>`).join('')}</details>` : '';
+    const sh = $('.mx-sheet');
+    sh.innerHTML = `<div class="mx-grab" aria-hidden="true"></div>
+      <button type="button" class="mx-x" aria-label="Close">✕</button>
+      ${art('mx-shcov', s.artist, initials(s.artist), s.photo, s.artist)}
+      ${s.genre ? `<p class="mx-kick">${esc(s.genre)}</p>` : ''}
+      <h3 class="mx-shtitle">${esc(s.artist)}</h3>
+      <span class="mx-meta">${esc(s.venue)}, ${esc(s.city)} · ${esc(when(s))}</span>
+      <div class="mx-shscore"><b>${sc || '–'}</b><span>/10</span></div>
+      ${story(s) ? `<p class="mx-said">${story(s)}</p>` : ''}
+      ${sets.length ? `<dl class="mx-sets">${sets.join('')}</dl>` : ''}
+      ${review}`;
+    recolor(sh);
+    sheetFrom = from || null;
+    sh.hidden = false; sh.scrollTop = 0;
+    $('.mx-x', sh).focus({ preventScroll: true });
+  }
+  function closeSheet(restore = true) {
+    const sh = $('.mx-sheet');
+    if (sh.hidden) return;
+    sh.hidden = true;
+    if (restore && sheetFrom && root.contains(sheetFrom)) sheetFrom.focus({ preventScroll: true });
+    sheetFrom = null;
+  }
+
+  /* ---------- side B ---------- */
+  let sortBy = 'az';
+  function pinned(list, key) {
+    const seenN = list.artists.filter(a => a.seen).length;
+    return `<div class="pl-pin mx-${key}" data-pin="${key}">
+      <button class="pl-pin-main" type="button" aria-expanded="false" aria-controls="pin-${key}">
+        <span class="pl-pin-art pl-cv" data-seed="pinned-${key}">${key === 'die' ? STAR : NOTE}</span>
+        <span><span class="pl-t">${esc(list.title)}</span>
+          <span class="pl-pin-sub">${list.artists.length} artists${key === 'die' ? ` · <i>${seenN} seen</i>` : ''}</span></span>
+        <span class="pl-caret" aria-hidden="true">›</span>
+      </button>
+      <ul class="pl-pin-list" id="pin-${key}" hidden>${list.artists.map(a => `<li class="${a.seen ? 'is-seen' : ''}">${art('mx-av', a.name, initials(a.name), a.photo, a.name, true)}${key === 'die' ? `<span class="mx-nm">${esc(a.typed.replace(/\s*✅️?/g, ''))}</span>${a.seen ? '<span class="vh"> (seen)</span>' : ''}` : `<span>${esc(a.typed)}</span>`}</li>`).join('')}</ul>
+    </div>`;
+  }
+  const holeCls = n => Number(n) === 10 ? ' is-10' : Number(n) === 9 ? ' is-9' : '';
+  function punch(p) {
+    if (!p) return '<span class="pl-hole" role="img" aria-label="a performance"></span>';
+    const label = ['a performance', p.year, p.score != null ? p.score + ' out of 10' : '', p.place].filter(Boolean).join(', ');
+    return `<span class="pl-punch" role="img" aria-label="${esc(label)}"><i class="pl-yr" aria-hidden="true">${esc(p.year || '')}</i><span class="pl-hole${holeCls(p.score)}" aria-hidden="true">${p.score == null ? '' : esc(p.score)}</span><i class="pl-pl" aria-hidden="true">${esc(p.place || '')}</i></span>`;
+  }
+  // scores out of 10 on an artist's performances; artists with none sort last
+  const scoresOf = a => a.punches.filter(p => p && p.score != null).map(p => Number(p.score));
+  const topScore = a => scoresOf(a).length ? Math.max(...scoresOf(a)) : -1;
+  const avgScore = a => scoresOf(a).length ? scoresOf(a).reduce((x, y) => x + y, 0) / scoresOf(a).length : -1;
+  const fmtAvg = n => (Math.round(n * 10) / 10).toFixed(1).replace(/\.0$/, '');
+  function artistRows() {
+    const byName = (a, b) => a.name.localeCompare(b.name, 'en', { sensitivity: 'base' });
+    const sorts = {
+      az: byName,
+      most: (a, b) => b.count - a.count || byName(a, b),
+      top: (a, b) => topScore(b) - topScore(a) || avgScore(b) - avgScore(a) || b.count - a.count || byName(a, b),
+      avg: (a, b) => avgScore(b) - avgScore(a) || topScore(b) - topScore(a) || b.count - a.count || byName(a, b)
+    };
+    return D.seen.slice().sort(sorts[sortBy] || byName).map(a => `<li class="pl-artist${a.punches.some(p => p && p.year) ? ' has-yr' : ''}${a.punches.some(p => p && p.place) ? ' has-pl' : ''}">
+      ${art('pl-ava', a.name, [...a.name][0] || '', a.photo, a.name, true)}
+      <span class="pl-an">${esc(a.name)}${a.note ? ` <small>${esc(a.note)}</small>` : ''}</span>
+      <span class="pl-ac">${sortBy === 'avg' && scoresOf(a).length ? `${fmtAvg(avgScore(a))} avg` : `×${a.count}`}</span>
+      <span class="pl-holes" aria-label="${a.count} ${a.count === 1 ? 'performance' : 'performances'}">${a.punches.map(punch).join('')}</span>
+    </li>`).join('');
+  }
+  function sideB() {
+    return `<div class="pl-b-head"><h2><span class="pl-lt">all-time</span></h2><p>${D.totals.artists} artists · ${D.totals.performances} performances</p></div>
+      <div class="mx-chips" role="group" aria-label="Show">
+        <button class="mx-fchip" type="button" data-filter="all" aria-pressed="true">all</button>
+        <button class="mx-fchip" type="button" data-filter="die" aria-pressed="false">need to see</button>
+        <button class="mx-fchip" type="button" data-filter="tag" aria-pressed="false">tag along</button>
+        <button class="mx-fchip" type="button" data-filter="seen" aria-pressed="false">seen</button>
+      </div>
+      ${pinned(D.dieList, 'die')}
+      ${pinned(D.tagAlong, 'tag')}
+      <div class="mx-seenwrap">
+        <div class="pl-sort"><h3><span class="pl-lt">artists i've seen</span></h3>
+          <button class="pl-sortbtn" type="button" data-sort="az" aria-pressed="true">A–Z</button>
+          <button class="pl-sortbtn" type="button" data-sort="most" aria-pressed="false">Most seen</button>
+          <button class="pl-sortbtn" type="button" data-sort="top" aria-pressed="false" aria-label="Highest rating">Highest</button>
+          <button class="pl-sortbtn" type="button" data-sort="avg" aria-pressed="false" aria-label="Highest average rating">Highest avg</button>
+        </div>
+        <ul class="pl-artists">${artistRows()}</ul>
+      </div>
+      ${D.credits ? `<p class="pl-credits">${esc(D.credits)}</p>` : ''}`;
+  }
+  function setPin(key, open) {
+    const pin = $(`.mx-${key}`);
+    $('.pl-pin-main', pin).setAttribute('aria-expanded', String(open));
+    $(`#pin-${key}`).hidden = !open;
+    pin.classList.toggle('is-open', open);
+  }
+  function applyFilter(f) {
+    $$('.mx-fchip').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.filter === f)));
+    $('.mx-die').hidden = !(f === 'all' || f === 'die');
+    $('.mx-tag').hidden = !(f === 'all' || f === 'tag');
+    $('.mx-seenwrap').hidden = !(f === 'all' || f === 'seen');
+    if (f === 'die') setPin('die', true);
+    if (f === 'tag') setPin('tag', true);
+  }
+
+  /* ---------- about: the intro, fav artists and fav concerts ---------- */
+  const favArtistRows = () => D.favArtists.map((a, i) => `<li class="pl-fav">
+      <span class="pl-fav-n">${i + 1}</span>
+      ${art('pl-fav-ava', a.name, [...a.name][0] || '', a.photo, a.name, true)}
+      <span class="pl-fav-main"><b>${esc(a.name)}</b></span>
+    </li>`).join('');
+  const favAlso = () => D.favArtistsAlso.length ? `<ul class="pl-favs-also" aria-label="more fav artists">${D.favArtistsAlso.map(a => `<li>
+      ${art('pl-fav-ava', a.name, [...a.name][0] || '', a.photo, a.name, true)}
+      <small>${esc(a.name)}</small>
+    </li>`).join('')}</ul>` : '';
+  // a fav concert opens to its short review, word for word; one open at a time keeps the view on one screen
+  const favConcertRows = () => D.favConcerts.map((c, i) => `<li>
+      <button class="pl-fav pl-fav-btn" type="button" aria-expanded="false" aria-controls="fc-${i}"${c.review ? '' : ' disabled'}>
+        <span class="pl-fav-n">${esc(c.rank != null ? c.rank : i + 1)}</span>
+        ${art('pl-fav-ava', c.name, [...c.name][0] || '', c.photo, c.name, true)}
+        <span class="pl-fav-main"><b>${esc(c.name)}</b><small>${esc(c.place)} · ${esc(c.year)}</small></span>
+        ${c.score != null ? `<span class="pl-hole${holeCls(c.score)}" role="img" aria-label="${esc(c.score)} out of 10">${esc(c.score)}</span>` : '<span></span>'}
+        ${c.review ? '<span class="pl-caret" aria-hidden="true">›</span>' : ''}
+      </button>
+      ${c.review ? `<div class="pl-fav-rev" id="fc-${i}" hidden>${String(c.review).split('\n').map(l => `<p>${esc(l)}</p>`).join('')}</div>` : ''}
+    </li>`).join('');
+  function aboutHtml() {
+    return `<button class="pl-about-close" type="button" aria-label="Close about"><b aria-hidden="true">×</b> close</button>
+      <div class="pl-about-head">
+        ${D.me ? `<span class="pl-me ph has-photo">${photo(D.me, '')}</span>` : ''}
+        <div><h2 tabindex="-1">about</h2>
+        <p class="pl-about-sub">${D.up.length} upcoming · ${seenThisYear()} seen this year · ${D.totals.artists} artists all-time</p></div>
+      </div>
+      <div class="pl-ab-tabs" role="tablist" aria-label="About">
+        <button class="pl-ab-tab" type="button" role="tab" aria-selected="true" aria-controls="ab-intro" data-panel="intro">about</button>
+        ${D.favArtists.length ? '<button class="pl-ab-tab" type="button" role="tab" aria-selected="false" aria-controls="ab-artists" data-panel="artists">fav artists</button>' : ''}
+        ${D.favConcerts.length ? '<button class="pl-ab-tab" type="button" role="tab" aria-selected="false" aria-controls="ab-concerts" data-panel="concerts">fav concerts</button>' : ''}
+      </div>
+      <div class="pl-desc" id="ab-intro" role="tabpanel" data-panel="intro">${introHtml()}</div>
+      <div id="ab-artists" role="tabpanel" aria-label="fav artists" data-panel="artists" hidden><ol class="pl-favs">${favArtistRows()}</ol>${favAlso()}</div>
+      <ol class="pl-favs" id="ab-concerts" role="tabpanel" aria-label="fav concerts" data-panel="concerts" hidden>${favConcertRows()}</ol>`;
+  }
+  function toggleFavReview(btn) {
+    const open = btn.getAttribute('aria-expanded') !== 'true';
+    $$('#ab-concerts .pl-fav-btn').forEach(b => {
+      const on = b === btn && open, rev = document.getElementById(b.getAttribute('aria-controls'));
+      b.setAttribute('aria-expanded', String(on)); if (rev) rev.hidden = !on;
+    });
+  }
+  function showAboutPanel(name) {
+    $$('.pl-ab-tab').forEach(b => b.setAttribute('aria-selected', String(b.dataset.panel === name)));
+    $$('.pl-about [role="tabpanel"]').forEach(el => { el.hidden = el.dataset.panel !== name; });
+    fitAbout();
+  }
+  // the intro should fit one screen: if its last line falls below the fold, the text steps down a size (twice at most)
+  function fitAbout() {
+    root.classList.remove('is-tight', 'is-tighter');
+    const intro = $('#ab-intro');
+    if (!intro || intro.hidden) return;
+    const over = () => intro.getBoundingClientRect().bottom + 16 > window.innerHeight;
+    if (over()) root.classList.add('is-tight');
+    if (over()) root.classList.add('is-tighter');
+  }
+  let aboutOpener = null, aboutScroll = 0;
+  const aboutOpen = () => !$('.pl-about').hidden;
+  function openAbout(opener) {
+    closeSheet(false);
+    aboutOpener = opener || null;
+    aboutScroll = window.scrollY;
+    $('.pl-a').hidden = true; $('.pl-b').hidden = true; $('.pl-about').hidden = false;
+    root.classList.add('is-about'); $('.pl-who').setAttribute('aria-expanded', 'true');
+    window.scrollTo(0, 0); fitAbout();
+    $('.pl-about-close').focus({ preventScroll: true });
+  }
+  function closeAbout(restore = true) {
+    if (!aboutOpen()) return;
+    $('.pl-about').hidden = true;
+    $('.pl-a').hidden = root.dataset.side !== 'a'; $('.pl-b').hidden = root.dataset.side !== 'b';
+    root.classList.remove('is-about'); $('.pl-who').setAttribute('aria-expanded', 'false');
+    if (restore) { window.scrollTo(0, aboutScroll); if (aboutOpener) aboutOpener.focus({ preventScroll: true }); }
+    aboutOpener = null;
+  }
+
+  function flip(to) {
+    closeAbout(false); closeSheet(false);
+    const side = to || (root.dataset.side === 'a' ? 'b' : 'a');
+    root.dataset.side = side;
+    $('.pl-a').hidden = side !== 'a';
+    $('.pl-b').hidden = side !== 'b';
+    const rec = $('.pl-rec');
+    rec.classList.remove('is-turning'); void rec.offsetWidth; rec.classList.add('is-turning');
+    setTimeout(() => { rec.querySelector('span').textContent = side.toUpperCase(); }, 200);
+    setTimeout(() => rec.classList.remove('is-turning'), 520);
+    rec.setAttribute('aria-label', side === 'a' ? 'Flip to side B' : 'Flip to side A');
+    window.scrollTo(0, 0);
+  }
+
+  /* ---------- the player: the bar at the bottom is the only one ---------- */
+  // Songs play through Spotify's embed (docs/adr/0002): visitors who aren't signed in hear Spotify's 30-second clip.
+  let queue = [], cur = null;
+  const history = [];
+  const state = { on: false, started: false, uri: null };
+  const uriOf = s => 'spotify:track:' + s.id;
+  function randomSong() { let s = cur; while (queue.length > 1 && s === cur) s = queue[Math.floor(Math.random() * queue.length)]; return s || queue[0]; }
+  function mini() {
+    return `<div class="pl-mini-swipe" aria-roledescription="swipe to change song" tabindex="0"><span class="pl-mini-cover"></span><div style="min-width:0"><div class="pl-mini-t"></div><div class="pl-mini-a"></div></div></div>
+      <button class="pl-icon pl-mini-next" type="button" aria-label="Next song">${NEXT}</button>
+      <button class="pl-mini-play" type="button">${PLAY}</button>
+      <span class="pl-mini-hint" aria-hidden="true">swipe for another</span>
+      <span class="pl-mini-bar" aria-hidden="true"><i></i></span>`;
+  }
+  const songFor = key => {
+    if (key === 'hollup') return D.hollup;
+    const s = /^up-\d+$/.test(key || '') ? D.up[Number(key.slice(3))] : null;
+    return s && s.songId ? { title: s.song, artists: s.artist, id: s.songId, length: s.length } : null;
+  };
+  function showState() {
+    if (!cur) return;
+    const on = state.on && state.uri === uriOf(cur);
+    const btn = $('.pl-mini-play');
+    btn.innerHTML = on ? PAUSE : PLAY;
+    btn.classList.toggle('is-on', on);
+    btn.setAttribute('aria-label', `${on ? 'Pause' : 'Play'} ${cur.title} by ${cur.artists}`);
+    $$('.mx-fav').forEach(b => {
+      const s = songFor(b.dataset.song), mine = on && s && s.id === cur.id;
+      b.querySelector('i').innerHTML = mine ? PAUSE : PLAY;
+      b.classList.toggle('is-on', Boolean(mine));
+    });
+  }
+  function paintSong() {
+    if (!cur) return;
+    $('.pl-mini-cover').innerHTML = `<span class="pl-cover pl-cv" data-seed="${esc(cur.id)}"><b>${esc([...cur.title][0] || '')}</b></span>`;
+    paint($('.pl-mini-cover [data-seed]'));
+    $('.pl-mini-t').textContent = cur.title;
+    $('.pl-mini-a').textContent = cur.artists;
+    $('.pl-mini-bar i').style.setProperty('--pct', '0%');
+    // the song's colour tints the header, the about page and the player
+    root.style.setProperty('--hc', look(cur.id).c);
+    showState();
+  }
+  function setSong(s, record = true) {
+    if (!s || (cur && s.id === cur.id)) return;
+    if (record && cur) history.push(cur);
+    const keepPlaying = state.on;
+    cur = s; paintSong();
+    if (keepPlaying) startPlaying();
+  }
+  const nextSong = () => setSong(randomSong());
+  const prevSong = () => { if (history.length) setSong(history.pop(), false); };
+
+  // Spotify's embed API: https://developer.spotify.com/documentation/embeds/references/iframe-api
+  let apiPromise = null, apiFailed = false, ctrlPromise = null, onReady = null, watchdog = 0;
+  function loadApi() {
+    if (!apiPromise) {
+      apiPromise = new Promise((resolve, reject) => {
+        window.onSpotifyIframeApiReady = resolve;
+        const script = document.createElement('script');
+        script.src = 'https://open.spotify.com/embed/iframe-api/v1';
+        script.async = true;
+        script.onerror = () => reject(new Error('Spotify did not load'));
+        document.head.appendChild(script);
+        setTimeout(() => reject(new Error('Spotify took too long')), 10000);
+      });
+      apiPromise.catch(() => { apiFailed = true; });
     }
-
-    function parseDate(value) {
-        if (value instanceof Date) return new Date(value.getUTCFullYear(), value.getUTCMonth(), value.getUTCDate(), 12);
-        const [year, month, day] = String(value).split('-').map(Number);
-        return new Date(year, month - 1, day, 12);
-    }
-
-    const noon = new Date();
-    noon.setHours(12, 0, 0, 0);
-    const daysUntil = value => Math.round((parseDate(value) - noon) / DAY);
-    const isUpcoming = concert => daysUntil(concert.end_date || concert.date) >= 0;
-    const format = (date, options) => date.toLocaleDateString('en-US', options);
-    const countdown = days => days === 0 ? 'Tonight!' : days === 1 ? 'Tomorrow!' : `${days} days to go`;
-    const asText = value => Array.isArray(value) ? value.join(', ') : String(value);
-    const paragraphs = text => String(text).split('\n').filter(line => line.trim()).map(line => `<p>${escapeHtml(line)}</p>`).join('');
-
-    function displayTime(time) {
-        if (!time) return '';
-        const [hours, minutes] = String(time).split(':').map(Number);
-        return `${hours % 12 || 12}${minutes ? ':' + String(minutes).padStart(2, '0') : ''} ${hours < 12 ? 'AM' : 'PM'}`;
-    }
-
-    function trackUri(url) {
-        const match = String(url || '').match(/open\.spotify\.com\/(?:intl-[a-z-]+\/)?track\/([A-Za-z0-9]+)/);
-        return match ? `spotify:track:${match[1]}` : '';
-    }
-
-    function clock(seconds) {
-        const total = Math.max(0, Math.floor(seconds || 0));
-        return `${Math.floor(total / 60)}:${String(total % 60).padStart(2, '0')}`;
-    }
-
-    function parseLength(value) {
-        if (!value) return 0;
-        const [minutes, seconds] = String(value).split(':').map(Number);
-        return minutes * 60 + (seconds || 0);
-    }
-
-    // "he" or "she" from the YAML; shows without one (bands, festivals) get wording that needs no pronoun.
-    const pronounFor = concert => ({ he: 'he', she: 'she' })[String(concert.pronoun || '').trim().toLowerCase()] || '';
-
-    const ICONS = '<svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"/></svg><svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 5h4v14h-4zM13.5 5h4v14h-4z"/></svg>';
-
-    // A song card with its own play/pause button, seek bar and times. On the live site it drives a hidden Spotify embed.
-    function songPlayer(concert) {
-        const uri = trackUri(concert.spotify);
-        if (!concert.song && !uri) {
-            return PREVIEW ? '<div class="player tbd"><span class="pp" aria-hidden="true">' + ICONS + '</span><div class="pl-main"><div class="pl-title">Song TBD</div></div></div>' : '';
-        }
-        const song = escapeHtml(concert.song || 'Play on Spotify');
-        const href = escapeHtml(concert.spotify || `https://open.spotify.com/search/${encodeURIComponent(`${concert.artist} ${concert.song}`)}`);
-        const length = parseLength(concert.length);
-        const live = uri && !PREVIEW;
-        const button = live
-            ? `<button class="pp" type="button" aria-label="Play ${song}">${ICONS}</button>`
-            : `<a class="pp" href="${href}" target="_blank" rel="noopener" aria-label="Play ${song} on Spotify">${ICONS}</a>`;
-        return `<div class="player"${live ? ` data-uri="${uri}" data-length="${length}"` : ''}>
-            ${button}
-            <div class="pl-main">
-                <span class="pl-label">My favorite song</span>
-                <div class="pl-top"><span class="pl-title">${song}</span><a class="pl-src" href="${href}" target="_blank" rel="noopener">Spotify ↗</a></div>
-                <div class="pl-bar"><span class="pl-cur">0:00</span><input class="pl-seek" type="range" min="0" max="${length || 100}" step="1" value="0" aria-label="Seek in ${song}"${live ? '' : ' disabled'}><span class="pl-dur">${length ? clock(length) : '--:--'}</span></div>
-                <div class="pl-note" hidden></div>
-            </div>
-            ${live ? '<div class="pl-embed"><div></div></div>' : ''}
-        </div>`;
-    }
-
-    function upcomingRow(concert) {
-        const date = parseDate(concert.date);
-        const where = [concert.venue, concert.city, displayTime(concert.time)].filter(Boolean).map(escapeHtml).join(' · ');
-        const company = !concert.companions ? '' : /^tbd$/i.test(concert.companions) ? "Who's coming with me: TBD" : `Going with ${escapeHtml(concert.companions)}`;
-        const extra = [company, concert.notes && escapeHtml(concert.notes)].filter(Boolean).join(' · ');
-        const maybe = /^maybe$/i.test(String(concert.status || '').trim()) ? '<span class="maybe">Maybe</span>' : '';
-        const tickets = /^https?:\/\//i.test(concert.link || '') ? `<a href="${escapeHtml(concert.link)}" target="_blank" rel="noopener">Tickets ↗</a>` : '';
-        return `<li class="show">
-            <div class="when"><div class="mon">${format(date, { month: 'short' })}</div><div class="day">${date.getDate()}</div><div class="dow">${format(date, { weekday: 'short' })}</div></div>
-            <div class="show-main">
-                <h3 class="show-artist">${escapeHtml(concert.artist)}</h3>
-                <div class="show-meta">${where}</div>
-                ${extra ? `<div class="show-meta">${extra}</div>` : ''}
-                <div class="show-actions"><span class="countdown">${countdown(daysUntil(concert.date))}</span>${maybe}${tickets}</div>
-                ${songPlayer(concert)}
-            </div>
-        </li>`;
-    }
-
-    // "I went with Deep, Pelumi & Nem and paid ~$60."
-    function story(concert) {
-        const company = concert.companions;
-        const price = concert.price && String(concert.price).trim();
-        const who = !company ? '' : /^(alone|solo)$/i.test(company) ? 'I went solo' : `I went with <b>${escapeHtml(company)}</b>`;
-        const paid = !price ? '' : /^free\b/i.test(price) ? 'got in free' : `paid <b>${escapeHtml(price)}</b>`;
-        if (who && paid) return `${who} and ${paid}.`;
-        if (who) return `${who}.`;
-        return paid ? `I ${paid}.` : '';
-    }
-
-    function reviewCard(concert) {
-        const date = parseDate(concert.date);
-        const when = concert.end_date
-            ? `${format(date, { month: 'short', day: 'numeric' })} – ${format(parseDate(concert.end_date), { month: 'short', day: 'numeric', year: 'numeric' })}`
-            : format(date, { month: 'short', day: 'numeric', year: 'numeric' });
-        const rating = Number(concert.rating);
-        const sets = [];
-        if (concert.highlights) sets.push(`<div class="set"><dt>The highlights</dt><dd>${escapeHtml(asText(concert.highlights))}</dd></div>`);
-        const pronoun = pronounFor(concert);
-        if (concert.wishlist) sets.push(`<div class="set miss"><dt>${pronoun ? `Wish ${pronoun === 'she' ? 'She' : 'He'} Performed` : "Wish I'd Heard"}</dt><dd>${escapeHtml(asText(concert.wishlist))}</dd></div>`);
-        const review = concert.review && String(concert.review).trim() ? `<details class="review-body"><summary>Read my review</summary><div class="review-text">${paragraphs(concert.review)}</div></details>` : '';
-        const notes = concert.notes ? `<div class="review-text">${paragraphs(concert.notes)}</div>` : '';
-        const sentence = story(concert);
-        return `<article class="review">
-            <div class="review-head">
-                <div class="score" aria-label="${rating ? `${rating} out of 10` : 'Not rated yet'}"><b>${rating || '–'}</b><small>/ 10</small></div>
-                <div>
-                    <div class="review-kicker label"><span>${escapeHtml(concert.genre || '')}</span></div>
-                    <h3 class="review-title">${escapeHtml(concert.artist)}</h3>
-                    <div class="review-sub">${escapeHtml(concert.venue)}, ${escapeHtml(concert.city)} · ${escapeHtml(when)}</div>
-                </div>
-            </div>
-            ${sentence ? `<p class="story">${sentence}</p>` : ''}
-            ${sets.length ? `<dl class="sets">${sets.join('')}</dl>` : ''}
-            ${notes}${review}
-        </article>`;
-    }
-
-    function render(concerts) {
-        const upcoming = concerts.filter(isUpcoming).sort((a, b) => parseDate(a.date) - parseDate(b.date));
-        const past = concerts.filter(concert => !isUpcoming(concert)).sort((a, b) => parseDate(b.date) - parseDate(a.date));
-        const rated = past.filter(concert => Number(concert.rating));
-        const average = rated.length ? rated.reduce((total, concert) => total + Number(concert.rating), 0) / rated.length : 0;
-
-        document.getElementById('stats').innerHTML = [
-            `<span><strong>${upcoming.length}</strong>upcoming shows</span>`,
-            `<span><strong>${past.length}</strong>shows reviewed</span>`,
-            rated.length ? `<span><strong>${average.toFixed(1)}</strong>my average score</span>` : ''
-        ].join('');
-
-        upcomingList.innerHTML = upcoming.length ? upcoming.map(upcomingRow).join('') : '<li class="empty">Nothing booked yet. Soon.</li>';
-        reviewList.innerHTML = past.length ? past.map(reviewCard).join('') : '<div class="empty">No reviews yet.</div>';
-    }
-
-    // Spotify's embed API: https://developer.spotify.com/documentation/embeds/references/iframe-api
-    let spotifyApi = null;
-    function loadSpotifyApi() {
-        if (!spotifyApi) {
-            spotifyApi = new Promise((resolve, reject) => {
-                window.onSpotifyIframeApiReady = resolve;
-                const script = document.createElement('script');
-                script.src = 'https://open.spotify.com/embed/iframe-api/v1';
-                script.async = true;
-                script.onerror = reject;
-                document.head.appendChild(script);
-            });
-        }
-        return spotifyApi;
-    }
-
-    function controllerFor(player) {
-        if (!player.controllerPromise) {
-            player.controllerPromise = loadSpotifyApi().then(api => new Promise(resolve => {
-                api.createController(player.querySelector('.pl-embed > div'), { uri: player.dataset.uri, width: '100%', height: 80 }, controller => {
-                    controller.addListener('playback_update', event => showProgress(player, event.data));
-                    controller.addListener('ready', () => resolve(controller));
-                    setTimeout(() => resolve(controller), 4000);
-                });
-            }));
-        }
-        return player.controllerPromise;
-    }
-
-    function setBar(player, position, duration) {
-        const seek = player.querySelector('.pl-seek');
-        if (duration) {
-            seek.max = duration;
-            player.querySelector('.pl-dur').textContent = clock(duration);
-        }
-        seek.value = position;
-        seek.style.setProperty('--pct', `${(position / (Number(seek.max) || 1)) * 100}%`);
-        player.querySelector('.pl-cur').textContent = clock(position);
-    }
-
-    function showProgress(player, data) {
-        const duration = data.duration / 1000;
-        const position = Math.min(data.position / 1000, duration || Infinity);
-        const ended = duration > 0 && position >= duration - 0.3;
-        const playing = !data.isPaused && !ended;
-        player.started = player.started || playing;
-        player.ended = ended;
-        player.classList.toggle('playing', playing);
-        player.classList.toggle('loading', Boolean(data.isBuffering));
-        player.querySelector('.pp').setAttribute('aria-label', `${playing ? 'Pause' : 'Play'} ${player.querySelector('.pl-title').textContent}`);
-        if (playing) clearTimeout(player.watchdog);
-        if (!player.dragging) setBar(player, ended ? 0 : position, duration);
-        const full = Number(player.dataset.length);
-        const note = player.querySelector('.pl-note');
-        if (full && duration && duration < full - 5) {
-            note.textContent = 'Preview. Sign in to Spotify in this browser to hear the full song.';
-            note.hidden = false;
-        }
-    }
-
-    function pauseOthers(current) {
-        document.querySelectorAll('.player.playing').forEach(player => {
-            if (player !== current && player.controllerPromise) player.controllerPromise.then(controller => controller.pause());
+    return apiPromise;
+  }
+  function controller() {
+    if (!ctrlPromise) {
+      ctrlPromise = loadApi().then(api => new Promise(resolve => {
+        state.uri = uriOf(cur);
+        api.createController($('.mx-embed > div'), { uri: state.uri, width: '100%', height: 80 }, c => {
+          c.addListener('ready', () => { if (onReady) { const f = onReady; onReady = null; f(); } resolve(c); });
+          c.addListener('playback_update', e => progress(e.data));
+          setTimeout(() => resolve(c), 4000);
         });
+      }));
     }
-
-    // If Spotify won't start from our button (some phones block it), show Spotify's own player instead.
-    function armWatchdog(player) {
-        clearTimeout(player.watchdog);
-        player.watchdog = setTimeout(() => {
-            if (player.classList.contains('playing')) return;
-            player.classList.remove('loading');
-            player.classList.add('show-embed');
-        }, 6000);
+    return ctrlPromise;
+  }
+  function progress(d) {
+    const dur = d.duration / 1000, pos = Math.min(d.position / 1000, dur || Infinity);
+    const ended = dur > 0 && pos >= dur - 0.3;
+    state.on = !d.isPaused && !ended;
+    if (state.on) { state.started = true; clearTimeout(watchdog); $('.mx-dock').classList.remove('show-embed'); $('.pl-mini-play').classList.remove('is-loading'); }
+    $('.pl-mini-bar i').style.setProperty('--pct', `${dur && !ended ? pos / dur * 100 : 0}%`);
+    const full = secs(cur && cur.length);
+    if (full && dur && dur < full - 5) $('.pl-mini-hint').textContent = '30s preview · swipe for another';
+    showState();
+  }
+  async function startPlaying() {
+    const uri = uriOf(cur), btn = $('.pl-mini-play');
+    btn.classList.add('is-loading');
+    try {
+      const c = await controller();
+      if (state.uri !== uri) {
+        state.uri = uri; state.started = false;
+        await new Promise(res => { onReady = res; c.loadUri(uri); setTimeout(() => { if (onReady === res) { onReady = null; res(); } }, 1500); });
+      }
+      // some phones won't let a page start Spotify: if nothing plays, show Spotify's own player to tap instead
+      clearTimeout(watchdog);
+      watchdog = setTimeout(() => { if (!state.on) { btn.classList.remove('is-loading'); $('.mx-dock').classList.add('show-embed'); } }, 6000);
+      c.play();
+    } catch (err) {
+      // Spotify couldn't load here, so the play button opens the song on Spotify instead
+      btn.classList.remove('is-loading');
+      apiFailed = true;
     }
+  }
+  async function togglePlay() {
+    if (!cur) return;
+    if (apiFailed) return window.open(track(cur.id), '_blank', 'noopener');
+    if (state.on && state.uri === uriOf(cur)) { (await controller()).pause(); return; }
+    if (state.started && state.uri === uriOf(cur)) { (await controller()).resume(); return; }
+    startPlaying();
+  }
+  function playSong(s) {
+    if (!s || !s.id) return;
+    if (cur && s.id === cur.id) return togglePlay();
+    if (cur) history.push(cur);
+    cur = s; paintSong();
+    if (apiFailed) return window.open(track(s.id), '_blank', 'noopener');
+    startPlaying();
+  }
 
-    async function togglePlayer(player) {
-        pauseOthers(player);
-        if (!player.controllerPromise) player.classList.add('loading');
-        const controller = await controllerFor(player);
-        if (player.classList.contains('playing')) {
-            controller.pause();
-        } else if (!player.started || player.ended) {
-            armWatchdog(player);
-            controller.play();
-        } else {
-            controller.resume();
-        }
+  function wireSwipe() {
+    const sw = $('.pl-mini-swipe');
+    let x0 = null, dx = 0;
+    sw.addEventListener('pointerdown', e => { x0 = e.clientX; dx = 0; sw.classList.add('is-drag'); sw.setPointerCapture(e.pointerId); });
+    sw.addEventListener('pointermove', e => { if (x0 === null) return; dx = e.clientX - x0; sw.style.transform = `translateX(${dx}px)`; sw.style.opacity = String(1 - Math.min(Math.abs(dx) / 220, .6)); });
+    const end = () => {
+      if (x0 === null) return;
+      x0 = null; sw.classList.remove('is-drag');
+      if (dx < -48) nextSong(); else if (dx > 48) prevSong();
+      sw.style.transition = 'transform .25s ease, opacity .25s ease';
+      sw.style.transform = ''; sw.style.opacity = '';
+      setTimeout(() => { sw.style.transition = ''; }, 260);
+    };
+    sw.addEventListener('pointerup', end);
+    sw.addEventListener('pointercancel', end);
+    sw.addEventListener('keydown', e => { if (e.key === 'ArrowLeft') nextSong(); if (e.key === 'ArrowRight') prevSong(); });
+  }
+
+  /* ---------- events ---------- */
+  root.addEventListener('click', e => {
+    const t = e.target;
+    if (!D) return;
+    if (t.closest('.pl-rec')) return flip();
+    if (t.closest('[data-flip="b"]')) return flip('b');
+    if (t.closest('[data-song]')) return playSong(songFor(t.closest('[data-song]').dataset.song));
+    if (t.closest('.pl-who')) return openAbout(t.closest('.pl-who'));
+    if (t.closest('.pl-about-close')) return closeAbout();
+    const favBtn = t.closest('.pl-fav-btn');
+    if (favBtn) return toggleFavReview(favBtn);
+    const abTab = t.closest('.pl-ab-tab');
+    if (abTab) return showAboutPanel(abTab.dataset.panel);
+    if (t.closest('.pl-mosaic')) return t.closest('.pl-mosaic').classList.toggle('is-turned');
+    if (t.closest('.mx-x')) return closeSheet();
+    const row = t.closest('.mx-past');
+    if (row) return openSheet(Number(row.dataset.i), row);
+    if (t.closest('.pl-mini-next')) return nextSong();
+    if (t.closest('.pl-mini-play')) return togglePlay();
+    const chip = t.closest('.mx-fchip');
+    if (chip) return applyFilter(chip.dataset.filter);
+    const pin = t.closest('.pl-pin-main');
+    if (pin) return setPin(pin.parentElement.dataset.pin, pin.getAttribute('aria-expanded') !== 'true');
+    const sb = t.closest('.pl-sortbtn');
+    if (sb) {
+      sortBy = sb.dataset.sort;
+      $$('.pl-sortbtn').forEach(b => b.setAttribute('aria-pressed', String(b === sb)));
+      $('.pl-artists').innerHTML = artistRows();
+      recolor($('.pl-artists'));
     }
+  });
+  root.addEventListener('keydown', e => {
+    if (e.key !== 'Escape') return;
+    if (!$('.mx-sheet').hidden) { e.preventDefault(); closeSheet(); }
+    else if (aboutOpen()) { e.preventDefault(); closeAbout(); }
+  });
+  window.addEventListener('resize', () => { if (D && aboutOpen()) fitAbout(); });
 
-    upcomingList.addEventListener('click', event => {
-        const button = event.target.closest('.player[data-uri] .pp');
-        if (button) togglePlayer(button.closest('.player'));
+  /* ---------- load ---------- */
+  // a preview can hand the files over in window.CONCERTS_FILES instead of the page fetching them
+  const load = path => (window.CONCERTS_FILES && path in window.CONCERTS_FILES ? Promise.resolve(window.CONCERTS_FILES[path])
+    : fetch(path).then(r => { if (!r.ok) throw new Error(path); return r.text(); })).then(t => jsyaml.load(t) || {});
+  Promise.all([load('contents/concerts.yml'), load('contents/artists.yml'), load('contents/intro.yml'), load('contents/playlist.yml').catch(() => ({}))])
+    .then(([shows, lists, intro, playlist]) => {
+      D = build(shows, lists, intro, playlist);
+      if (D.me) $('.pl-who-face').innerHTML = `<img src="${esc(D.me)}" alt="">`;
+      $('.pl-a').innerHTML = sideA();
+      $('.pl-b').innerHTML = sideB();
+      $('.pl-about').innerHTML = aboutHtml();
+      $('.pl-mini-in').innerHTML = mini();
+      queue = D.songs.length ? D.songs : [D.hollup, ...D.up.map((s, i) => songFor('up-' + i))].filter(s => s && s.id);
+      cur = queue[Math.floor(Math.random() * queue.length)] || null;
+      if (!cur) $('.pl-mini-in').hidden = true;
+      recolor(); paintSong(); wireSwipe();
+      // get Spotify ready in the background, so the first tap on play can start the song straight away
+      if (cur) setTimeout(() => loadApi().catch(() => {}), 1200);
+    })
+    .catch(() => {
+      $('.pl-a').innerHTML = '<p class="empty" style="padding: 80px 16px">The concert list could not be loaded. Check that the files in <code>contents/</code> are there.</p>';
     });
-
-    upcomingList.addEventListener('input', event => {
-        if (!event.target.matches('.pl-seek')) return;
-        const player = event.target.closest('.player');
-        player.dragging = true;
-        setBar(player, Number(event.target.value), 0);
-    });
-
-    upcomingList.addEventListener('change', async event => {
-        if (!event.target.matches('.pl-seek')) return;
-        const player = event.target.closest('.player');
-        if (!player.dataset.uri) return;
-        const target = Number(event.target.value);
-        player.dragging = false;
-        pauseOthers(player);
-        const controller = await controllerFor(player);
-        if (!player.started) {
-            armWatchdog(player);
-            controller.play();
-            setTimeout(() => controller.seek(target), 800);
-        } else {
-            controller.seek(target);
-        }
-    });
-
-    if (Array.isArray(window.CONCERTS_DATA)) {
-        render(window.CONCERTS_DATA);
-        return;
-    }
-
-    fetch('contents/concerts.yml')
-        .then(response => {
-            if (!response.ok) throw new Error('Could not load concerts');
-            return response.text();
-        })
-        .then(text => {
-            const data = jsyaml.load(text) || {};
-            render(Array.isArray(data) ? data : (Array.isArray(data.concerts) ? data.concerts : []));
-        })
-        .catch(() => {
-            const message = '<div class="empty">The concert list could not be loaded. Check that <code>contents/concerts.yml</code> is available.</div>';
-            upcomingList.innerHTML = message;
-            reviewList.innerHTML = '';
-        });
 })();

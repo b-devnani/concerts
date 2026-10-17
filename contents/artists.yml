@@ -4,8 +4,8 @@
 # tag_along: artists Bhagya wouldn't mind tagging along to see, under Bhagya's own heading. Bhagya asked for these names in each
 #   artist's own styling (as on Spotify), so this list is the one place names aren't as typed.
 # fav_artists, fav_concerts: Bhagya's top fives, in Bhagya's order, shown on the about page. fav_artists_also: more fav
-#   artists, in no order (they can include artists Bhagya hasn't seen yet, like Rihanna). Names are as in seen; the page
-#   shows each artist's own styling (Aminé, Odunsi (The Engine)). A fav concert is one performance (artist, year, place), the
+#   artists, in no order (they can include artists Bhagya hasn't seen yet, like Rihanna). Names are in each artist's own
+#   styling (Aminé, Odunsi (The Engine)); they match seen by spelling, ignoring accents and brackets. A fav concert is one performance (artist, year, place), the
 #   venue the page shows for it, Bhagya's rank (ties allowed: 1, 1, 1, 4, 5) and a short review, exactly as typed.
 # punch_details: what Bhagya remembers about older punches (year, score out of 10, place, note), keyed by the name as typed in seen.
 #   Punches from diary shows fill themselves in; these are the ones from before the diary.
@@ -120,9 +120,9 @@ tag_along:
     - "PARTYNEXTDOOR"
 fav_artists:
   - "Wizkid"
-  - "Odunsi the Engine"
+  - "Odunsi (The Engine)"
   - "Drake"
-  - "Amine"
+  - "Aminé"
   - "Odeal"
 fav_artists_also:
   - "Burna Boy"
@@ -145,7 +145,7 @@ fav_concerts:
     venue: "Irving Plaza"
     review: |-
       best concert i've ever attended. this was just when the raves & roses album dropped. energy in the room was 10/10 all night. He did Dirty, Runaway and FYN - songs i dont think ill ever hear live again. At the end, he did Calm Down and left, but ran back screaming to perform Woman. Entire crowd lost their marbles
-  - artist: "Amine"
+  - artist: "Aminé"
     rank: 1
     year: 2022
     place: "Stanford"
