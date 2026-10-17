@@ -306,7 +306,6 @@ punch_details:
     - year: 2022
       score: 8
       place: "NYC"
-      note: "private club"
   "Nicki Minaj":
     - year: 2022
       score: 6
@@ -401,5 +400,6 @@ punch_details:
     - year: 2021
       score: 9
       place: "Lost in Riddim"
-    - score: 7
+    - year: 2026
+      score: 7
       place: "Afro+"
