@@ -48,6 +48,9 @@
         return minutes * 60 + (seconds || 0);
     }
 
+    // "he" or "she" from the YAML; shows without one (bands, festivals) get wording that needs no pronoun.
+    const pronounFor = concert => ({ he: 'he', she: 'she' })[String(concert.pronoun || '').trim().toLowerCase()] || '';
+
     const ICONS = '<svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"/></svg><svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 5h4v14h-4zM13.5 5h4v14h-4z"/></svg>';
 
     // A song card with its own play/pause button, seek bar and times. On the live site it drives a hidden Spotify embed.
@@ -66,7 +69,7 @@
         return `<div class="player"${live ? ` data-uri="${uri}" data-length="${length}"` : ''}>
             ${button}
             <div class="pl-main">
-                <span class="pl-label">A song I love by them</span>
+                <span class="pl-label">My favorite song</span>
                 <div class="pl-top"><span class="pl-title">${song}</span><a class="pl-src" href="${href}" target="_blank" rel="noopener">Spotify ↗</a></div>
                 <div class="pl-bar"><span class="pl-cur">0:00</span><input class="pl-seek" type="range" min="0" max="${length || 100}" step="1" value="0" aria-label="Seek in ${song}"${live ? '' : ' disabled'}><span class="pl-dur">${length ? clock(length) : '--:--'}</span></div>
                 <div class="pl-note" hidden></div>
@@ -80,6 +83,7 @@
         const where = [concert.venue, concert.city, displayTime(concert.time)].filter(Boolean).map(escapeHtml).join(' · ');
         const company = !concert.companions ? '' : /^tbd$/i.test(concert.companions) ? "Who's coming with me: TBD" : `Going with ${escapeHtml(concert.companions)}`;
         const extra = [company, concert.notes && escapeHtml(concert.notes)].filter(Boolean).join(' · ');
+        const maybe = /^maybe$/i.test(String(concert.status || '').trim()) ? '<span class="maybe">Maybe</span>' : '';
         const tickets = /^https?:\/\//i.test(concert.link || '') ? `<a href="${escapeHtml(concert.link)}" target="_blank" rel="noopener">Tickets ↗</a>` : '';
         return `<li class="show">
             <div class="when"><div class="mon">${format(date, { month: 'short' })}</div><div class="day">${date.getDate()}</div><div class="dow">${format(date, { weekday: 'short' })}</div></div>
@@ -87,17 +91,10 @@
                 <h3 class="show-artist">${escapeHtml(concert.artist)}</h3>
                 <div class="show-meta">${where}</div>
                 ${extra ? `<div class="show-meta">${extra}</div>` : ''}
-                <div class="show-actions"><span class="countdown">${countdown(daysUntil(concert.date))}</span>${tickets}</div>
+                <div class="show-actions"><span class="countdown">${countdown(daysUntil(concert.date))}</span>${maybe}${tickets}</div>
                 ${songPlayer(concert)}
             </div>
         </li>`;
-    }
-
-    // The first sentence of a review, word for word, used as the pull quote.
-    function openingLine(text) {
-        const line = String(text).split('\n').find(part => part.trim()) || '';
-        const match = line.match(/^.*?[.!?](?=\s|$)/);
-        return (match ? match[0] : line).trim();
     }
 
     // "I went with Deep, Pelumi & Nem and paid ~$60."
@@ -117,25 +114,22 @@
             ? `${format(date, { month: 'short', day: 'numeric' })} – ${format(parseDate(concert.end_date), { month: 'short', day: 'numeric', year: 'numeric' })}`
             : format(date, { month: 'short', day: 'numeric', year: 'numeric' });
         const rating = Number(concert.rating);
-        const best = rating === 10;
         const sets = [];
         if (concert.highlights) sets.push(`<div class="set"><dt>The highlights</dt><dd>${escapeHtml(asText(concert.highlights))}</dd></div>`);
-        if (concert.wishlist) sets.push(`<div class="set miss"><dt>I wish they'd played</dt><dd>${escapeHtml(asText(concert.wishlist))}</dd></div>`);
-        const opening = concert.review ? openingLine(concert.review) : '';
-        const fullReview = concert.review && String(concert.review).trim() !== opening;
-        const review = fullReview ? `<details class="review-body"><summary>Read my review</summary><div class="review-text">${paragraphs(concert.review)}</div></details>` : '';
+        const pronoun = pronounFor(concert);
+        if (concert.wishlist) sets.push(`<div class="set miss"><dt>${pronoun ? `I wish ${pronoun}'d played` : "I wish I'd heard"}</dt><dd>${escapeHtml(asText(concert.wishlist))}</dd></div>`);
+        const review = concert.review && String(concert.review).trim() ? `<details class="review-body"><summary>Read my review</summary><div class="review-text">${paragraphs(concert.review)}</div></details>` : '';
         const notes = concert.notes ? `<div class="review-text">${paragraphs(concert.notes)}</div>` : '';
         const sentence = story(concert);
-        return `<article class="review${best ? ' best' : ''}">
+        return `<article class="review">
             <div class="review-head">
                 <div class="score" aria-label="${rating ? `${rating} out of 10` : 'Not rated yet'}"><b>${rating || '–'}</b><small>/ 10</small></div>
                 <div>
-                    <div class="review-kicker label"><span>${escapeHtml(concert.genre || '')}</span>${best ? '<span class="badge">A perfect 10</span>' : ''}</div>
+                    <div class="review-kicker label"><span>${escapeHtml(concert.genre || '')}</span></div>
                     <h3 class="review-title">${escapeHtml(concert.artist)}</h3>
                     <div class="review-sub">${escapeHtml(concert.venue)}, ${escapeHtml(concert.city)} · ${escapeHtml(when)}</div>
                 </div>
             </div>
-            ${opening ? `<blockquote class="pull">“${escapeHtml(opening)}”</blockquote>` : ''}
             ${sentence ? `<p class="story">${sentence}</p>` : ''}
             ${sets.length ? `<dl class="sets">${sets.join('')}</dl>` : ''}
             ${notes}${review}
@@ -149,7 +143,7 @@
         const average = rated.length ? rated.reduce((total, concert) => total + Number(concert.rating), 0) / rated.length : 0;
 
         document.getElementById('stats').innerHTML = [
-            `<span><strong>${upcoming.length}</strong>shows coming up</span>`,
+            `<span><strong>${upcoming.length}</strong>upcoming shows</span>`,
             `<span><strong>${past.length}</strong>shows reviewed</span>`,
             rated.length ? `<span><strong>${average.toFixed(1)}</strong>my average score</span>` : ''
         ].join('');

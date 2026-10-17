@@ -112,6 +112,7 @@ main { display: grid; gap: 4rem; padding-block: 3.5rem 5rem; }
 .show-meta { color: var(--muted); }
 .show-actions { align-items: center; display: flex; flex-wrap: wrap; gap: .6rem 1.1rem; margin-top: .5rem; }
 .countdown { background: var(--tag); color: var(--tag-ink); font-family: var(--display); font-size: .8rem; font-weight: 500; letter-spacing: .12em; padding: .25rem .6rem; text-transform: uppercase; }
+.maybe { border: 1px dashed var(--ink); font-family: var(--display); font-size: .8rem; font-weight: 500; letter-spacing: .12em; padding: calc(.25rem - 1px) .6rem; text-transform: uppercase; }
 
 /* song player */
 .player { align-items: center; background: var(--card); border: 1px solid var(--rule); display: grid; gap: 1rem; grid-template-columns: auto minmax(0, 1fr); margin-top: .9rem; padding: .9rem 1.1rem .9rem .9rem; position: relative; }
@@ -151,13 +152,9 @@ main { display: grid; gap: 4rem; padding-block: 3.5rem 5rem; }
 .score { background: var(--card); border: 3px solid var(--ink); display: grid; height: 5.4rem; line-height: 1; place-content: center; text-align: center; width: 5.4rem; }
 .score b { font-family: var(--display); font-size: 2.8rem; font-variant-numeric: tabular-nums; font-weight: 700; }
 .score small { color: var(--muted); font-size: .75rem; margin-top: .2rem; }
-.review.best .score { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
-.review.best .score small { color: var(--accent-ink); opacity: .85; }
 .review-kicker { align-items: center; display: flex; flex-wrap: wrap; gap: .35rem .75rem; }
-.badge { background: var(--tag); color: var(--tag-ink); padding: .05rem .45rem; }
 .review-title { font-family: var(--display); font-size: clamp(2rem, 7vw, 2.9rem); font-weight: 700; letter-spacing: -.02em; line-height: 1; margin: .35rem 0 .3rem; overflow-wrap: anywhere; text-transform: uppercase; text-wrap: balance; }
 .review-sub { color: var(--muted); }
-.pull { border-left: 4px solid var(--accent); font-family: var(--display); font-size: clamp(1.45rem, 5vw, 1.9rem); font-weight: 200; letter-spacing: -.02em; line-height: 1.2; margin: .2rem 0; max-width: 34ch; padding-left: 1rem; }
 .story { font-size: 1.08rem; margin: 0; max-width: 40rem; }
 .sets { display: grid; gap: .9rem; margin: 0; }
 .set { display: grid; gap: .2rem; }
