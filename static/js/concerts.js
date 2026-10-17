@@ -28,7 +28,6 @@
     return `${mon(c.date)} ${day(c.date)}, ${y}`;
   };
   const clock = t => { if (!t) return ''; const [h, m] = String(t).split(':').map(Number); return `${h % 12 || 12}${m ? ':' + String(m).padStart(2, '0') : ''} ${h < 12 ? 'AM' : 'PM'}`; };
-  const secs = len => { const [m, s] = String(len || '').split(':').map(Number); return m * 60 + (s || 0) || 0; };
 
   /* ---------- names, photos and made-up covers ---------- */
   // an artist's photo lives at static/img/artists/<slug>.jpg, e.g. "Aminé" → amine.jpg, "D’Banj" → dbanj.jpg
@@ -157,7 +156,7 @@
   function upRow(s, i) {
     const n = daysFrom(s.date);
     const cd = n === 0 ? 'tonight' : n === 1 ? 'tomorrow' : n < 0 ? 'on now' : `${n} days`;
-    const tix = /^https?:\/\//.test(s.tickets || '') ? `<a href="${esc(s.tickets)}" target="_blank" rel="noopener">Tickets ↗</a>` : '';
+    const tix = /^https?:\/\//.test(s.tickets || '') ? `<a class="mx-tix" href="${esc(s.tickets)}" target="_blank" rel="noopener">Tickets</a>` : '';
     return `<li class="mx-up${s.maybe ? ' is-maybe' : ''}">
       <div class="mx-cal" aria-hidden="true"><span>${mon(s.date)}</span><b>${day(s.date)}</b><span>${dowOf(s.date)}</span></div>
       <div>
@@ -423,7 +422,6 @@
     return `<div class="pl-mini-swipe" aria-roledescription="swipe to change song" tabindex="0"><span class="pl-mini-cover"></span><div style="min-width:0"><div class="pl-mini-t"></div><div class="pl-mini-a"></div></div></div>
       <button class="pl-icon pl-mini-next" type="button" aria-label="Next song">${NEXT}</button>
       <button class="pl-mini-play" type="button">${PLAY}</button>
-      <span class="pl-mini-hint" aria-hidden="true">swipe for another</span>
       <span class="pl-mini-bar" aria-hidden="true"><i></i></span>`;
   }
   const songFor = key => {
@@ -444,16 +442,55 @@
       b.classList.toggle('is-on', Boolean(mine));
     });
   }
+  // a song's album art lives at static/img/songs/<Spotify track id>.jpg
+  const songArt = id => `static/img/songs/${encodeURIComponent(id)}.jpg`;
   function paintSong() {
     if (!cur) return;
-    $('.pl-mini-cover').innerHTML = `<span class="pl-cover pl-cv" data-seed="${esc(cur.id)}"><b>${esc([...cur.title][0] || '')}</b></span>`;
+    const id = cur.id;
+    $('.pl-mini-cover').innerHTML = art('pl-cover', id, [...cur.title][0] || '', songArt(id), '', true);
     paint($('.pl-mini-cover [data-seed]'));
     $('.pl-mini-t').textContent = cur.title;
     $('.pl-mini-a').textContent = cur.artists;
     $('.pl-mini-bar i').style.setProperty('--pct', '0%');
-    // the song's colour tints the header, the about page and the player
-    root.style.setProperty('--hc', look(cur.id).c);
+    // the song's colour tints the header, the about page and the player: a made-up one first, then the album art's own
+    root.style.setProperty('--hc', look(id).c);
+    const img = $('.pl-mini-cover img');
+    if (img) {
+      const tint = () => { const c = artColour(img); if (c && cur && cur.id === id) root.style.setProperty('--hc', c); };
+      if (img.complete && img.naturalWidth) tint(); else img.addEventListener('load', tint, { once: true });
+    }
     showState();
+  }
+  // keeps the colour's hue but lifts dull or very dark ones, so the header reads like Spotify's (greys stay grey)
+  function lively(r, g, b) {
+    r /= 255; g /= 255; b /= 255;
+    const max = Math.max(r, g, b), min = Math.min(r, g, b), l0 = (max + min) / 2, d = max - min;
+    let h = 0, s0 = d ? d / (1 - Math.abs(2 * l0 - 1)) : 0;
+    if (d) h = max === r ? ((g - b) / d) % 6 : max === g ? (b - r) / d + 2 : (r - g) / d + 4;
+    const s = s0 < 0.08 ? s0 : Math.max(s0, 0.45), l = Math.min(Math.max(l0, 0.34), 0.58);
+    const c = (1 - Math.abs(2 * l - 1)) * s, x = c * (1 - Math.abs((h % 2 + 2) % 2 - 1)), m = l - c / 2;
+    const [R, G, B] = h < 1 ? [c, x, 0] : h < 2 ? [x, c, 0] : h < 3 ? [0, c, x] : h < 4 ? [0, x, c] : h < 5 ? [x, 0, c] : [c, 0, x];
+    const hex = v => Math.round((v + m) * 255).toString(16).padStart(2, '0');
+    return `#${hex(R)}${hex(G)}${hex(B)}`;
+  }
+  // the album art's main colour: an average that leans on its most colourful, mid-bright pixels
+  function artColour(img) {
+    try {
+      const cv = document.createElement('canvas'); cv.width = cv.height = 24;
+      const cx = cv.getContext('2d', { willReadFrequently: true });
+      cx.drawImage(img, 0, 0, 24, 24);
+      const px = cx.getImageData(0, 0, 24, 24).data;
+      let r = 0, g = 0, b = 0, w = 0;
+      for (let i = 0; i < px.length; i += 4) {
+        const R = px[i], G = px[i + 1], B = px[i + 2], max = Math.max(R, G, B), min = Math.min(R, G, B);
+        const sat = max ? (max - min) / max : 0, lum = (0.299 * R + 0.587 * G + 0.114 * B) / 255;
+        const k = 0.02 + sat * sat * (lum > 0.12 && lum < 0.9 ? 1 : 0.15);
+        r += R * k; g += G * k; b += B * k; w += k;
+      }
+      return lively(r / w, g / w, b / w);
+    } catch (err) {
+      return null;
+    }
   }
   function setSong(s, record = true) {
     if (!s || (cur && s.id === cur.id)) return;
@@ -461,6 +498,7 @@
     const keepPlaying = state.on;
     cur = s; paintSong();
     if (keepPlaying) startPlaying();
+    else if (embedShown()) cue(); // Spotify's player is showing: put the new song in it, ready to tap
   }
   const nextSong = () => setSong(randomSong());
   const prevSong = () => { if (history.length) setSong(history.pop(), false); };
@@ -501,22 +539,29 @@
     state.on = !d.isPaused && !ended;
     if (state.on) { state.started = true; clearTimeout(watchdog); $('.mx-dock').classList.remove('show-embed'); $('.pl-mini-play').classList.remove('is-loading'); }
     $('.pl-mini-bar i').style.setProperty('--pct', `${dur && !ended ? pos / dur * 100 : 0}%`);
-    const full = secs(cur && cur.length);
-    if (full && dur && dur < full - 5) $('.pl-mini-hint').textContent = '30s preview · swipe for another';
     showState();
   }
+  // Phones only let Spotify start from a tap inside Spotify's own player, so on a phone that player shows straight away
+  // with the song loaded (one more tap plays it) and tucks itself away once the music starts. Computers play from our button.
+  const touch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
+  const embedShown = () => $('.mx-dock').classList.contains('show-embed');
+  async function cue() {
+    const uri = uriOf(cur), c = await controller();
+    if (state.uri !== uri) {
+      state.uri = uri; state.started = false;
+      await new Promise(res => { onReady = res; c.loadUri(uri); setTimeout(() => { if (onReady === res) { onReady = null; res(); } }, 1500); });
+    }
+    return c;
+  }
   async function startPlaying() {
-    const uri = uriOf(cur), btn = $('.pl-mini-play');
+    const btn = $('.pl-mini-play');
     btn.classList.add('is-loading');
+    if (touch) $('.mx-dock').classList.add('show-embed');
     try {
-      const c = await controller();
-      if (state.uri !== uri) {
-        state.uri = uri; state.started = false;
-        await new Promise(res => { onReady = res; c.loadUri(uri); setTimeout(() => { if (onReady === res) { onReady = null; res(); } }, 1500); });
-      }
-      // some phones won't let a page start Spotify: if nothing plays, show Spotify's own player to tap instead
+      const c = await cue();
+      // if nothing plays (a phone, or a browser blocking it), Spotify's own player shows so a tap there starts it
       clearTimeout(watchdog);
-      watchdog = setTimeout(() => { if (!state.on) { btn.classList.remove('is-loading'); $('.mx-dock').classList.add('show-embed'); } }, 6000);
+      watchdog = setTimeout(() => { if (!state.on) { btn.classList.remove('is-loading'); $('.mx-dock').classList.add('show-embed'); } }, touch ? 1500 : 6000);
       c.play();
     } catch (err) {
       // Spotify couldn't load here, so the play button opens the song on Spotify instead

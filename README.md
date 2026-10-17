@@ -17,6 +17,7 @@ Words are shown exactly as typed ([docs/adr/0001](docs/adr/0001-reviews-stay-wor
 
 - Artist photos live in `static/img/artists/`, named after the artist in lowercase with dashes: "Aminé" is `amine.jpg`, "Burna Boy" is `burna-boy.jpg`, "D’Banj" is `dbanj.jpg`. Without one, the page draws a coloured cover with the initial.
 - Show pictures live in `static/img/shows/` and are set with `photo:` on the show. Your own photos from the night are the best ones to use.
+- Album art for the player lives in `static/img/songs/`, named by the Spotify track id (the last part of the song's link). Without one, the player draws a coloured cover.
 - Most artist photos come from Spotify and most show pictures from event pages, so they belong to the artists, promoters and photographers. The credits line at the bottom of side B says where they're from.
 
 ## Hosting

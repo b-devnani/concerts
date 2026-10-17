@@ -1,5 +1,6 @@
 # Songs the player at the bottom of the page shuffles through; a random one is up first on each visit.
 # The page never names where these come from. Each song: title, artists, spotify (track link), length.
+# Album art lives in static/img/songs/, named by the Spotify track id (the end of the link), e.g. 794P6LrIcSEL2NCCqNnUmX.jpg.
 songs:
   - title: "Better Days"
     artists: "Odunsi (The Engine), WANI"
