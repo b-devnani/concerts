@@ -15,7 +15,7 @@
 #   review        your write-up; shown behind "Read review", exactly as typed
 #   notes         short info shown on the card (e.g. "Doors 7 PM, 16+.")
 #   link          tickets or event page
-#   pronoun       he or she, for "I wish he'd played" (leave out for bands and festivals)
+#   pronoun       he or she, for "Wish He Performed" / "Wish She Performed" (leave out for bands and festivals)
 #   song          your favorite song by the artist (upcoming shows get a play button)
 #   spotify       Spotify track link for that song, e.g. https://open.spotify.com/track/...
 #   length        that song's length, e.g. "3:27" (shown on the player before it plays)
@@ -102,7 +102,7 @@ concerts:
     hook: "Dave is the best lyricist ever. the crowd was truly deeping it. Free Palestine, Free Sudan, Free Congo"
     rating: 9
     price: "$60 ish"
-    companions: Deep, Pelumi n nem
+    companions: Deep, Pelumi & nem
     highlights: "The Boy Who Played The Harp, System, Verdansk, Screwface Capital"
     wishlist: "Law Of Attraction, Heart Attack, Lazarus"
   - artist: Odunsi (The Engine)
@@ -179,13 +179,13 @@ concerts:
     hook: "so chaotic, so fun"
     rating: 10
     price: "$600"
-    companions: Saahith sparsh swe n more
+    companions: Saahith Sparsh Swe & more
     review: |-
       Kwamz Original w Kelvin Momo on Day 2 had the most insane DJ set ever. I still think abt it from time to time
       Olamide back to back to back bangers was so fulfilling. He was the only artist I hadn’t seen before
       Ruger was reallllly good
 
-      Lowkey crowd for davido was hype asf but that was day 1 energies coming out
+      Lowkey crowd for davido was hype asf but that was day 1 energy coming out
   - artist: World's Biggest Saxophone Meetup
     date: 2026-10-03
     time: "12:00"
@@ -215,3 +215,4 @@ concerts:
     price: Free
     companions: Kwesi Adwoa n more
     highlights: "Rapid Fire, Murvlana and Sparky"
+    wishlist: "Gangsta Fear, Dime In The Winter, RX"

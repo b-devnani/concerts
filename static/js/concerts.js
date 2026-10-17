@@ -117,7 +117,7 @@
         const sets = [];
         if (concert.highlights) sets.push(`<div class="set"><dt>The highlights</dt><dd>${escapeHtml(asText(concert.highlights))}</dd></div>`);
         const pronoun = pronounFor(concert);
-        if (concert.wishlist) sets.push(`<div class="set miss"><dt>${pronoun ? `I wish ${pronoun}'d played` : "I wish I'd heard"}</dt><dd>${escapeHtml(asText(concert.wishlist))}</dd></div>`);
+        if (concert.wishlist) sets.push(`<div class="set miss"><dt>${pronoun ? `Wish ${pronoun === 'she' ? 'She' : 'He'} Performed` : "Wish I'd Heard"}</dt><dd>${escapeHtml(asText(concert.wishlist))}</dd></div>`);
         const review = concert.review && String(concert.review).trim() ? `<details class="review-body"><summary>Read my review</summary><div class="review-text">${paragraphs(concert.review)}</div></details>` : '';
         const notes = concert.notes ? `<div class="review-text">${paragraphs(concert.notes)}</div>` : '';
         const sentence = story(concert);

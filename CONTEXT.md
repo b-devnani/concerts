@@ -71,7 +71,7 @@ The songs or moments from a past show that hit hardest, in Bhagya's words.
 _Avoid_: Setlist, best songs
 
 **Wishlist**:
-Songs Bhagya wishes the artist had played at a past show.
+Songs Bhagya wishes the artist had played at a past show, shown as "Wish He Performed" or "Wish She Performed" ("Wish I'd Heard" when the show has no pronoun).
 _Avoid_: Missing songs, requests
 
 **Hook**:
