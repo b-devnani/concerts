@@ -323,13 +323,16 @@ punch_details:
       score: 7
       place: "UIUC"
   "Maleek Berry":
-    - score: 7
-      place: "BK"
+    - year: 2025
+      score: 7
+      place: "NYC"
   "Mannywellz":
-    - score: 8
+    - year: 2022
+      score: 8
       place: "NYC"
   "Mariah the Scientist":
-    - score: 6
+    - year: 2023
+      score: 6
       place: "DC"
   "Mayorkun":
     - year: 2018
@@ -457,17 +460,20 @@ punch_details:
       score: 7
       place: "Coachella"
   "Tiakola":
-    - score: 7
+    - year: 2025
+      score: 7
       place: "Red Bull"
   "Travis Scott":
-    - score: 5
+    - year: 2018
+      score: 5
       place: "Lolla"
   "Umi":
     - year: 2023
       score: 8
       place: "Coachella"
   "Vic Mensa":
-    - score: 8
+    - year: 2017
+      score: 8
       place: "UIUC"
   "Victony":
     - year: 2024
