@@ -83,6 +83,7 @@
         const where = [concert.venue, concert.city, displayTime(concert.time)].filter(Boolean).map(escapeHtml).join(' · ');
         const company = !concert.companions ? '' : /^tbd$/i.test(concert.companions) ? "Who's coming with me: TBD" : `Going with ${escapeHtml(concert.companions)}`;
         const extra = [company, concert.notes && escapeHtml(concert.notes)].filter(Boolean).join(' · ');
+        const maybe = /^maybe$/i.test(String(concert.status || '').trim()) ? '<span class="maybe">Maybe</span>' : '';
         const tickets = /^https?:\/\//i.test(concert.link || '') ? `<a href="${escapeHtml(concert.link)}" target="_blank" rel="noopener">Tickets ↗</a>` : '';
         return `<li class="show">
             <div class="when"><div class="mon">${format(date, { month: 'short' })}</div><div class="day">${date.getDate()}</div><div class="dow">${format(date, { weekday: 'short' })}</div></div>
@@ -90,7 +91,7 @@
                 <h3 class="show-artist">${escapeHtml(concert.artist)}</h3>
                 <div class="show-meta">${where}</div>
                 ${extra ? `<div class="show-meta">${extra}</div>` : ''}
-                <div class="show-actions"><span class="countdown">${countdown(daysUntil(concert.date))}</span>${tickets}</div>
+                <div class="show-actions"><span class="countdown">${countdown(daysUntil(concert.date))}</span>${maybe}${tickets}</div>
                 ${songPlayer(concert)}
             </div>
         </li>`;
