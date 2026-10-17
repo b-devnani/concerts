@@ -162,7 +162,7 @@ punch_details:
     - year: 2019
       place: "CHI"
     - year: 2021
-      place: "Lost in Riddim"
+      place: "LID"
     - year: 2023
       place: "OAK"
     - year: 2023
@@ -251,43 +251,52 @@ punch_details:
       score: 7
       place: "BK"
   "Glass Animals":
-    - score: 4
+    - year: 2022
+      score: 4
       place: "BK Mirage"
   "Glorilla":
-    - score: 6
+    - year: 2023
+      score: 6
       place: "Coachella"
   "Gunna":
     - year: 2025
       score: 8
       place: "Red Bull"
   "Jaden Smith":
-    - score: 6
+    - year: 2018
+      score: 6
       place: "Lolla"
   "Kali Uchis":
-    - score: 6
+    - year: 2023
+      score: 6
       place: "Coachella"
   "Kelvin Momo":
     - year: 2026
       score: 9
       place: "Afro+"
   "Kenny Beats":
-    - score: 5
+    - year: 2023
+      score: 5
       place: "Coachella"
   "Khalid":
-    - score: 8
+    - year: 2018
+      score: 8
       place: "Lolla"
   "Labrynth w Zendaya":
-    - score: 6
+    - year: 2023
+      score: 6
       place: "Coachella"
   "Lil Baby":
     - year: 2026
       score: 7
       place: "Afro+"
   "Lil Wayne":
-    - score: 7
+    - year: 2024
+      score: 7
       place: "NJ"
   "Lil Yachty":
-    - score: 7
+    - year: 2019
+      score: 7
       place: "UIUC"
   "Maleek Berry":
     - score: 7
@@ -301,7 +310,7 @@ punch_details:
   "Mr Eazi":
     - year: 2021
       score: 10
-      place: "Lost in Riddim"
+      place: "LID"
   "NeYo":
     - year: 2022
       score: 8
@@ -313,6 +322,7 @@ punch_details:
   "obongjayar":
     - year: 2025
       score: 6
+      place: "BK"
   "Odeal":
     - year: 2024
       score: 10
@@ -328,7 +338,8 @@ punch_details:
       score: 8
       place: "NYC"
   "Offset":
-    - score: 7
+    - year: 2023
+      score: 7
       place: "Coachella"
   "Olamide":
     - year: 2026
@@ -343,7 +354,8 @@ punch_details:
       score: 8
       place: "LOS"
   "Rae Sremmund":
-    - score: 7
+    - year: 2023
+      score: 7
       place: "Coachella"
   "Reekado Banks":
     - year: 2018
@@ -355,7 +367,7 @@ punch_details:
       place: "LOS"
     - year: 2021
       score: 7
-      place: "Lost in Riddim"
+      place: "LID"
     - year: 2022
       score: 10
       place: "NYC"
@@ -367,10 +379,12 @@ punch_details:
       place: "NYC"
       note: "HEIS Listening party"
   "Rosalia":
-    - score: 6
+    - year: 2023
+      score: 6
       place: "Coachella"
   "Ruger":
-    - score: 9
+    - year: 2025
+      score: 9
       place: "CHI"
     - year: 2026
       score: 8
@@ -380,8 +394,9 @@ punch_details:
       score: 8
       place: "Afro+"
   "Shenseea":
-    - score: 7
-      place: "Lost in Riddim"
+    - year: 2021
+      score: 7
+      place: "LID"
   "Show dem Camp":
     - year: 2023
       score: 8
@@ -391,7 +406,8 @@ punch_details:
       score: 10
       place: "NYC"
   "T-Pain":
-    - score: 8
+    - year: 2018
+      score: 8
       place: "UIUC"
   "Wizkid":
     - year: 2018
@@ -399,7 +415,7 @@ punch_details:
       place: "LOS"
     - year: 2021
       score: 9
-      place: "Lost in Riddim"
+      place: "LID"
     - year: 2026
       score: 7
       place: "Afro+"

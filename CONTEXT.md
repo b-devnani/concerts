@@ -86,7 +86,7 @@ Every artist Bhagya has ever seen live, from before the diary began until now, e
 _Avoid_: Seen list, everyone I've seen, lifetime list
 
 **Punch**:
-One time Bhagya saw an artist live, like a hole punched in a card. It can carry the year, a score, the place and a short note ("Opener with Rema"), if Bhagya remembers them. Places are short labels, as Bhagya types them: MSG, BK, NYC, NJ, DC, CHI, LOS, OAK, SF, India, VMAs, Afro+, Stanford, Coachella, Lolla, Lost in Riddim, UIUC, SOB's, Soulection, Barclays, Red Bull, or a spot like Prospect Park. Seeing the artist a show is for adds a punch; at a festival, only the artists Bhagya says they saw get one; an opener gets one only when Bhagya lists them in Artists I've seen. Each punch gets its own score.
+One time Bhagya saw an artist live, like a hole punched in a card. It can carry the year, a score, the place and a short note ("Opener with Rema"), if Bhagya remembers them. Places are short labels, as Bhagya types them: MSG, BK, NYC, NJ, DC, CHI, LOS, OAK, SF, India, VMAs, Afro+, Stanford, Coachella, Lolla, LID (Lost in Riddim), UIUC, SOB's, Soulection, Barclays, Red Bull, or a spot like Prospect Park. Seeing the artist a show is for adds a punch; at a festival, only the artists Bhagya says they saw get one; an opener gets one only when Bhagya lists them in Artists I've seen. Each punch gets its own score.
 On the page, the total is labelled "performances" (e.g. "108 performances").
 _Avoid_: Sighting, count, visit
 
