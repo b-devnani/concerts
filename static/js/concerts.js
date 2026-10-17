@@ -153,7 +153,7 @@
         const average = rated.length ? rated.reduce((total, concert) => total + Number(concert.rating), 0) / rated.length : 0;
 
         document.getElementById('stats').innerHTML = [
-            `<span><strong>${upcoming.length}</strong>shows coming up</span>`,
+            `<span><strong>${upcoming.length}</strong>upcoming shows</span>`,
             `<span><strong>${past.length}</strong>shows reviewed</span>`,
             rated.length ? `<span><strong>${average.toFixed(1)}</strong>my average score</span>` : ''
         ].join('');

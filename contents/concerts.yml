@@ -1,5 +1,5 @@
 # Every show lives here. The page reads this file.
-# Shows dated today or later appear under "Coming up"; earlier ones become reviews.
+# Shows dated today or later appear under "Upcoming"; earlier ones become reviews.
 #
 # Fields (all optional except artist and date):
 #   artist, date (YYYY-MM-DD), end_date (multi-day festivals), time ("20:00"),

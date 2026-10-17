@@ -1,6 +1,6 @@
 # Bhagya's Live Music Diary
 
-A personal record of every show Bhagya goes to: what's coming up, and what Bhagya thought of the ones already seen.
+A personal record of every show Bhagya goes to: what's upcoming, and what Bhagya thought of the ones already seen.
 
 ## Language
 
@@ -29,8 +29,8 @@ One concert, festival or music event Bhagya goes to, or might go to, on a date a
 _Avoid_: Gig, concert entry, event
 
 **Upcoming show**:
-A show that hasn't happened yet.
-_Avoid_: Future show, next show
+A show that hasn't happened yet. Its section is called "upcoming".
+_Avoid_: Coming up, future show, next show
 
 **Maybe**:
 An upcoming show Bhagya hasn't committed to. Every other upcoming show is a definite.
