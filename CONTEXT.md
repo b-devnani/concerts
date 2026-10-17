@@ -97,3 +97,10 @@ _Avoid_: Bucket list, wishlist (a wishlist is songs, not artists)
 **Tag-along list**:
 Artists Bhagya wouldn't mind seeing if the chance came up, shown under Bhagya's own heading, "artists i wouldnt mind tagging along to see". It can include artists Bhagya has already seen; an artist leaves it the next time Bhagya sees them.
 _Avoid_: Maybe list (a Maybe is an upcoming show), second list
+
+**Fav artists**:
+Bhagya's top five artists, in Bhagya's order, shown on the introduction page next to the intro text. Each shows how many times Bhagya has seen them and their average score.
+
+**Fav concerts**:
+Bhagya's top five performances, in Bhagya's order, also on the introduction page. Each is one punch (artist, year and place) and shows its score.
+_Avoid_: Best shows, top 10s

@@ -3,6 +3,8 @@
 # need_to_see: Bhagya's die-peacefully list, under Bhagya's own heading. A ✅ here means seen; the page shows it crossed out.
 # tag_along: artists Bhagya wouldn't mind tagging along to see, under Bhagya's own heading. Bhagya asked for these names in each
 #   artist's own styling (as on Spotify), so this list is the one place names aren't as typed.
+# fav_artists, fav_concerts: Bhagya's favourites, in Bhagya's order, shown on the about page. Names are as in seen;
+#   the page shows each artist's own styling (Aminé, Odunsi (The Engine)). A fav concert is one performance: artist, year, place.
 # punch_details: what Bhagya remembers about older punches (year, score out of 10, place, note), keyed by the name as typed in seen.
 #   Punches from diary shows fill themselves in; these are the ones from before the diary.
 seen:
@@ -113,6 +115,28 @@ tag_along:
     - "Jhené Aiko"
     - "Zaylevelten"
     - "AMARIA BB"
+fav_artists:
+  - "Wizkid"
+  - "Odunsi the Engine"
+  - "Drake"
+  - "Amine"
+  - "Odeal"
+fav_concerts:
+  - artist: "Rema"
+    year: 2022
+    place: "NYC"
+  - artist: "Amine"
+    year: 2022
+    place: "Stanford"
+  - artist: "Snoh Aalegra"
+    year: 2022
+    place: "NYC"
+  - artist: "Odeal"
+    year: 2024
+    place: "SOB's"
+  - artist: "Mr Eazi"
+    year: 2021
+    place: "LID"
 punch_details:
   "A Boogie With a Hoodie":
     - year: 2023
