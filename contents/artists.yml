@@ -117,6 +117,7 @@ tag_along:
     - "Jhené Aiko"
     - "Zaylevelten"
     - "AMARIA BB"
+    - "PARTYNEXTDOOR"
 fav_artists:
   - "Wizkid"
   - "Odunsi the Engine"
@@ -129,11 +130,18 @@ fav_artists_also:
   - "Rihanna"
   - "Frank Ocean"
   - "Brent Faiyaz"
+  - "Juls"
+  - "Chance the Rapper"
+  - "Snoh Aalegra"
+  - "Rema"
+  - "J Hus"
+  - "PARTYNEXTDOOR"
+  - "SZA"
 fav_concerts:
   - artist: "Rema"
     year: 2022
     place: "NYC"
-    venue: "Gramercy Theater"
+    venue: "Irving Plaza"
   - artist: "Amine"
     year: 2022
     place: "Stanford"
