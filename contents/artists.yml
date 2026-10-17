@@ -2,7 +2,7 @@
 # seen: every artist Bhagya has seen live, in Bhagya's order. "(x3)" means seen three times.
 # need_to_see: Bhagya's die-peacefully list, under Bhagya's own heading. A ✅ here means seen; the page shows it crossed out.
 # tag_along: artists Bhagya wouldn't mind tagging along to see, under Bhagya's own heading.
-# punch_details: what Bhagya remembers about older punches (year, score out of 10, place), keyed by the name as typed in seen.
+# punch_details: what Bhagya remembers about older punches (year, score out of 10, place, note), keyed by the name as typed in seen.
 #   Punches from diary shows fill themselves in; these are the ones from before the diary.
 seen:
   - "Amine"
@@ -113,8 +113,123 @@ tag_along:
     - "zaylevelten"
     - "amaria bb"
 punch_details:
+  "A Boogie With a Hoodie":
+    - year: 2023
+      score: 7
+      place: "Coachella"
+  "Amine":
+    - year: 2023
+      score: 10
+      place: "Stanford"
+  "Armaan Malik":
+    - year: 2015
+      score: 7
+      place: "India"
+  "Asake":
+    - year: 2023
+      score: 9
+      place: "DC"
+    - year: 2024
+      score: 7
+      place: "MSG"
+    - year: 2025
+      score: 9
+      place: "Red Bull"
+  "Ayra Starr":
+    - year: 2022
+      score: 8
+      place: "Stanford"
+    - year: 2026
+      score: 5
+      place: "Afro+"
+  "Blackpink":
+    - year: 2022
+      score: 6
+      place: "VMAs"
+  "Bnxn":
+    - year: 2023
+      score: 8
+      place: "CHI"
+  "Brent Faiyaz":
+    - year: 2023
+      score: 9
+      place: "DC"
+  "Burna Boy":
+    - year: 2017
+      place: "LOS"
+    - year: 2018
+      place: "LOS"
+    - year: 2019
+      place: "CHI"
+    - year: 2021
+      place: "Lost in Riddim"
+    - year: 2023
+      place: "OAK"
+    - year: 2023
+      place: "Coachella"
+  "Central Cee":
+    - score: 6
+      place: "Red Bull"
+  "Ckay":
+    - year: 2023
+      score: 7
+      place: "Stanford"
+  "Coco Jones":
+    - score: 9
+      place: "DC"
+  "Crayon":
+    - year: 2023
+      place: "NYC"
+      note: "Opener with Rema"
+  "D’Banj":
+    - year: 2018
+      score: 7
+      place: "LOS"
+  "Davido":
+    - year: 2018
+      score: 9
+      place: "LOS"
+    - year: 2019
+      score: 5
+      place: "LOS"
+    - year: 2022
+      score: 7
+      place: "BK"
+    - year: 2026
+      score: 8
+      place: "Afro+"
+  "Daler Mehndi":
+    - year: 2014
+      score: 9
+      place: "LOS"
+  "Diljit Dosanjh":
+    - score: 7
+      place: "Coachella"
+  "Don Toliver":
+    - score: 7
+      place: "Coachella"
+  "Drake":
+    - year: 2024
+      score: 9
+      place: "NJ"
+  "Fireboy DML":
+    - year: 2022
+      score: 8
+      place: "SF"
+  "Flo Milli":
+    - score: 7
+      place: "Coachella"
+  "Future":
+    - year: 2019
+      score: 8
+      place: "LOS"
+    - year: 2023
+      score: 7
+      place: "Coachella"
   "Mr Eazi":
     - year: 2021
       place: "Lost in Riddim"
   "Daniel Caesar":
-    - place: "Prospect Park"
+    - year: 2025
+      score: 9
+      place: "Prospect Park"
