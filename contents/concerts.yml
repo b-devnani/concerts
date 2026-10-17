@@ -12,8 +12,8 @@
 #   review        your write-up; shown behind "Read review", exactly as typed
 #   notes         short info shown on the card (e.g. "Doors 7 PM, 16+.")
 #   link          tickets or event page
-#   pronoun       he or she, for "I wish he'd played" and "A song I love by her" (leave out for bands and festivals)
-#   song          a song you love by the artist (upcoming shows get a play button)
+#   pronoun       he or she, for "I wish he'd played" (leave out for bands and festivals)
+#   song          your favorite song by the artist (upcoming shows get a play button)
 #   spotify       Spotify track link for that song, e.g. https://open.spotify.com/track/...
 #   length        that song's length, e.g. "3:27" (shown on the player before it plays)
 concerts:
@@ -25,7 +25,6 @@ concerts:
     country: USA
     genre: Jazz
     companions: TBD
-    notes: Doors 7 PM, 16+.
     link: https://www.axs.com/events/1493867/ezra-collective-tickets?skin=websterhall
     song: No One's Watching Me (feat. Olivia Dean)
     spotify: https://open.spotify.com/track/1omK6ocXd3Z19wiFpJmQ4J
@@ -52,7 +51,6 @@ concerts:
     country: USA
     genre: Afrobeats
     companions: TBD
-    notes: One Night Special with Maleek Berry, presented by Duke Concept.
     link: https://posh.vip/f/ef604
     song: Lost In The World
     spotify: https://open.spotify.com/track/6W2oq6ZRRnxNc1Pdpm1XKC
@@ -66,7 +64,6 @@ concerts:
     country: USA
     genre: R&B
     companions: TBD
-    notes: I Spent The Night With Brent Faiyaz tour.
     link: https://www.barclayscenter.com/events/detail/brent-faiyaz-2026
     song: Stay Down
     spotify: https://open.spotify.com/track/4mwiRPRAUSSFD6lJ86m98B

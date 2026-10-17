@@ -49,10 +49,9 @@
     }
 
     // "he" or "she" from the YAML; shows without one (bands, festivals) get wording that needs no pronoun.
-    const PRONOUNS = { he: { subject: 'he', object: 'him' }, she: { subject: 'she', object: 'her' } };
-    const pronounFor = concert => PRONOUNS[String(concert.pronoun || '').trim().toLowerCase()];
+    const pronounFor = concert => ({ he: 'he', she: 'she' })[String(concert.pronoun || '').trim().toLowerCase()] || '';
 
-    const ICONS ='<svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"/></svg><svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 5h4v14h-4zM13.5 5h4v14h-4z"/></svg>';
+    const ICONS = '<svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"/></svg><svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 5h4v14h-4zM13.5 5h4v14h-4z"/></svg>';
 
     // A song card with its own play/pause button, seek bar and times. On the live site it drives a hidden Spotify embed.
     function songPlayer(concert) {
@@ -64,14 +63,13 @@
         const href = escapeHtml(concert.spotify || `https://open.spotify.com/search/${encodeURIComponent(`${concert.artist} ${concert.song}`)}`);
         const length = parseLength(concert.length);
         const live = uri && !PREVIEW;
-        const pronoun = pronounFor(concert);
         const button = live
             ? `<button class="pp" type="button" aria-label="Play ${song}">${ICONS}</button>`
             : `<a class="pp" href="${href}" target="_blank" rel="noopener" aria-label="Play ${song} on Spotify">${ICONS}</a>`;
         return `<div class="player"${live ? ` data-uri="${uri}" data-length="${length}"` : ''}>
             ${button}
             <div class="pl-main">
-                <span class="pl-label">${pronoun ? `A song I love by ${pronoun.object}` : 'A song I love'}</span>
+                <span class="pl-label">My favorite song</span>
                 <div class="pl-top"><span class="pl-title">${song}</span><a class="pl-src" href="${href}" target="_blank" rel="noopener">Spotify ↗</a></div>
                 <div class="pl-bar"><span class="pl-cur">0:00</span><input class="pl-seek" type="range" min="0" max="${length || 100}" step="1" value="0" aria-label="Seek in ${song}"${live ? '' : ' disabled'}><span class="pl-dur">${length ? clock(length) : '--:--'}</span></div>
                 <div class="pl-note" hidden></div>
@@ -126,7 +124,7 @@
         const sets = [];
         if (concert.highlights) sets.push(`<div class="set"><dt>The highlights</dt><dd>${escapeHtml(asText(concert.highlights))}</dd></div>`);
         const pronoun = pronounFor(concert);
-        if (concert.wishlist) sets.push(`<div class="set miss"><dt>${pronoun ? `I wish ${pronoun.subject}'d played` : "I wish I'd heard"}</dt><dd>${escapeHtml(asText(concert.wishlist))}</dd></div>`);
+        if (concert.wishlist) sets.push(`<div class="set miss"><dt>${pronoun ? `I wish ${pronoun}'d played` : "I wish I'd heard"}</dt><dd>${escapeHtml(asText(concert.wishlist))}</dd></div>`);
         const opening = concert.review ? openingLine(concert.review) : '';
         const fullReview = concert.review && String(concert.review).trim() !== opening;
         const review = fullReview ? `<details class="review-body"><summary>Read my review</summary><div class="review-text">${paragraphs(concert.review)}</div></details>` : '';
