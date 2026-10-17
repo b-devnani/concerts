@@ -41,7 +41,7 @@ _Avoid_: A song I love, featured track
 ### Bhagya's verdict
 
 **Score**:
-Bhagya's whole-number verdict on a past show, out of 10.
+Bhagya's whole-number verdict, out of 10, on a past show or on a punch.
 _Avoid_: Rating, stars, ranking
 
 **Perfect 10**:
@@ -73,10 +73,13 @@ Every artist Bhagya has ever seen live, from before the diary began until now, e
 _Avoid_: Seen list, everyone I've seen, lifetime list
 
 **Punch**:
-One time Bhagya saw an artist live, like a hole punched in a card. It may carry where and when, if Bhagya remembers. Seeing an artist at a show adds a punch.
+One time Bhagya saw an artist live, like a hole punched in a card. It can carry the year, a score and the place, if Bhagya remembers them. Seeing the artist a show is for adds a punch; at a festival every artist gets one; openers never do.
 _Avoid_: Sighting, count, visit
 
 **Die-peacefully list**:
 The artists Bhagya still needs to see, shown under Bhagya's own heading, "Artists I need to see so I can die peacefully". An artist gets a ✅ once Bhagya has seen them.
 _Avoid_: Bucket list, wishlist (a wishlist is songs, not artists)
 
+**Tag-along list**:
+Artists Bhagya wouldn't mind seeing if the chance came up, shown under Bhagya's own heading, "artists i wouldnt mind tagging along to see". It can include artists Bhagya has already seen.
+_Avoid_: Maybe list (a Maybe is an upcoming show), second list

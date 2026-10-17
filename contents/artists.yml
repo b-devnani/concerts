@@ -1,6 +1,7 @@
 # Bhagya's all-time lists, exactly as Bhagya typed them (see docs/adr/0001). Do not tidy spelling or names.
 # seen: every artist Bhagya has seen live, in Bhagya's order. "(x3)" means seen three times.
-# need_to_see: Bhagya's list, under Bhagya's own heading. A ✅ means seen.
+# need_to_see: Bhagya's die-peacefully list, under Bhagya's own heading. A ✅ means seen.
+# tag_along: artists Bhagya wouldn't mind tagging along to see, under Bhagya's own heading.
 seen:
   - "Amine"
   - "Ayra Starr (x3)"
@@ -96,3 +97,11 @@ need_to_see:
     - "Rihanna (impossible)"
     - "Frank Ocean (ouch)"
     - "Chance the Rapper ✅"
+tag_along:
+  title: "artists i wouldnt mind tagging along to see"
+  artists:
+    - "Len"
+    - "luwa.mp4"
+    - "Don Toliver"
+    - "Gunna"
+    - "Ella Mai"
