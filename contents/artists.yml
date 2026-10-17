@@ -118,7 +118,7 @@ punch_details:
       score: 7
       place: "Coachella"
   "Amine":
-    - year: 2023
+    - year: 2022
       score: 10
       place: "Stanford"
   "Armaan Malik":
@@ -226,6 +226,17 @@ punch_details:
     - year: 2023
       score: 7
       place: "Coachella"
+  "G Herbo":
+    - year: 2018
+      score: 8
+      place: "Lolla"
+  "Gabzy":
+    - year: 2025
+      score: 9
+      place: "NYC"
+    - year: 2026
+      score: 8
+      place: "Afro+"
   "Mr Eazi":
     - year: 2021
       place: "Lost in Riddim"
