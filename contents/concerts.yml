@@ -8,11 +8,12 @@
 #   price         what you paid, e.g. "$35" or Free
 #   companions    who you went with ("Alone" shows as "Went solo")
 #   highlights    standout songs or moments
-#   wishlist      songs you wish they played
+#   wishlist      songs you wish the artist played
 #   review        your write-up; shown behind "Read review", exactly as typed
 #   notes         short info shown on the card (e.g. "Doors 7 PM, 16+.")
 #   link          tickets or event page
-#   song          a song you love by them (upcoming shows get a play button)
+#   pronoun       he or she, for "I wish he'd played" and "A song I love by her" (leave out for bands and festivals)
+#   song          a song you love by the artist (upcoming shows get a play button)
 #   spotify       Spotify track link for that song, e.g. https://open.spotify.com/track/...
 #   length        that song's length, e.g. "3:27" (shown on the player before it plays)
 concerts:
@@ -30,6 +31,7 @@ concerts:
     spotify: https://open.spotify.com/track/1omK6ocXd3Z19wiFpJmQ4J
     length: "4:22"
   - artist: Jorja Smith
+    pronoun: she
     date: 2026-11-21
     time: "20:00"
     venue: Kings Theatre
@@ -42,6 +44,7 @@ concerts:
     spotify: https://open.spotify.com/track/1OxL1FWSEd7QmJoWLRP2NO
     length: "3:02"
   - artist: Maleek Berry
+    pronoun: he
     date: 2026-11-25
     # time: "20:00"
     venue: SOB's
@@ -55,6 +58,7 @@ concerts:
     spotify: https://open.spotify.com/track/6W2oq6ZRRnxNc1Pdpm1XKC
     length: "3:17"
   - artist: Brent Faiyaz
+    pronoun: he
     date: 2026-12-03
     time: "20:00"
     venue: Barclays Center
@@ -68,6 +72,7 @@ concerts:
     spotify: https://open.spotify.com/track/4mwiRPRAUSSFD6lJ86m98B
     length: "3:27"
   - artist: Dave
+    pronoun: he
     date: 2026-05-01
     venue: Brooklyn Paramount
     city: Brooklyn
@@ -80,6 +85,7 @@ concerts:
     highlights: "The Boy Who Played The Harp, System, Verdansk, Screwface Capital"
     wishlist: "Law Of Attraction, Heart Attack, Lazarus"
   - artist: Odunsi (The Engine)
+    pronoun: he
     date: 2026-06-12
     time: "18:00"
     venue: SOB's
@@ -93,6 +99,7 @@ concerts:
     highlights: "falling, wanted you, SPORT, Gangsta Fear"
     wishlist: "Better Days, Tipsy, Desire"
   - artist: Ayra Starr (Starr Girl listening party)
+    pronoun: she
     date: 2026-08-05
     time: "19:00"
     venue: The DL (rooftop)
@@ -105,6 +112,7 @@ concerts:
     companions: Chinasa
     highlights: "Ms Paper was a madness on first listen"
   - artist: Chance the Rapper
+    pronoun: he
     date: 2026-08-08
     time: "19:00"
     venue: Ravinia
@@ -161,6 +169,7 @@ concerts:
     review: |-
       Whole experience reminded me how much I love nyc. It didn’t seem like something that was supposed to be (or could be) perfectly organized. Very impressive to see how someone gathered every young saxophonist in the city and pulled that off. In Unison, they all sounded really fkn good
   - artist: Santi (K.O.T.B listening party)
+    pronoun: he
     date: 2026-10-10
     venue: Le Père
     city: New York
