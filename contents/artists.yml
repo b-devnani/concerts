@@ -205,10 +205,12 @@ punch_details:
       score: 9
       place: "LOS"
   "Diljit Dosanjh":
-    - score: 7
+    - year: 2023
+      score: 7
       place: "Coachella"
   "Don Toliver":
-    - score: 7
+    - year: 2023
+      score: 7
       place: "Coachella"
   "Drake":
     - year: 2024
@@ -219,7 +221,8 @@ punch_details:
       score: 8
       place: "SF"
   "Flo Milli":
-    - score: 7
+    - year: 2023
+      score: 7
       place: "Coachella"
   "Future":
     - year: 2019
