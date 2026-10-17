@@ -1,7 +1,8 @@
 # Bhagya's all-time lists, exactly as Bhagya typed them (see docs/adr/0001). Do not tidy spelling or names.
 # seen: every artist Bhagya has seen live, in Bhagya's order. "(x3)" means seen three times.
 # need_to_see: Bhagya's die-peacefully list, under Bhagya's own heading. A ✅ here means seen; the page shows it crossed out.
-# tag_along: artists Bhagya wouldn't mind tagging along to see, under Bhagya's own heading.
+# tag_along: artists Bhagya wouldn't mind tagging along to see, under Bhagya's own heading. Bhagya asked for these names in each
+#   artist's own styling (as on Spotify), so this list is the one place names aren't as typed.
 # punch_details: what Bhagya remembers about older punches (year, score out of 10, place, note), keyed by the name as typed in seen.
 #   Punches from diary shows fill themselves in; these are the ones from before the diary.
 seen:
@@ -74,7 +75,7 @@ seen:
   - "Maleek Berry"
   - "Odeal (x3)"
   - "Odunsi the Engine (x2)"
-  - "Daniel Caesar (Prospect Park 😫)"
+  - "Daniel Caesar"
   - "Tiakola"
   - "Gunna"
   - "Central Cee"
@@ -105,13 +106,13 @@ tag_along:
   title: "artists i wouldnt mind tagging along to see"
   artists:
     - "Len"
-    - "luwa.mp4"
+    - "Luwa.Mp4"
     - "Don Toliver"
     - "Gunna"
     - "Ella Mai"
-    - "jhene aiko"
-    - "zaylevelten"
-    - "amaria bb"
+    - "Jhené Aiko"
+    - "Zaylevelten"
+    - "AMARIA BB"
 punch_details:
   "A Boogie With a Hoodie":
     - year: 2023
@@ -383,7 +384,7 @@ punch_details:
       score: 6
       place: "Coachella"
   "Ruger":
-    - year: 2025
+    - year: 2023
       score: 9
       place: "CHI"
     - year: 2026
