@@ -65,3 +65,18 @@ _Avoid_: Write-up, notes, verdict
 
 **Pull quote**:
 The first sentence of a review, shown large.
+
+### All-time lists
+
+**Artists I've seen**:
+Every artist Bhagya has ever seen live, from before the diary began until now, each with one punch per time seen. Kept in Bhagya's own order and spelling.
+_Avoid_: Seen list, everyone I've seen, lifetime list
+
+**Punch**:
+One time Bhagya saw an artist live, like a hole punched in a card. It may carry where and when, if Bhagya remembers. Seeing an artist at a show adds a punch.
+_Avoid_: Sighting, count, visit
+
+**Die-peacefully list**:
+The artists Bhagya still needs to see, shown under Bhagya's own heading, "Artists I need to see so I can die peacefully". An artist gets a ✅ once Bhagya has seen them.
+_Avoid_: Bucket list, wishlist (a wishlist is songs, not artists)
+
