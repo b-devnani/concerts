@@ -14,6 +14,10 @@ _Avoid_: Home, main page, tab
 The all-time side: the die-peacefully list, the tag-along list, then the artists I've seen.
 _Avoid_: Archive, second page, tab
 
+**Introduction**:
+Bhagya's own words near the top of side A, telling visitors from Instagram who Bhagya is and how the obsession started, exactly as typed.
+_Avoid_: Bio, about, intro text
+
 **Summer arc**:
 Bhagya's Spotify playlist; a random song from it plays at the top of side A.
 _Avoid_: Station, radio, mix

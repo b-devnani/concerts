@@ -2,6 +2,8 @@
 # seen: every artist Bhagya has seen live, in Bhagya's order. "(x3)" means seen three times.
 # need_to_see: Bhagya's die-peacefully list, under Bhagya's own heading. A ✅ means seen.
 # tag_along: artists Bhagya wouldn't mind tagging along to see, under Bhagya's own heading.
+# punch_details: what Bhagya remembers about older punches (year, score out of 10, place), keyed by the name as typed in seen.
+#   Punches from diary shows fill themselves in; these are the ones from before the diary.
 seen:
   - "Amine"
   - "Ayra Starr (x3)"
@@ -105,3 +107,7 @@ tag_along:
     - "Don Toliver"
     - "Gunna"
     - "Ella Mai"
+punch_details:
+  "Mr Eazi":
+    - year: 2021
+      place: "lost in riddim"
