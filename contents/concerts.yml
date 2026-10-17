@@ -9,6 +9,7 @@
 #   rating        score out of 10
 #   price         what you paid, e.g. "$35" or Free
 #   companions    your friends, exactly as you typed them ("Alone" shows as "I went solo")
+#   hook          one line that sums up a past show, shown on its row under Been there (exactly as typed)
 #   highlights    standout songs or moments
 #   wishlist      songs you wish the artist played
 #   review        your write-up; shown behind "Read review", exactly as typed
@@ -98,6 +99,7 @@ concerts:
     country: USA
     genre: UK Rap
     status: Attended
+    hook: "Dave is the best lyricist ever. the crowd was truly deeping it. Free Palestine, Free Sudan, Free Congo"
     rating: 9
     price: "$60 ish"
     companions: Deep, Pelumi n nem
@@ -113,6 +115,7 @@ concerts:
     country: USA
     genre: Afrobeats, Alté
     status: Attended
+    hook: "literally all my friends in nyc were there and i captured some beautiful moments of all of us + odunsi. i could look back & cry"
     rating: 10
     price: "$35"
     companions: loads of friends
@@ -128,6 +131,7 @@ concerts:
     country: USA
     genre: Afrobeats
     status: Attended
+    hook: "Ms Paper was a madness on first listen"
     rating: 7
     price: Free
     companions: Chinasa
@@ -142,6 +146,7 @@ concerts:
     country: USA
     genre: Hip-Hop
     status: Attended
+    hook: "my washed goat reminded me of the good times"
     rating: 7
     price: "$50"
     companions: Ghosh & Priya
@@ -156,6 +161,7 @@ concerts:
     country: USA
     genre: Blues
     status: Attended
+    hook: "saw a rlly old couple dancing and said goals"
     rating: 6
     price: Free
     companions: Tinu
@@ -170,6 +176,7 @@ concerts:
     country: USA
     genre: Afrobeats, Dancehall
     status: Attended
+    hook: "so chaotic, so fun"
     rating: 10
     price: "$600"
     companions: Saahith sparsh swe n more
@@ -188,6 +195,7 @@ concerts:
     country: USA
     genre: Saxophone jam
     status: Attended
+    hook: "great reminder of how much i love nyc"
     rating: 9
     price: Free
     companions: Alone
@@ -202,6 +210,7 @@ concerts:
     country: USA
     genre: Alté
     status: Attended
+    hook: "craziest 10 mins of the summer"
     rating: 7
     price: Free
     companions: Kwesi Adwoa n more

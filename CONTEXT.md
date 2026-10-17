@@ -74,6 +74,10 @@ _Avoid_: Setlist, best songs
 Songs Bhagya wishes the artist had played at a past show.
 _Avoid_: Missing songs, requests
 
+**Hook**:
+Bhagya's one-line take on a past show, shown in full on its row under "been there". Tapping the row opens everything else: highlights, wishlist, friends, price and the review.
+_Avoid_: Summary, tagline, pull quote
+
 **Review**:
 What Bhagya wrote about a past show, in Bhagya's own words. Optional: most past shows get one, some only get a score.
 _Avoid_: Write-up, notes, verdict
