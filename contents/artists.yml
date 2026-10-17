@@ -17,7 +17,7 @@ seen:
   - "Joeboy"
   - "Mr Eazi"
   - "Burna Boy (x6)"
-  - "Wizkid (x2)"
+  - "Wizkid (x3)"
   - "Davido (x4)"
   - "Mayorkun"
   - "Peruzzi"
@@ -31,7 +31,7 @@ seen:
   - "Tekno"
   - "Shenseea"
   - "Tems (x2)"
-  - "Omah Lay (x2)"
+  - "Omah Lay"
   - "Daler Mehndi"
   - "Armaan Malik"
   - "D’Banj"
@@ -187,6 +187,14 @@ punch_details:
     - year: 2018
       score: 7
       place: "LOS"
+  "Daler Mehndi":
+    - year: 2014
+      score: 9
+      place: "LOS"
+  "Daniel Caesar":
+    - year: 2025
+      score: 9
+      place: "Prospect Park"
   "Davido":
     - year: 2018
       score: 9
@@ -200,10 +208,6 @@ punch_details:
     - year: 2026
       score: 8
       place: "Afro+"
-  "Daler Mehndi":
-    - year: 2014
-      score: 9
-      place: "LOS"
   "Diljit Dosanjh":
     - year: 2023
       score: 7
@@ -242,10 +246,160 @@ punch_details:
     - year: 2026
       score: 8
       place: "Afro+"
+  "Giveon":
+    - year: 2022
+      score: 7
+      place: "BK"
+  "Glass Animals":
+    - score: 4
+      place: "BK Mirage"
+  "Glorilla":
+    - score: 6
+      place: "Coachella"
+  "Gunna":
+    - year: 2025
+      score: 8
+      place: "Red Bull"
+  "Jaden Smith":
+    - score: 6
+      place: "Lolla"
+  "Kali Uchis":
+    - score: 6
+      place: "Coachella"
+  "Kelvin Momo":
+    - year: 2026
+      score: 9
+      place: "Afro+"
+  "Kenny Beats":
+    - score: 5
+      place: "Coachella"
+  "Khalid":
+    - score: 8
+      place: "Lolla"
+  "Labrynth w Zendaya":
+    - score: 6
+      place: "Coachella"
+  "Lil Baby":
+    - year: 2026
+      score: 7
+      place: "Afro+"
+  "Lil Wayne":
+    - score: 7
+      place: "NJ"
+  "Lil Yachty":
+    - score: 7
+      place: "UIUC"
+  "Maleek Berry":
+    - score: 7
+      place: "BK"
+  "Mannywellz":
+    - score: 8
+      place: "NYC"
+  "Mariah the Scientist":
+    - score: 6
+      place: "DC"
   "Mr Eazi":
     - year: 2021
+      score: 10
       place: "Lost in Riddim"
-  "Daniel Caesar":
+  "NeYo":
+    - year: 2022
+      score: 8
+      place: "NYC"
+      note: "private club"
+  "Nicki Minaj":
+    - year: 2022
+      score: 6
+      place: "VMAs"
+  "obongjayar":
     - year: 2025
+      score: 6
+  "Odeal":
+    - year: 2024
+      score: 10
+      place: "SOB's"
+    - year: 2025
+      score: 7
+      place: "Soulection"
+    - year: 2026
+      score: 6
+      place: "Afro+"
+  "Odumodublvck":
+    - year: 2024
+      score: 8
+      place: "NYC"
+  "Offset":
+    - score: 7
+      place: "Coachella"
+  "Olamide":
+    - year: 2026
       score: 9
-      place: "Prospect Park"
+      place: "Afro+"
+  "Omah Lay":
+    - year: 2022
+      score: 9
+      place: "NYC"
+  "Peruzzi":
+    - year: 2018
+      score: 8
+      place: "LOS"
+  "Rae Sremmund":
+    - score: 7
+      place: "Coachella"
+  "Reekado Banks":
+    - year: 2018
+      score: 7
+      place: "LOS"
+  "Rema":
+    - year: 2019
+      score: 7
+      place: "LOS"
+    - year: 2021
+      score: 7
+      place: "Lost in Riddim"
+    - year: 2022
+      score: 10
+      place: "NYC"
+    - year: 2023
+      score: 8
+      place: "NYC"
+    - year: 2024
+      score: 8
+      place: "NYC"
+      note: "HEIS Listening party"
+  "Rosalia":
+    - score: 6
+      place: "Coachella"
+  "Ruger":
+    - score: 9
+      place: "CHI"
+    - year: 2026
+      score: 8
+      place: "Afro+"
+  "Sexyy Redd":
+    - year: 2026
+      score: 8
+      place: "Afro+"
+  "Shenseea":
+    - score: 7
+      place: "Lost in Riddim"
+  "Show dem Camp":
+    - year: 2023
+      score: 8
+      place: "CHI"
+  "Snoh Aalegra":
+    - year: 2022
+      score: 10
+      place: "NYC"
+  "T-Pain":
+    - score: 8
+      place: "UIUC"
+  "Wizkid":
+    - year: 2018
+      score: 8
+      place: "LOS"
+    - year: 2021
+      score: 9
+      place: "Lost in Riddim"
+    - score: 7
+      place: "Afro+"
