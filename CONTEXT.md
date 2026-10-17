@@ -7,7 +7,7 @@ A personal record of every show Bhagya goes to: what's upcoming, and what Bhagya
 ### The record
 
 **Side A**:
-The now side: a small summer arc player, the upcoming shows, then this year's past shows. The introduction opens from a button in its top-left corner.
+The now side: a small player (songs from summer arc), the upcoming shows, then this year's past shows. The introduction opens from a button in its top-left corner.
 _Avoid_: Home, main page, tab
 
 **Side B**:
@@ -19,7 +19,7 @@ Bhagya's own words, telling visitors from Instagram who Bhagya is and how the ob
 _Avoid_: Bio, about, intro text
 
 **Summer arc**:
-Bhagya's Spotify playlist; a random song from it plays at the top of side A.
+Bhagya's Spotify playlist; a random song from it plays at the top of side A. The page never names it.
 _Avoid_: Station, radio, mix
 
 ### Shows
