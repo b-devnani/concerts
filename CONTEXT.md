@@ -30,6 +30,10 @@ _Avoid_: Act, performer, headliner
 How the diary refers to a solo artist: he or she. Bands and events get wording that needs no pronoun.
 _Avoid_: They (for a solo artist)
 
+**Friends**:
+The people Bhagya goes to a show with. Not decided yet for most upcoming shows; nobody for a show Bhagya went to alone.
+_Avoid_: Companions, crew, company
+
 **Favorite song**:
 The one song by the artist that Bhagya loves most, attached to an upcoming show so visitors can play it.
 _Avoid_: A song I love, featured track
@@ -51,5 +55,9 @@ _Avoid_: Setlist, best songs
 Songs Bhagya wishes the artist had played at a past show.
 _Avoid_: Missing songs, requests
 
+**Review**:
+What Bhagya wrote about a past show, in Bhagya's own words. Optional: most past shows get one, some only get a score.
+_Avoid_: Write-up, notes, verdict
+
 **Pull quote**:
-The first sentence of what Bhagya wrote about a past show, shown large.
+The first sentence of a review, shown large.
