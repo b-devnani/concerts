@@ -37,7 +37,7 @@ An upcoming show Bhagya hasn't committed to. Every other upcoming show is a defi
 _Avoid_: Tentative, pending
 
 **Past show**:
-A show that has already happened.
+A show that has already happened. Its section is called "been there".
 _Avoid_: Attended show, old show
 
 **Artist**:
@@ -78,8 +78,6 @@ _Avoid_: Missing songs, requests
 What Bhagya wrote about a past show, in Bhagya's own words. Optional: most past shows get one, some only get a score.
 _Avoid_: Write-up, notes, verdict
 
-**Pull quote**:
-The first sentence of a review, shown large.
 
 ### All-time lists
 

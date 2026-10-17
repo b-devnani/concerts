@@ -97,13 +97,6 @@
         </li>`;
     }
 
-    // The first sentence of a review, word for word, used as the pull quote.
-    function openingLine(text) {
-        const line = String(text).split('\n').find(part => part.trim()) || '';
-        const match = line.match(/^.*?[.!?](?=\s|$)/);
-        return (match ? match[0] : line).trim();
-    }
-
     // "I went with Deep, Pelumi & Nem and paid ~$60."
     function story(concert) {
         const company = concert.companions;
@@ -125,9 +118,7 @@
         if (concert.highlights) sets.push(`<div class="set"><dt>The highlights</dt><dd>${escapeHtml(asText(concert.highlights))}</dd></div>`);
         const pronoun = pronounFor(concert);
         if (concert.wishlist) sets.push(`<div class="set miss"><dt>${pronoun ? `I wish ${pronoun}'d played` : "I wish I'd heard"}</dt><dd>${escapeHtml(asText(concert.wishlist))}</dd></div>`);
-        const opening = concert.review ? openingLine(concert.review) : '';
-        const fullReview = concert.review && String(concert.review).trim() !== opening;
-        const review = fullReview ? `<details class="review-body"><summary>Read my review</summary><div class="review-text">${paragraphs(concert.review)}</div></details>` : '';
+        const review = concert.review && String(concert.review).trim() ? `<details class="review-body"><summary>Read my review</summary><div class="review-text">${paragraphs(concert.review)}</div></details>` : '';
         const notes = concert.notes ? `<div class="review-text">${paragraphs(concert.notes)}</div>` : '';
         const sentence = story(concert);
         return `<article class="review">
@@ -139,7 +130,6 @@
                     <div class="review-sub">${escapeHtml(concert.venue)}, ${escapeHtml(concert.city)} · ${escapeHtml(when)}</div>
                 </div>
             </div>
-            ${opening ? `<blockquote class="pull">“${escapeHtml(opening)}”</blockquote>` : ''}
             ${sentence ? `<p class="story">${sentence}</p>` : ''}
             ${sets.length ? `<dl class="sets">${sets.join('')}</dl>` : ''}
             ${notes}${review}

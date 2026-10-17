@@ -155,7 +155,6 @@ main { display: grid; gap: 4rem; padding-block: 3.5rem 5rem; }
 .review-kicker { align-items: center; display: flex; flex-wrap: wrap; gap: .35rem .75rem; }
 .review-title { font-family: var(--display); font-size: clamp(2rem, 7vw, 2.9rem); font-weight: 700; letter-spacing: -.02em; line-height: 1; margin: .35rem 0 .3rem; overflow-wrap: anywhere; text-transform: uppercase; text-wrap: balance; }
 .review-sub { color: var(--muted); }
-.pull { border-left: 4px solid var(--accent); font-family: var(--display); font-size: clamp(1.45rem, 5vw, 1.9rem); font-weight: 200; letter-spacing: -.02em; line-height: 1.2; margin: .2rem 0; max-width: 34ch; padding-left: 1rem; }
 .story { font-size: 1.08rem; margin: 0; max-width: 40rem; }
 .sets { display: grid; gap: .9rem; margin: 0; }
 .set { display: grid; gap: .2rem; }
