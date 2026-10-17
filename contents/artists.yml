@@ -9,7 +9,7 @@ seen:
   - "Amine"
   - "Ayra Starr (x3)"
   - "YG"
-  - "Wurld"
+  - "Wurld (x2)"
   - "Snoh Aalegra"
   - "Victoria Monet"
   - "Future (x2)"
@@ -39,7 +39,7 @@ seen:
   - "Reekado Banks"
   - "Mannywellz"
   - "A Boogie With a Hoodie"
-  - "Wande Coal"
+  - "Wande Coal (x2)"
   - "Rosalia"
   - "Kenny Beats"
   - "Umi"
@@ -65,7 +65,7 @@ seen:
   - "Kodak Black"
   - "Brent Faiyaz"
   - "Crayon"
-  - "Victony"
+  - "Victony (x2)"
   - "Ruger (x2)"
   - "Bnxn"
   - "Lil Durk"
@@ -157,16 +157,22 @@ punch_details:
       place: "DC"
   "Burna Boy":
     - year: 2017
+      score: 9
       place: "LOS"
     - year: 2018
+      score: 8
       place: "LOS"
     - year: 2019
+      score: 8
       place: "CHI"
     - year: 2021
+      score: 9
       place: "LID"
     - year: 2023
+      score: 6
       place: "OAK"
     - year: 2023
+      score: 7
       place: "Coachella"
   "Central Cee":
     - year: 2025
@@ -182,6 +188,7 @@ punch_details:
       place: "DC"
   "Crayon":
     - year: 2023
+      score: 7
       place: "NYC"
       note: "Opener with Rema"
   "D’Banj":
@@ -267,6 +274,14 @@ punch_details:
     - year: 2018
       score: 6
       place: "Lolla"
+  "Joeboy":
+    - year: 2021
+      score: 6
+      place: "LID"
+  "Juls":
+    - year: 2022
+      score: 8
+      place: "NYC"
   "Kali Uchis":
     - year: 2023
       score: 6
@@ -283,6 +298,10 @@ punch_details:
     - year: 2018
       score: 8
       place: "Lolla"
+  "Kodak Black":
+    - year: 2023
+      score: 3
+      place: "DC"
   "Labrynth w Zendaya":
     - year: 2023
       score: 6
@@ -291,6 +310,10 @@ punch_details:
     - year: 2026
       score: 7
       place: "Afro+"
+  "Lil Durk":
+    - year: 2024
+      score: 5
+      place: "NJ"
   "Lil Wayne":
     - year: 2024
       score: 7
@@ -308,6 +331,10 @@ punch_details:
   "Mariah the Scientist":
     - score: 6
       place: "DC"
+  "Mayorkun":
+    - year: 2018
+      score: 8
+      place: "LOS"
   "Mr Eazi":
     - year: 2021
       score: 10
@@ -336,6 +363,10 @@ punch_details:
       place: "Afro+"
   "Odumodublvck":
     - year: 2024
+      score: 8
+      place: "NYC"
+  "Odunsi the Engine":
+    - year: 2025
       score: 8
       place: "NYC"
   "Offset":
@@ -410,6 +441,52 @@ punch_details:
     - year: 2018
       score: 8
       place: "UIUC"
+  "Tekno":
+    - year: 2017
+      score: 6
+      place: "LOS"
+  "Tems":
+    - year: 2021
+      score: 5
+      place: "LID"
+    - year: 2026
+      score: 6
+      place: "Afro+"
+  "The Weeknd":
+    - year: 2023
+      score: 7
+      place: "Coachella"
+  "Tiakola":
+    - score: 7
+      place: "Red Bull"
+  "Travis Scott":
+    - score: 5
+      place: "Lolla"
+  "Umi":
+    - year: 2023
+      score: 8
+      place: "Coachella"
+  "Vic Mensa":
+    - score: 8
+      place: "UIUC"
+  "Victony":
+    - year: 2024
+      score: 6
+      place: "NYC"
+    - year: 2026
+      score: 7
+      place: "Afro+"
+  "Victoria Monet":
+    - year: 2022
+      score: 6
+      place: "Stanford"
+  "Wande Coal":
+    - year: 2022
+      score: 8
+      place: "BK"
+    - year: 2024
+      score: 7
+      place: "NYC"
   "Wizkid":
     - year: 2018
       score: 8
@@ -420,3 +497,14 @@ punch_details:
     - year: 2026
       score: 7
       place: "Afro+"
+  "Wurld":
+    - year: 2022
+      score: 7
+      place: "NYC"
+    - year: 2022
+      score: 5
+      place: "Central Park"
+  "YG":
+    - year: 2022
+      score: 2
+      place: "Stanford"

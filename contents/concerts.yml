@@ -4,7 +4,7 @@
 # Fields (all optional except artist and date):
 #   artist, date (YYYY-MM-DD), end_date (multi-day festivals), time ("20:00"),
 #   venue, city, country, genre,
-#   place         short label for punch cards: MSG, BK, NYC, NJ, DC, CHI, LOS, OAK, SF, India, VMAs, Afro+, Stanford, Coachella, Lolla, LID (Lost in Riddim), UIUC, SOB's, Soulection, Barclays, Red Bull
+#   place         short label for punch cards: MSG, BK, NYC, NJ, DC, CHI, LOS, OAK, SF, India, VMAs, Afro+, Stanford, Coachella, Lolla, LID (Lost in Riddim), UIUC, SOB's, Soulection, Central Park, Barclays, Red Bull
 #   status        Maybe for a show you might go to (it gets a "Maybe" tag); leave out when you're definitely going
 #   rating        score out of 10
 #   price         what you paid, e.g. "$35" or Free
@@ -109,7 +109,7 @@ concerts:
     time: "18:00"
     venue: SOB's
     city: New York
-    place: NYC
+    place: SOB's
     country: USA
     genre: Afrobeats, Alté
     status: Attended
