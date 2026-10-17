@@ -47,6 +47,10 @@ _Avoid_: Rating, stars, ranking
 **Perfect 10**:
 A past show with a score of 10.
 
+**Price**:
+What Bhagya paid to get into a past show, or "free". Shown publicly.
+_Avoid_: Cost, ticket price
+
 **Highlights**:
 The songs or moments from a past show that hit hardest, in Bhagya's words.
 _Avoid_: Setlist, best songs
