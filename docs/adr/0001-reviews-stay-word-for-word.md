@@ -1,9 +1,3 @@
-# 1. Reviews stay word for word
+# Bhagya's words are never edited
 
-**Status:** Accepted
-
-**Context:** Bhagya writes reviews, highlights and wishlists casually ("abt", "asf", "reallllly", lowercase names). An early version tidied the spelling and capitalisation, and Bhagya asked for it to be undone: "Do not edit my reviews put them exactly like that."
-
-**Decision:** Reviews, highlights and wishlists are stored and shown exactly as typed. No spelling, grammar, capitalisation or punctuation fixes, in the data or in the design (no CSS text-transform on them either).
-
-**Consequences:** Any redesign has to look right with messy, real text of any length. Only Bhagya changes these words.
+Reviews, highlights and wishlists are shown exactly as Bhagya typed them: casual spelling ("abt", "asf", "reallllly"), lowercase names and all. An early version tidied them and Bhagya asked for it to be undone ("Do not edit my reviews put them exactly like that"), so nobody should "fix" this text, in the data or with styling such as forced capitalisation.
