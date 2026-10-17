@@ -11,6 +11,8 @@ Everything on the page comes from the files in [`contents/`](contents); edit one
 - [`intro.yml`](contents/intro.yml): the intro, the song "Hollup" plays, my photo, and the photo credits.
 - [`playlist.yml`](contents/playlist.yml): the songs the bottom player shuffles through.
 
+The player plays Spotify's 30-second clip of each song. After adding a song with a `spotify:` link, run `python3 tools/clips.py` to fill in its clip (`preview:`); without one, tapping play opens the song on Spotify.
+
 Words are shown exactly as typed ([docs/adr/0001](docs/adr/0001-reviews-stay-word-for-word.md)). [`CONTEXT.md`](CONTEXT.md) explains the terms.
 
 ## Pictures

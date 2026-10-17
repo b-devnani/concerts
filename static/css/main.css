@@ -136,9 +136,8 @@ body { background: #121212; margin: 0; }
 
 /* the dock: a past show's sheet and the player, stuck to the bottom of the screen */
 .mx-dock { bottom: 0; display: grid; gap: 6px; padding: 0 8px 8px; padding-bottom: max(8px, env(safe-area-inset-bottom)); position: sticky; z-index: 7; }
-/* about hides the player, but Spotify's hidden player stays put so a song started there keeps playing */
-.app.is-about .mx-dock { padding: 0; }
-.app.is-about .mx-dock :is(.mx-sheet, .pl-mini-in) { display: none; }
+/* about hides the player; a song started there (Hollup) keeps playing */
+.app.is-about .mx-dock { display: none; }
 .mx-sheet { animation: up .3s cubic-bezier(.2,.8,.2,1) both; background: var(--sheet); border-radius: 18px 18px var(--r) var(--r); box-shadow: 0 -12px 40px rgba(0,0,0,.35); color: var(--fg); max-height: min(560px, 72vh); overflow-y: auto; overscroll-behavior: contain; padding: 8px 18px 18px; position: relative; }
 .mx-grab { background: var(--s3); border-radius: 3px; height: 4px; margin: 0 auto 10px; width: 38px; }
 .mx-x { background: var(--s2); border: 0; border-radius: 50%; color: var(--fg); cursor: pointer; display: grid; height: 40px; place-items: center; position: absolute; right: 12px; top: 12px; width: 40px; z-index: 1; }
@@ -158,7 +157,7 @@ body { background: #121212; margin: 0; }
 .mx-rev summary::-webkit-details-marker { display: none; }
 .mx-rev p { font-size: 14.5px; margin: 0 0 10px; }
 
-/* the player: swipe the song for another; play runs a hidden Spotify player */
+/* the player: swipe the song for another; play plays the song's 30-second clip */
 .pl-mini-in { align-items: center; background: var(--mini); border-radius: var(--r); box-shadow: 0 8px 24px rgba(0,0,0,.35); color: var(--mini-ink); display: grid; gap: 10px; grid-template-columns: 40px minmax(0, 1fr) auto auto; min-height: 56px; overflow: hidden; padding: 8px; position: relative; transition: background .35s; }
 .pl-mini-swipe { align-items: center; cursor: grab; display: grid; gap: 10px; grid-column: 1 / 3; grid-template-columns: 40px minmax(0, 1fr); touch-action: pan-y; user-select: none; }
 .pl-mini-swipe.is-drag { cursor: grabbing; }
@@ -174,10 +173,6 @@ body { background: #121212; margin: 0; }
 .pl-icon svg { fill: currentColor; height: 20px; width: 20px; }
 .pl-mini-bar { background: currentColor; bottom: 0; height: 2px; left: 8px; opacity: .2; position: absolute; right: 8px; }
 .pl-mini-bar i { background: currentColor; display: block; height: 100%; opacity: 1; width: var(--pct, 0%); }
-/* Spotify's own player stays out of sight unless a phone won't start it from our button */
-.mx-embed { height: 1px; left: 0; opacity: 0; overflow: hidden; pointer-events: none; position: absolute; top: 0; width: 1px; }
-.mx-dock.show-embed .mx-embed { height: auto; opacity: 1; pointer-events: auto; position: static; width: auto; }
-.mx-embed iframe { border: 0; border-radius: 12px; display: block; height: 80px; width: 100%; }
 
 /* side B: filter chips, the two lists, and every artist I've seen */
 .pl-b-head { padding: 58px 16px 6px; }

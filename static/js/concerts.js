@@ -64,7 +64,7 @@
     const up = shows.filter(isUp).sort((a, b) => utc(a.date) - utc(b.date)).map(c => ({
       artist: c.artist, date: c.date, time: c.time, venue: c.venue, city: c.city,
       maybe: String(c.status || '').toLowerCase() === 'maybe', friends: c.companions, tickets: c.link,
-      song: c.song, songId: trackId(c.spotify), length: c.length, photo: artistPhoto(c.artist)
+      song: c.song, songId: trackId(c.spotify), preview: c.preview || null, length: c.length, photo: artistPhoto(c.artist)
     }));
     const past = shows.filter(c => !isUp(c)).sort((a, b) => utc(b.date) - utc(a.date)).map(c => ({
       artist: c.artist, date: c.date, endDate: c.end_date || null, venue: c.venue, city: c.city, genre: c.genre,
@@ -106,7 +106,7 @@
       const p = a.punches.find(p => p && String(p.year) === String(fc.year) && p.place === fc.place) || {};
       return { name: fc.artist, photo: artistPhoto(fc.artist), year: fc.year, place: fc.venue || fc.place, score: p.score ?? null, rank: fc.rank, review: fc.review };
     });
-    const songOf = s => s && { title: s.title, artists: s.artists, id: trackId(s.spotify), length: s.length };
+    const songOf = s => s && { title: s.title, artists: s.artists, id: trackId(s.spotify), preview: s.preview || null, length: s.length };
     const intro = introDoc || {};
     return {
       intro: intro.intro || '', me: intro.photo || null, hollup: songOf(intro.hollup), credits: intro.credits || '',
@@ -412,11 +412,13 @@
   }
 
   /* ---------- the player: the bar at the bottom is the only one ---------- */
-  // Songs play through Spotify's embed (docs/adr/0002): visitors who aren't signed in hear Spotify's 30-second clip.
+  // It plays Spotify's own 30-second clip of each song (the song's `preview` link) in the page, so nothing else ever
+  // shows up to play it (docs/adr/0002). A song without a clip opens on Spotify instead.
   let queue = [], cur = null;
   const history = [];
-  const state = { on: false, started: false, uri: null };
-  const uriOf = s => 'spotify:track:' + s.id;
+  const audio = new Audio();
+  audio.preload = 'none';
+  let loaded = null; // the id of the song in the audio element
   function randomSong() { let s = cur; while (queue.length > 1 && s === cur) s = queue[Math.floor(Math.random() * queue.length)]; return s || queue[0]; }
   function mini() {
     return `<div class="pl-mini-swipe" aria-roledescription="swipe to change song" tabindex="0"><span class="pl-mini-cover"></span><div style="min-width:0"><div class="pl-mini-t"></div><div class="pl-mini-a"></div></div></div>
@@ -427,11 +429,11 @@
   const songFor = key => {
     if (key === 'hollup') return D.hollup;
     const s = /^up-\d+$/.test(key || '') ? D.up[Number(key.slice(3))] : null;
-    return s && s.songId ? { title: s.song, artists: s.artist, id: s.songId, length: s.length } : null;
+    return s && s.songId ? { title: s.song, artists: s.artist, id: s.songId, preview: s.preview, length: s.length } : null;
   };
   function showState() {
     if (!cur) return;
-    const on = state.on && state.uri === uriOf(cur);
+    const on = !audio.paused && loaded === cur.id;
     const btn = $('.pl-mini-play');
     btn.innerHTML = on ? PAUSE : PLAY;
     btn.classList.toggle('is-on', on);
@@ -495,95 +497,38 @@
   function setSong(s, record = true) {
     if (!s || (cur && s.id === cur.id)) return;
     if (record && cur) history.push(cur);
-    const keepPlaying = state.on;
+    const keepPlaying = !audio.paused;
     cur = s; paintSong();
-    if (keepPlaying) startPlaying();
-    else if (embedShown()) cue(); // Spotify's player is showing: put the new song in it, ready to tap
+    if (keepPlaying) play(); else audio.pause();
   }
   const nextSong = () => setSong(randomSong());
   const prevSong = () => { if (history.length) setSong(history.pop(), false); };
 
-  // Spotify's embed API: https://developer.spotify.com/documentation/embeds/references/iframe-api
-  let apiPromise = null, apiFailed = false, ctrlPromise = null, onReady = null, watchdog = 0;
-  function loadApi() {
-    if (!apiPromise) {
-      apiPromise = new Promise((resolve, reject) => {
-        window.onSpotifyIframeApiReady = resolve;
-        const script = document.createElement('script');
-        script.src = 'https://open.spotify.com/embed/iframe-api/v1';
-        script.async = true;
-        script.onerror = () => reject(new Error('Spotify did not load'));
-        document.head.appendChild(script);
-        setTimeout(() => reject(new Error('Spotify took too long')), 10000);
-      });
-      apiPromise.catch(() => { apiFailed = true; });
-    }
-    return apiPromise;
-  }
-  function controller() {
-    if (!ctrlPromise) {
-      ctrlPromise = loadApi().then(api => new Promise(resolve => {
-        state.uri = uriOf(cur);
-        api.createController($('.mx-embed > div'), { uri: state.uri, width: '100%', height: 80 }, c => {
-          c.addListener('ready', () => { if (onReady) { const f = onReady; onReady = null; f(); } resolve(c); });
-          c.addListener('playback_update', e => progress(e.data));
-          setTimeout(() => resolve(c), 4000);
-        });
-      }));
-    }
-    return ctrlPromise;
-  }
-  function progress(d) {
-    const dur = d.duration / 1000, pos = Math.min(d.position / 1000, dur || Infinity);
-    const ended = dur > 0 && pos >= dur - 0.3;
-    state.on = !d.isPaused && !ended;
-    if (state.on) { state.started = true; clearTimeout(watchdog); $('.mx-dock').classList.remove('show-embed'); $('.pl-mini-play').classList.remove('is-loading'); }
-    $('.pl-mini-bar i').style.setProperty('--pct', `${dur && !ended ? pos / dur * 100 : 0}%`);
-    showState();
-  }
-  // Phones only let Spotify start from a tap inside Spotify's own player, so on a phone that player shows straight away
-  // with the song loaded (one more tap plays it) and tucks itself away once the music starts. Computers play from our button.
-  const touch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
-  const embedShown = () => $('.mx-dock').classList.contains('show-embed');
-  async function cue() {
-    const uri = uriOf(cur), c = await controller();
-    if (state.uri !== uri) {
-      state.uri = uri; state.started = false;
-      await new Promise(res => { onReady = res; c.loadUri(uri); setTimeout(() => { if (onReady === res) { onReady = null; res(); } }, 1500); });
-    }
-    return c;
-  }
-  async function startPlaying() {
-    const btn = $('.pl-mini-play');
-    btn.classList.add('is-loading');
-    if (touch) $('.mx-dock').classList.add('show-embed');
-    try {
-      const c = await cue();
-      // if nothing plays (a phone, or a browser blocking it), Spotify's own player shows so a tap there starts it
-      clearTimeout(watchdog);
-      watchdog = setTimeout(() => { if (!state.on) { btn.classList.remove('is-loading'); $('.mx-dock').classList.add('show-embed'); } }, touch ? 1500 : 6000);
-      c.play();
-    } catch (err) {
-      // Spotify couldn't load here, so the play button opens the song on Spotify instead
-      btn.classList.remove('is-loading');
-      apiFailed = true;
-    }
-  }
-  async function togglePlay() {
+  // play() runs inside the tap itself, which is what lets phones start the sound
+  function play() {
     if (!cur) return;
-    if (apiFailed) return window.open(track(cur.id), '_blank', 'noopener');
-    if (state.on && state.uri === uriOf(cur)) { (await controller()).pause(); return; }
-    if (state.started && state.uri === uriOf(cur)) { (await controller()).resume(); return; }
-    startPlaying();
+    if (!cur.preview) { audio.pause(); window.open(track(cur.id), '_blank', 'noopener'); return; }
+    if (loaded !== cur.id) { audio.src = cur.preview; loaded = cur.id; }
+    $('.pl-mini-play').classList.add('is-loading');
+    audio.play().catch(() => $('.pl-mini-play').classList.remove('is-loading'));
+  }
+  function togglePlay() {
+    if (cur && loaded === cur.id && !audio.paused) audio.pause(); else play();
   }
   function playSong(s) {
     if (!s || !s.id) return;
     if (cur && s.id === cur.id) return togglePlay();
     if (cur) history.push(cur);
     cur = s; paintSong();
-    if (apiFailed) return window.open(track(s.id), '_blank', 'noopener');
-    startPlaying();
+    play();
   }
+  const bar = () => { const d = audio.duration; $('.pl-mini-bar i').style.setProperty('--pct', `${d ? audio.currentTime / d * 100 : 0}%`); };
+  audio.addEventListener('timeupdate', bar);
+  audio.addEventListener('playing', () => { $('.pl-mini-play').classList.remove('is-loading'); showState(); });
+  audio.addEventListener('waiting', () => $('.pl-mini-play').classList.add('is-loading'));
+  audio.addEventListener('pause', showState);
+  audio.addEventListener('ended', () => { audio.currentTime = 0; bar(); showState(); });
+  audio.addEventListener('error', () => { $('.pl-mini-play').classList.remove('is-loading'); showState(); });
 
   function wireSwipe() {
     const sw = $('.pl-mini-swipe');
@@ -657,8 +602,6 @@
       cur = queue[Math.floor(Math.random() * queue.length)] || null;
       if (!cur) $('.pl-mini-in').hidden = true;
       recolor(); paintSong(); wireSwipe();
-      // get Spotify ready in the background, so the first tap on play can start the song straight away
-      if (cur) setTimeout(() => loadApi().catch(() => {}), 1200);
     })
     .catch(() => {
       $('.pl-a').innerHTML = '<p class="empty" style="padding: 80px 16px">The concert list could not be loaded. Check that the files in <code>contents/</code> are there.</p>';
