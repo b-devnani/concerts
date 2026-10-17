@@ -111,6 +111,7 @@
     const intro = introDoc || {};
     return {
       intro: intro.intro || '', me: intro.photo || null, hollup: songOf(intro.hollup), credits: intro.credits || '',
+      shoutout: intro.shoutout ? { text: String(intro.shoutout), name: intro.shoutout_name || '', link: intro.shoutout_link || '' } : null,
       songs: ((playlistDoc || {}).songs || []).map(songOf).filter(s => s.id),
       up, past, seen,
       dieList: checklist(lists.need_to_see), tagAlong: checklist(lists.tag_along),
@@ -189,7 +190,15 @@
       <section class="mx-blk" aria-label="Been there">
         <h2 class="mx-h"><span class="pl-lt">been there</span> <small>${thisYear()}</small></h2>
         <ol class="mx-list">${D.past.map(pastRow).join('')}</ol>
-      </section>`;
+      </section>
+      ${shout()}`;
+  }
+  // the thank-you line at the very bottom of each side
+  function shout() {
+    const s = D.shoutout; if (!s) return '';
+    let h = esc(s.text);
+    if (s.name && /^https?:\/\//.test(s.link)) h = h.replace(esc(s.name), `<a href="${esc(s.link)}" target="_blank" rel="noopener">${esc(s.name)}</a>`);
+    return `<p class="pl-shout">${h}</p>`;
   }
 
   /* ---------- a past show's sheet ---------- */
@@ -293,7 +302,8 @@
         </div>
         <ul class="pl-artists">${artistRows()}</ul>
       </div>
-      ${D.credits ? `<p class="pl-credits">${esc(D.credits)}</p>` : ''}`;
+      ${D.credits ? `<p class="pl-credits">${esc(D.credits)}</p>` : ''}
+      ${shout()}`;
   }
   function setPin(key, open) {
     const pin = $(`.mx-${key}`);

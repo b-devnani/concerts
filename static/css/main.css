@@ -227,7 +227,10 @@ body { background: #121212; margin: 0; }
 /* a 10 is a gold record, a 9 a silver one; every other score stays a plain hole */
 .pl-hole.is-10 { background: conic-gradient(from 200deg, #fbe9a6, #d6a53c, #fff5cc, #b9872c, #f3d27a, #fbe9a6); box-shadow: inset 0 1px 1px rgba(255,255,255,.6), inset 0 -1px 2px rgba(90,60,0,.35), 0 0 0 1.5px #e9c45c, 0 0 12px rgba(240,190,70,.5); color: #3a2800; letter-spacing: -.02em; }
 .pl-hole.is-9 { background: conic-gradient(from 200deg, #f4f4f4, #a8a8a8, #ffffff, #8f8f8f, #dcdcdc, #f4f4f4); box-shadow: inset 0 1px 1px rgba(255,255,255,.6), inset 0 -1px 2px rgba(0,0,0,.3), 0 0 0 1.5px #cfcfcf; color: #1c1c1c; }
-.pl-credits { color: var(--mut); font-family: "Archivo", "Helvetica Neue", Arial, sans-serif; font-size: 11px; line-height: 1.5; margin: 16px 16px 0; padding-bottom: 96px; }
+.pl-credits { color: var(--mut); font-family: "Archivo", "Helvetica Neue", Arial, sans-serif; font-size: 11px; line-height: 1.5; margin: 16px 16px 0; }
+/* the shout-out sits at the very end of each side */
+.pl-shout { color: var(--mut); font-family: "Archivo", "Helvetica Neue", Arial, sans-serif; font-size: 12.5px; margin: 0; padding: 18px 16px 22px; text-align: center; }
+.pl-shout a { color: var(--fg); font-weight: 700; text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 3px; }
 .pl-credits a { color: inherit; }
 
 /* about: the intro, fav artists and fav concerts, each on one screen, over the player's colour */
