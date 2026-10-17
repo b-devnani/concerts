@@ -122,7 +122,7 @@ concerts:
     pronoun: she
     date: 2026-08-05
     time: "19:00"
-    venue: The DL (rooftop)
+    venue: The DL
     city: New York
     place: NYC
     country: USA
@@ -136,7 +136,7 @@ concerts:
     pronoun: he
     date: 2026-08-08
     time: "19:00"
-    venue: Ravinia
+    venue: Ravinia Park
     city: Highland Park (Chicago)
     place: Ravinia
     country: USA
@@ -164,7 +164,7 @@ concerts:
   - artist: Afro+ Fest
     date: 2026-09-04
     end_date: 2026-09-06
-    venue: Northwest Stadium Complex
+    venue: DC
     city: Landover (DC)
     place: Afro+
     country: USA
