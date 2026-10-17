@@ -62,9 +62,6 @@ _Avoid_: A song I love, featured track
 Bhagya's whole-number verdict, out of 10, on a past show or on a punch.
 _Avoid_: Rating, stars, ranking
 
-**Perfect 10**:
-A past show with a score of 10.
-
 **Price**:
 What Bhagya paid to get into a past show, or "free". Shown publicly.
 _Avoid_: Cost, ticket price

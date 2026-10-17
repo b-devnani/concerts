@@ -121,7 +121,6 @@
             ? `${format(date, { month: 'short', day: 'numeric' })} – ${format(parseDate(concert.end_date), { month: 'short', day: 'numeric', year: 'numeric' })}`
             : format(date, { month: 'short', day: 'numeric', year: 'numeric' });
         const rating = Number(concert.rating);
-        const best = rating === 10;
         const sets = [];
         if (concert.highlights) sets.push(`<div class="set"><dt>The highlights</dt><dd>${escapeHtml(asText(concert.highlights))}</dd></div>`);
         const pronoun = pronounFor(concert);
@@ -131,11 +130,11 @@
         const review = fullReview ? `<details class="review-body"><summary>Read my review</summary><div class="review-text">${paragraphs(concert.review)}</div></details>` : '';
         const notes = concert.notes ? `<div class="review-text">${paragraphs(concert.notes)}</div>` : '';
         const sentence = story(concert);
-        return `<article class="review${best ? ' best' : ''}">
+        return `<article class="review">
             <div class="review-head">
                 <div class="score" aria-label="${rating ? `${rating} out of 10` : 'Not rated yet'}"><b>${rating || '–'}</b><small>/ 10</small></div>
                 <div>
-                    <div class="review-kicker label"><span>${escapeHtml(concert.genre || '')}</span>${best ? '<span class="badge">A perfect 10</span>' : ''}</div>
+                    <div class="review-kicker label"><span>${escapeHtml(concert.genre || '')}</span></div>
                     <h3 class="review-title">${escapeHtml(concert.artist)}</h3>
                     <div class="review-sub">${escapeHtml(concert.venue)}, ${escapeHtml(concert.city)} · ${escapeHtml(when)}</div>
                 </div>
