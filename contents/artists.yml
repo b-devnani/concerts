@@ -175,7 +175,8 @@ punch_details:
       score: 7
       place: "Stanford"
   "Coco Jones":
-    - score: 9
+    - year: 2023
+      score: 9
       place: "DC"
   "Crayon":
     - year: 2023
