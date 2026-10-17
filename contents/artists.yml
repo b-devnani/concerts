@@ -1,0 +1,577 @@
+# Bhagya's all-time lists, exactly as Bhagya typed them (see docs/adr/0001). Do not tidy spelling or names.
+# seen: every artist Bhagya has seen live, in Bhagya's order. "(x3)" means seen three times.
+# need_to_see: Bhagya's die-peacefully list, under Bhagya's own heading. A ✅ here means seen; the page shows it crossed out.
+# tag_along: artists Bhagya wouldn't mind tagging along to see, under Bhagya's own heading. Bhagya asked for these names in each
+#   artist's own styling (as on Spotify), so this list is the one place names aren't as typed.
+# fav_artists, fav_concerts: Bhagya's top fives, in Bhagya's order, shown on the about page. fav_artists_also: more fav
+#   artists, in no order (they can include artists Bhagya hasn't seen yet, like Rihanna). Names are in each artist's own
+#   styling (Aminé, Odunsi (The Engine)); they match seen by spelling, ignoring accents and brackets. A fav concert is one performance (artist, year, place), the
+#   venue the page shows for it, Bhagya's rank (ties allowed: 1, 1, 1, 4, 5) and a short review, exactly as typed.
+# punch_details: what Bhagya remembers about older punches (year, score out of 10, place, note), keyed by the name as typed in seen.
+#   Punches from diary shows fill themselves in; these are the ones from before the diary.
+seen:
+  - "Amine"
+  - "Ayra Starr (x3)"
+  - "YG"
+  - "Wurld (x2)"
+  - "Snoh Aalegra"
+  - "Victoria Monet"
+  - "Future (x2)"
+  - "Rema (x5)"
+  - "Fireboy DML"
+  - "Joeboy"
+  - "Mr Eazi"
+  - "Burna Boy (x6)"
+  - "Wizkid (x3)"
+  - "Davido (x4)"
+  - "Mayorkun"
+  - "Peruzzi"
+  - "Khalid"
+  - "Jaden Smith"
+  - "Travis Scott"
+  - "G Herbo"
+  - "Vic Mensa"
+  - "Lil Yachty"
+  - "T-Pain"
+  - "Tekno"
+  - "Shenseea"
+  - "Tems (x2)"
+  - "Omah Lay"
+  - "Daler Mehndi"
+  - "Armaan Malik"
+  - "D’Banj"
+  - "Reekado Banks"
+  - "Mannywellz"
+  - "A Boogie With a Hoodie"
+  - "Wande Coal (x2)"
+  - "Rosalia"
+  - "Kenny Beats"
+  - "Umi"
+  - "Labrynth w Zendaya"
+  - "The Weeknd"
+  - "Don Toliver"
+  - "Offset"
+  - "Diljit Dosanjh"
+  - "Flo Milli"
+  - "Glorilla"
+  - "Rae Sremmund"
+  - "Kali Uchis"
+  - "Nicki Minaj"
+  - "Blackpink"
+  - "NeYo"
+  - "Glass Animals"
+  - "Juls"
+  - "Giveon"
+  - "Show dem Camp"
+  - "Asake (x3)"
+  - "Coco Jones"
+  - "Mariah the Scientist"
+  - "Kodak Black"
+  - "Brent Faiyaz"
+  - "Crayon"
+  - "Victony (x2)"
+  - "Ruger (x2)"
+  - "Bnxn"
+  - "Lil Durk"
+  - "Lil Wayne"
+  - "Drake"
+  - "Odumodublvck"
+  - "Maleek Berry"
+  - "Odeal (x3)"
+  - "Odunsi the Engine (x2)"
+  - "Daniel Caesar"
+  - "Tiakola"
+  - "Gunna"
+  - "Central Cee"
+  - "Gabzy (x2)"
+  - "Dave"
+  - "Chance the Rapper"
+  - "Lil Baby"
+  - "Kelvin Momo"
+  - "Sexyy Redd"
+  - "Olamide"
+  - "Santi"
+  - "Ckay"
+  - "obongjayar"
+need_to_see:
+  title: "artists i need to see so i can die peacefully"
+  artists:
+    - "Odunsi ✅"
+    - "Santi ✅"
+    - "Tay Iwar"
+    - "Boj (this man is not serious)"
+    - "Ajebutter"
+    - "Sza"
+    - "J Hus"
+    - "Rihanna (impossible)"
+    - "Frank Ocean (ouch)"
+    - "Chance the Rapper ✅"
+tag_along:
+  title: "artists i wouldnt mind tagging along to see"
+  artists:
+    - "Len"
+    - "Luwa.Mp4"
+    - "Don Toliver"
+    - "Gunna"
+    - "Ella Mai"
+    - "Jhené Aiko"
+    - "Zaylevelten"
+    - "AMARIA BB"
+    - "PARTYNEXTDOOR"
+fav_artists:
+  - "Wizkid"
+  - "Odunsi (The Engine)"
+  - "Drake"
+  - "Aminé"
+  - "Odeal"
+fav_artists_also:
+  - "Burna Boy"
+  - "Maleek Berry"
+  - "Rihanna"
+  - "Frank Ocean"
+  - "Brent Faiyaz"
+  - "Juls"
+  - "Chance the Rapper"
+  - "Snoh Aalegra"
+  - "Rema"
+  - "J Hus"
+  - "PARTYNEXTDOOR"
+  - "SZA"
+fav_concerts:
+  - artist: "Rema"
+    rank: 1
+    year: 2022
+    place: "NYC"
+    venue: "Irving Plaza"
+    review: |-
+      best concert i've ever attended. this was just when the raves & roses album dropped. energy in the room was 10/10 all night. He did Dirty, Runaway and FYN - songs i dont think ill ever hear live again. At the end, he did Calm Down and left, but ran back screaming to perform Woman. Entire crowd lost their marbles
+  - artist: "Aminé"
+    rank: 1
+    year: 2022
+    place: "Stanford"
+    venue: "Frost Amphitheater"
+    review: |-
+      went bar for bar with him on SHINE. lost my voice that day. met him afterwards and thanked him for the entire discography, especially ONEPOINTFIVE.
+  - artist: "Snoh Aalegra"
+    rank: 1
+    year: 2022
+    place: "NYC"
+    venue: "Radio City Music Hall"
+    review: |-
+      this concert has a special place in my heart bc it was my first time in new york city. that entire week was prolly why i moved to nyc. everyone was dressed so boujee and looked so mature. snoh can hit every note. that is my mother fr
+  - artist: "Odeal"
+    rank: 4
+    year: 2024
+    place: "SOB's"
+    venue: "SOB's"
+    review: |-
+      no words. i think every friend of mine knows.
+      fun fact: i almost did not have tickets for this bc it had sold out.
+  - artist: "Mr Eazi"
+    rank: 5
+    year: 2021
+    place: "LID"
+    venue: "Lost in Riddim"
+    review: |-
+      zaga whatttttt. this performance was the beginning of it all. it's the reason i have spent thousands of dollars and the reason why the poor 5'2" girl behind me cannot see the stage.
+punch_details:
+  "A Boogie With a Hoodie":
+    - year: 2023
+      score: 7
+      place: "Coachella"
+  "Amine":
+    - year: 2022
+      score: 10
+      place: "Stanford"
+  "Armaan Malik":
+    - year: 2015
+      score: 7
+      place: "India"
+  "Asake":
+    - year: 2023
+      score: 9
+      place: "DC"
+    - year: 2024
+      score: 7
+      place: "MSG"
+    - year: 2025
+      score: 9
+      place: "Red Bull"
+  "Ayra Starr":
+    - year: 2022
+      score: 8
+      place: "Stanford"
+    - year: 2026
+      score: 5
+      place: "Afro+"
+  "Blackpink":
+    - year: 2022
+      score: 6
+      place: "VMAs"
+  "Bnxn":
+    - year: 2023
+      score: 8
+      place: "CHI"
+  "Brent Faiyaz":
+    - year: 2023
+      score: 9
+      place: "DC"
+  "Burna Boy":
+    - year: 2017
+      score: 9
+      place: "LOS"
+    - year: 2018
+      score: 8
+      place: "LOS"
+    - year: 2019
+      score: 8
+      place: "CHI"
+    - year: 2021
+      score: 9
+      place: "LID"
+    - year: 2023
+      score: 6
+      place: "OAK"
+    - year: 2023
+      score: 7
+      place: "Coachella"
+  "Central Cee":
+    - year: 2025
+      score: 6
+      place: "Red Bull"
+  "Ckay":
+    - year: 2023
+      score: 7
+      place: "Stanford"
+  "Coco Jones":
+    - year: 2023
+      score: 9
+      place: "DC"
+  "Crayon":
+    - year: 2023
+      score: 7
+      place: "NYC"
+      note: "Opener with Rema"
+  "D’Banj":
+    - year: 2018
+      score: 7
+      place: "LOS"
+  "Daler Mehndi":
+    - year: 2014
+      score: 9
+      place: "LOS"
+  "Daniel Caesar":
+    - year: 2025
+      score: 9
+      place: "Prospect Park"
+  "Davido":
+    - year: 2018
+      score: 9
+      place: "LOS"
+    - year: 2019
+      score: 5
+      place: "LOS"
+    - year: 2022
+      score: 7
+      place: "BK"
+    - year: 2026
+      score: 8
+      place: "Afro+"
+  "Diljit Dosanjh":
+    - year: 2023
+      score: 7
+      place: "Coachella"
+  "Don Toliver":
+    - year: 2023
+      score: 7
+      place: "Coachella"
+  "Drake":
+    - year: 2024
+      score: 9
+      place: "NJ"
+  "Fireboy DML":
+    - year: 2022
+      score: 8
+      place: "SF"
+  "Flo Milli":
+    - year: 2023
+      score: 7
+      place: "Coachella"
+  "Future":
+    - year: 2019
+      score: 8
+      place: "LOS"
+    - year: 2023
+      score: 7
+      place: "Coachella"
+  "G Herbo":
+    - year: 2018
+      score: 8
+      place: "Lolla"
+  "Gabzy":
+    - year: 2025
+      score: 9
+      place: "NYC"
+    - year: 2026
+      score: 8
+      place: "Afro+"
+  "Giveon":
+    - year: 2022
+      score: 7
+      place: "BK"
+  "Glass Animals":
+    - year: 2022
+      score: 4
+      place: "BK Mirage"
+  "Glorilla":
+    - year: 2023
+      score: 6
+      place: "Coachella"
+  "Gunna":
+    - year: 2025
+      score: 8
+      place: "Red Bull"
+  "Jaden Smith":
+    - year: 2018
+      score: 6
+      place: "Lolla"
+  "Joeboy":
+    - year: 2021
+      score: 6
+      place: "LID"
+  "Juls":
+    - year: 2022
+      score: 8
+      place: "NYC"
+  "Kali Uchis":
+    - year: 2023
+      score: 6
+      place: "Coachella"
+  "Kelvin Momo":
+    - year: 2026
+      score: 9
+      place: "Afro+"
+  "Kenny Beats":
+    - year: 2023
+      score: 5
+      place: "Coachella"
+  "Khalid":
+    - year: 2018
+      score: 8
+      place: "Lolla"
+  "Kodak Black":
+    - year: 2023
+      score: 3
+      place: "DC"
+  "Labrynth w Zendaya":
+    - year: 2023
+      score: 6
+      place: "Coachella"
+  "Lil Baby":
+    - year: 2026
+      score: 7
+      place: "Afro+"
+  "Lil Durk":
+    - year: 2024
+      score: 5
+      place: "NJ"
+  "Lil Wayne":
+    - year: 2024
+      score: 7
+      place: "NJ"
+  "Lil Yachty":
+    - year: 2019
+      score: 7
+      place: "UIUC"
+  "Maleek Berry":
+    - year: 2025
+      score: 7
+      place: "NYC"
+  "Mannywellz":
+    - year: 2022
+      score: 8
+      place: "NYC"
+  "Mariah the Scientist":
+    - year: 2023
+      score: 6
+      place: "DC"
+  "Mayorkun":
+    - year: 2018
+      score: 8
+      place: "LOS"
+  "Mr Eazi":
+    - year: 2021
+      score: 10
+      place: "LID"
+  "NeYo":
+    - year: 2022
+      score: 8
+      place: "NYC"
+  "Nicki Minaj":
+    - year: 2022
+      score: 6
+      place: "VMAs"
+  "obongjayar":
+    - year: 2025
+      score: 6
+      place: "BK"
+  "Odeal":
+    - year: 2024
+      score: 10
+      place: "SOB's"
+    - year: 2025
+      score: 7
+      place: "Soulection"
+    - year: 2026
+      score: 6
+      place: "Afro+"
+  "Odumodublvck":
+    - year: 2024
+      score: 8
+      place: "NYC"
+  "Odunsi the Engine":
+    - year: 2025
+      score: 8
+      place: "NYC"
+  "Offset":
+    - year: 2023
+      score: 7
+      place: "Coachella"
+  "Olamide":
+    - year: 2026
+      score: 9
+      place: "Afro+"
+  "Omah Lay":
+    - year: 2022
+      score: 9
+      place: "NYC"
+  "Peruzzi":
+    - year: 2018
+      score: 8
+      place: "LOS"
+  "Rae Sremmund":
+    - year: 2023
+      score: 7
+      place: "Coachella"
+  "Reekado Banks":
+    - year: 2018
+      score: 7
+      place: "LOS"
+  "Rema":
+    - year: 2019
+      score: 7
+      place: "LOS"
+    - year: 2021
+      score: 7
+      place: "LID"
+    - year: 2022
+      score: 10
+      place: "NYC"
+    - year: 2023
+      score: 8
+      place: "BK"
+    - year: 2024
+      score: 8
+      place: "NYC"
+      note: "HEIS Listening Party"
+  "Rosalia":
+    - year: 2023
+      score: 6
+      place: "Coachella"
+  "Ruger":
+    - year: 2023
+      score: 9
+      place: "CHI"
+    - year: 2026
+      score: 8
+      place: "Afro+"
+  "Sexyy Redd":
+    - year: 2026
+      score: 8
+      place: "Afro+"
+  "Shenseea":
+    - year: 2021
+      score: 7
+      place: "LID"
+  "Show dem Camp":
+    - year: 2023
+      score: 8
+      place: "CHI"
+  "Snoh Aalegra":
+    - year: 2022
+      score: 10
+      place: "NYC"
+  "T-Pain":
+    - year: 2018
+      score: 8
+      place: "UIUC"
+  "Tekno":
+    - year: 2017
+      score: 6
+      place: "LOS"
+  "Tems":
+    - year: 2021
+      score: 5
+      place: "LID"
+    - year: 2026
+      score: 6
+      place: "Afro+"
+  "The Weeknd":
+    - year: 2023
+      score: 7
+      place: "Coachella"
+  "Tiakola":
+    - year: 2025
+      score: 7
+      place: "Red Bull"
+  "Travis Scott":
+    - year: 2018
+      score: 5
+      place: "Lolla"
+  "Umi":
+    - year: 2023
+      score: 8
+      place: "Coachella"
+  "Vic Mensa":
+    - year: 2017
+      score: 8
+      place: "UIUC"
+  "Victony":
+    - year: 2024
+      score: 6
+      place: "NYC"
+    - year: 2026
+      score: 7
+      place: "Afro+"
+  "Victoria Monet":
+    - year: 2022
+      score: 6
+      place: "Stanford"
+  "Wande Coal":
+    - year: 2022
+      score: 8
+      place: "BK"
+    - year: 2024
+      score: 7
+      place: "NYC"
+  "Wizkid":
+    - year: 2018
+      score: 8
+      place: "LOS"
+    - year: 2021
+      score: 9
+      place: "LID"
+    - year: 2026
+      score: 7
+      place: "Afro+"
+  "Wurld":
+    - year: 2022
+      score: 7
+      place: "NYC"
+    - year: 2022
+      score: 5
+      place: "Central Park"
+  "YG":
+    - year: 2022
+      score: 2
+      place: "Stanford"

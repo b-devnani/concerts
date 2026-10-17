@@ -1,39 +1,62 @@
 # Every show lives here. The page reads this file.
-# Shows dated today or later appear under "Coming up"; earlier ones become reviews.
+# Shows dated today or later appear under "Upcoming"; earlier ones become reviews.
 #
 # Fields (all optional except artist and date):
 #   artist, date (YYYY-MM-DD), end_date (multi-day festivals), time ("20:00"),
 #   venue, city, country, genre,
+#   place         short label for punch cards: MSG, BK, NYC, NJ, DC, CHI, LOS, OAK, SF, India, VMAs, Afro+, Stanford, Coachella, Lolla, LID (Lost in Riddim), UIUC, SOB's, Soulection, Central Park, Barclays, Red Bull
+#   status        Maybe for a show you might go to (it gets a "Maybe" tag); leave out when you're definitely going
 #   rating        score out of 10
 #   price         what you paid, e.g. "$35" or Free
-#   companions    who you went with ("Alone" shows as "Went solo")
+#   companions    your friends, exactly as you typed them ("Alone" shows as "I went solo")
+#   hook          one line that sums up a past show, shown on its row under Been there (exactly as typed)
+#   seen_as       for a past show, the artist it counts for in contents/artists.yml (as typed in seen), so it adds a performance
+#   photo         a picture for a past show, e.g. static/img/shows/dave.jpg (your own photos are best)
 #   highlights    standout songs or moments
-#   wishlist      songs you wish they played
+#   wishlist      songs you wish the artist played
 #   review        your write-up; shown behind "Read review", exactly as typed
 #   notes         short info shown on the card (e.g. "Doors 7 PM, 16+.")
 #   link          tickets or event page
-#   song          a song you love by them (upcoming shows get a play button)
+#   pronoun       he or she, for "Wish He Performed" / "Wish She Performed" (leave out for bands and festivals)
+#   song          your favorite song by the artist (upcoming shows get a play button)
 #   spotify       Spotify track link for that song, e.g. https://open.spotify.com/track/...
 #   length        that song's length, e.g. "3:27" (shown on the player before it plays)
 concerts:
+  - artist: Kaytranada
+    date: 2026-10-30
+    time: "22:00"
+    venue: Pacha New York
+    city: Brooklyn
+    place: BK
+    country: USA
+    genre: House
+    pronoun: he
+    status: Maybe
+    companions: TBD
+    link: https://pacha-nyc.com/event/kaytranada-30-10-2026
+    song: 4EVA (KAYTRAMINÉ, with Aminé)
+    spotify: https://open.spotify.com/track/2S4HEo4LCcIbU1AcEQ4RQZ
+    length: "3:10"
   - artist: Ezra Collective
     date: 2026-11-18
     time: "20:00"
     venue: Webster Hall
     city: New York
+    place: NYC
     country: USA
     genre: Jazz
     companions: TBD
-    notes: Doors 7 PM, 16+.
     link: https://www.axs.com/events/1493867/ezra-collective-tickets?skin=websterhall
     song: No One's Watching Me (feat. Olivia Dean)
     spotify: https://open.spotify.com/track/1omK6ocXd3Z19wiFpJmQ4J
     length: "4:22"
   - artist: Jorja Smith
+    pronoun: she
     date: 2026-11-21
     time: "20:00"
     venue: Kings Theatre
     city: Brooklyn
+    place: BK
     country: USA
     genre: R&B, Soul
     companions: TBD
@@ -42,89 +65,114 @@ concerts:
     spotify: https://open.spotify.com/track/1OxL1FWSEd7QmJoWLRP2NO
     length: "3:02"
   - artist: Maleek Berry
+    pronoun: he
     date: 2026-11-25
     # time: "20:00"
     venue: SOB's
     city: New York
+    place: NYC
     country: USA
     genre: Afrobeats
     companions: TBD
-    notes: One Night Special with Maleek Berry, presented by Duke Concept.
     link: https://posh.vip/f/ef604
     song: Lost In The World
     spotify: https://open.spotify.com/track/6W2oq6ZRRnxNc1Pdpm1XKC
     length: "3:17"
   - artist: Brent Faiyaz
+    pronoun: he
     date: 2026-12-03
     time: "20:00"
     venue: Barclays Center
     city: Brooklyn
+    place: Barclays
     country: USA
     genre: R&B
     companions: TBD
-    notes: I Spent The Night With Brent Faiyaz tour.
     link: https://www.barclayscenter.com/events/detail/brent-faiyaz-2026
     song: Stay Down
     spotify: https://open.spotify.com/track/4mwiRPRAUSSFD6lJ86m98B
     length: "3:27"
   - artist: Dave
+    pronoun: he
     date: 2026-05-01
     venue: Brooklyn Paramount
     city: Brooklyn
+    place: BK
     country: USA
     genre: UK Rap
     status: Attended
+    hook: "Dave is the best lyricist ever. the crowd was truly deeping it. Free Palestine, Free Sudan, Free Congo"
+    seen_as: Dave
+    photo: static/img/shows/dave.jpg
     rating: 9
-    price: "~$60"
-    companions: Deep, Pelumi & Nem
+    price: "$60 ish"
+    companions: Deep, Pelumi & nem
     highlights: "The Boy Who Played The Harp, System, Verdansk, Screwface Capital"
     wishlist: "Law Of Attraction, Heart Attack, Lazarus"
   - artist: Odunsi (The Engine)
+    pronoun: he
     date: 2026-06-12
     time: "18:00"
     venue: SOB's
     city: New York
+    place: SOB's
     country: USA
     genre: Afrobeats, Alté
     status: Attended
+    hook: "literally all my friends in nyc were there and i captured some beautiful moments of all of us + odunsi. i could look back & cry"
+    seen_as: Odunsi the Engine
+    photo: static/img/shows/odunsi.jpg
     rating: 10
     price: "$35"
-    companions: Loads of friends
+    companions: loads of friends
     highlights: "falling, wanted you, SPORT, Gangsta Fear"
     wishlist: "Better Days, Tipsy, Desire"
-  - artist: Ayra Starr (Starr Girl listening party)
+  - artist: Ayra Starr (Starr Girl Listening Party)
+    pronoun: she
     date: 2026-08-05
     time: "19:00"
-    venue: The DL (rooftop)
+    venue: The DL
     city: New York
+    place: NYC
     country: USA
     genre: Afrobeats
     status: Attended
+    hook: "Ms Paper was a madness on first listen"
+    seen_as: Ayra Starr
+    photo: static/img/shows/ayra-starr.jpg
     rating: 7
     price: Free
     companions: Chinasa
     highlights: "Ms Paper was a madness on first listen"
   - artist: Chance the Rapper
+    pronoun: he
     date: 2026-08-08
     time: "19:00"
-    venue: Ravinia
+    venue: Ravinia Park
     city: Highland Park (Chicago)
+    place: Ravinia
     country: USA
     genre: Hip-Hop
     status: Attended
+    hook: "my washed goat reminded me of the good times"
+    seen_as: Chance the Rapper
+    photo: static/img/shows/chance-the-rapper.jpg
     rating: 7
     price: "$50"
     companions: Ghosh & Priya
-    highlights: "Blessings, All We Got, Finish Line, Sunday candy"
+    highlights: "Blessings, All We Got, Finish Line, Sunday Candy"
     wishlist: "NOT DOING SAME DRUGS WAS CRIMINAL, Blessings (other version)"
   - artist: Blues BBQ Festival
     date: 2026-08-15
     time: "13:00"
     venue: Pier 76, Hudson River Park
     city: New York
+    place: NYC
     country: USA
     genre: Blues
     status: Attended
+    hook: "saw a rlly old couple dancing and said goals"
+    photo: static/img/shows/blues-bbq.jpg
     rating: 6
     price: Free
     companions: Tinu
@@ -133,41 +181,53 @@ concerts:
   - artist: Afro+ Fest
     date: 2026-09-04
     end_date: 2026-09-06
-    venue: Northwest Stadium Complex
+    venue: DC
     city: Landover (DC)
+    place: Afro+
     country: USA
     genre: Afrobeats, Dancehall
     status: Attended
+    hook: "so chaotic, so fun"
+    photo: static/img/shows/afro-plus-fest.jpg
     rating: 10
     price: "$600"
-    companions: Saahith, Sparsh, Swe & more
+    companions: Saahith Sparsh Swe & more
     review: |-
       Kwamz Original w Kelvin Momo on Day 2 had the most insane DJ set ever. I still think abt it from time to time
       Olamide back to back to back bangers was so fulfilling. He was the only artist I hadn’t seen before
       Ruger was reallllly good
 
-      Lowkey crowd for davido was hype asf but that was day 1 energies coming out
+      Lowkey crowd for davido was hype asf but that was day 1 energy coming out
   - artist: World's Biggest Saxophone Meetup
-    date: 2026-09-26
+    date: 2026-10-03
     time: "12:00"
     venue: Washington Square Park
     city: New York
+    place: NYC
     country: USA
     genre: Saxophone jam
     status: Attended
+    hook: "great reminder of how much i love nyc"
+    photo: static/img/shows/sax-meetup.jpg
     rating: 9
     price: Free
     companions: Alone
     review: |-
       Whole experience reminded me how much I love nyc. It didn’t seem like something that was supposed to be (or could be) perfectly organized. Very impressive to see how someone gathered every young saxophonist in the city and pulled that off. In Unison, they all sounded really fkn good
-  - artist: Santi (K.O.T.B listening party)
+  - artist: Santi (K.O.T.B Listening Party)
+    pronoun: he
     date: 2026-10-10
     venue: Le Père
     city: New York
+    place: NYC
     country: USA
     genre: Alté
     status: Attended
+    hook: "craziest 10 mins of the summer"
+    seen_as: Santi
+    photo: static/img/shows/santi.jpg
     rating: 7
     price: Free
-    companions: Kwesi, Adwoa & more
+    companions: Kwesi Adwoa & more
     highlights: "Rapid Fire, Murvlana and Sparky"
+    wishlist: "Gangsta Fear, Dime In The Winter, RX"

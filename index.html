@@ -4,53 +4,35 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="description" content="Bhagya's live music diary: every show I go to, who I went with, the songs that hit, and what I thought." />
-    <title>Bhagya · Live Music Diary</title>
+    <meta name="description" content="Every concert I'm going to and every one I've been to: the songs, the friends, the scores, and my reviews." />
+    <meta name="theme-color" content="#121212" />
+    <title>concerts</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎶</text></svg>" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Oswald:wght@200;500;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Figtree:wght@400;500;600;700;800&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link href="static/css/main.css" rel="stylesheet" />
     <script src="static/js/js-yaml.min.js"></script>
 </head>
 
 <body>
-    <header class="hero">
-        <div class="container">
-            <div class="label">My live music diary</div>
-            <h1 class="wordmark">Bhagya<span>.</span></h1>
-            <p class="tagline">Every show I go to, and how it really felt.</p>
-            <p class="intro">Hi, I'm Bhagya. I'm usually a short-and-sweet person, but live music gets more out of me. This is where I keep every show: who I went with, what I paid, the songs that hit, the ones I'm still waiting to hear, and a score out of 10.</p>
-            <div class="stats" id="stats"></div>
+    <main class="app" id="app" data-side="a">
+        <div class="pl-bar">
+            <button class="pl-who" type="button" aria-controls="about" aria-expanded="false" aria-label="About">
+                <span class="pl-who-face" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3.5a4.2 4.2 0 1 1 0 8.4 4.2 4.2 0 0 1 0-8.4zM4.5 20.2c.6-4 3.6-6.3 7.5-6.3s6.9 2.3 7.5 6.3z" /></svg></span>
+                <span>about</span>
+            </button>
+            <button class="pl-rec" type="button" aria-label="Flip to side B"><span>A</span></button>
         </div>
-    </header>
-
-    <main class="container">
-        <section aria-labelledby="upcoming-title">
-            <div class="section-head">
-                <span class="label">Counting down</span>
-                <h2 id="upcoming-title">What's next</h2>
-                <p>Tickets in hand. Each one comes with a song I love by them, so press play and get in the mood with me.</p>
-            </div>
-            <ol class="rail" id="upcoming"></ol>
-        </section>
-
-        <section aria-labelledby="reviews-title">
-            <div class="section-head">
-                <span class="label">Been there</span>
-                <h2 id="reviews-title">Shows I've been to</h2>
-                <p>Newest first. Tap "Read my review" for the full story, in my own words.</p>
-            </div>
-            <div class="feed" id="reviews"></div>
-        </section>
+        <div class="pl-side pl-a"><p class="empty" style="padding: 80px 16px">Loading…</p></div>
+        <div class="pl-side pl-b" hidden></div>
+        <div class="pl-side pl-about" id="about" role="region" aria-label="About" hidden></div>
+        <div class="mx-dock">
+            <div class="mx-sheet" role="dialog" aria-modal="false" aria-label="Show details" hidden></div>
+            <div class="mx-embed"><div></div></div>
+            <div class="pl-mini-in"></div>
+        </div>
     </main>
-
-    <footer class="footer">
-        <div class="container">
-            <p>See you at the next one.</p>
-            <small>&copy; Bhagya 2026</small>
-        </div>
-    </footer>
 
     <script src="static/js/concerts.js"></script>
 </body>

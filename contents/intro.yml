@@ -1,0 +1,32 @@
+# Bhagya's introduction, exactly as Bhagya typed it (docs/adr/0001). Do not tidy it.
+# The word "here" in "click here" links to side B; nothing else in the text is changed.
+intro: |-
+  if you're here from my ig, you probably know me as the guy who is at wayyy too many concerts and lowkey u not wrong 😭 im the greediest mf there is when it comes to ts.
+
+  my obsession started in 2021 at lost in riddim. this is where I had crawled my way to the front barricades and Mr Eazi had looked at me and was confused asf on why I knew every lyric to the song Hollup. that's when i knew my bank acct was in trouble bc there was no way i was gonna be standing at the back of any concert ever again. its a truly diff experience.
+
+  anywayyss so i primarily listen to Alté, Afrobeats, R&B and all the subgenres that come with. i'm based in Brooklyn so i'm most likely to attend the nyc stop of the tour.
+
+  i share this as a blog of my own concert experiences but also for friends (to tag along) or know what im up to next :)
+
+  here is everything im looking to attend and have attended in the past
+
+  alsooo click here to see every show I've ever attended and the list of artists i need to see so i can die peacefully. i have rihanna & frank ocean on there so i dont think im ever achieving peace.
+
+# The word "Hollup" in the intro plays this song in the bottom player.
+hollup:
+  title: "Hollup"
+  artists: "Mr Eazi, Dammy Krane, Joey B"
+  spotify: "https://open.spotify.com/track/7qecdQmvEVTmpJQMjteuVW"
+  length: "4:20"
+
+# The round picture on the about page and on the "about" button.
+photo: static/img/me.jpg
+
+# A small line at the bottom of side B saying where the pictures come from.
+credits: "Artist photos from Spotify. Show pictures from event pages; Dave at Brooklyn Paramount by Andrew Timms for Quip Magazine. Davido by Olamiposi Daniel, CC BY-SA 4.0."
+
+# A thank-you line at the very bottom of side A and side B; the name links to the site that inspired this one.
+shoutout: "shout out to Ibukun for the inspiration"
+shoutout_name: "Ibukun"
+shoutout_link: "https://1soyebo.github.io/"
