@@ -90,7 +90,7 @@ One time Bhagya saw an artist live, like a hole punched in a card. It can carry 
 _Avoid_: Sighting, count, visit
 
 **Die-peacefully list**:
-The artists Bhagya still needs to see, shown under Bhagya's own heading, "Artists I need to see so I can die peacefully". An artist gets a ✅ once Bhagya has seen them.
+The artists Bhagya still needs to see, shown under Bhagya's own heading, "artists i need to see so i can die peacefully". An artist gets a ✅ once Bhagya has seen them.
 _Avoid_: Bucket list, wishlist (a wishlist is songs, not artists)
 
 **Tag-along list**:
