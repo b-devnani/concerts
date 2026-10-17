@@ -4,6 +4,7 @@
 # Fields (all optional except artist and date):
 #   artist, date (YYYY-MM-DD), end_date (multi-day festivals), time ("20:00"),
 #   venue, city, country, genre,
+#   place         short label for punch cards: MSG, BK, NYC, Afro+, Stanford, Coachella, SF, Oakland, Lagos, Lost in Riddim, Barclays, Red Bull
 #   status        Maybe for a show you might go to (it gets a "Maybe" tag); leave out when you're definitely going
 #   rating        score out of 10
 #   price         what you paid, e.g. "$35" or Free
@@ -23,6 +24,7 @@ concerts:
     time: "22:00"
     venue: Pacha New York
     city: Brooklyn
+    place: BK
     country: USA
     genre: House
     pronoun: he
@@ -37,6 +39,7 @@ concerts:
     time: "20:00"
     venue: Webster Hall
     city: New York
+    place: NYC
     country: USA
     genre: Jazz
     companions: TBD
@@ -50,6 +53,7 @@ concerts:
     time: "20:00"
     venue: Kings Theatre
     city: Brooklyn
+    place: BK
     country: USA
     genre: R&B, Soul
     companions: TBD
@@ -63,6 +67,7 @@ concerts:
     # time: "20:00"
     venue: SOB's
     city: New York
+    place: NYC
     country: USA
     genre: Afrobeats
     companions: TBD
@@ -76,6 +81,7 @@ concerts:
     time: "20:00"
     venue: Barclays Center
     city: Brooklyn
+    place: Barclays
     country: USA
     genre: R&B
     companions: TBD
@@ -88,6 +94,7 @@ concerts:
     date: 2026-05-01
     venue: Brooklyn Paramount
     city: Brooklyn
+    place: BK
     country: USA
     genre: UK Rap
     status: Attended
@@ -102,6 +109,7 @@ concerts:
     time: "18:00"
     venue: SOB's
     city: New York
+    place: NYC
     country: USA
     genre: Afrobeats, Alté
     status: Attended
@@ -116,6 +124,7 @@ concerts:
     time: "19:00"
     venue: The DL (rooftop)
     city: New York
+    place: NYC
     country: USA
     genre: Afrobeats
     status: Attended
@@ -129,6 +138,7 @@ concerts:
     time: "19:00"
     venue: Ravinia
     city: Highland Park (Chicago)
+    place: Ravinia
     country: USA
     genre: Hip-Hop
     status: Attended
@@ -142,6 +152,7 @@ concerts:
     time: "13:00"
     venue: Pier 76, Hudson River Park
     city: New York
+    place: NYC
     country: USA
     genre: Blues
     status: Attended
@@ -155,6 +166,7 @@ concerts:
     end_date: 2026-09-06
     venue: Northwest Stadium Complex
     city: Landover (DC)
+    place: Afro+
     country: USA
     genre: Afrobeats, Dancehall
     status: Attended
@@ -172,6 +184,7 @@ concerts:
     time: "12:00"
     venue: Washington Square Park
     city: New York
+    place: NYC
     country: USA
     genre: Saxophone jam
     status: Attended
@@ -185,6 +198,7 @@ concerts:
     date: 2026-10-10
     venue: Le Père
     city: New York
+    place: NYC
     country: USA
     genre: Alté
     status: Attended
