@@ -126,17 +126,18 @@ fav_artists:
   - "Odeal"
 fav_artists_also:
   - "Burna Boy"
+  - "Snoh Aalegra"
+  - "SZA"
   - "Maleek Berry"
   - "Rihanna"
   - "Frank Ocean"
   - "Brent Faiyaz"
   - "Juls"
   - "Chance the Rapper"
-  - "Snoh Aalegra"
   - "Rema"
   - "J Hus"
   - "PARTYNEXTDOOR"
-  - "SZA"
+  - "Show Dem Camp"
 fav_concerts:
   - artist: "Rema"
     rank: 1
