@@ -137,7 +137,7 @@
     const spare = [...D.up.slice(2).map(upTile), ...shown.slice(2).map(pastTile)];
     return fronts.map((t, i) => ({ ...(t || spare.shift() || { seed: 'tile' + i, small: '', big: '' }), backSmall: backs[i][0], backBig: String(backs[i][1]) }));
   }
-  const mosaic = () => tiles().map(t => `<span class="pl-tile"><span class="pl-face pl-cv${t.photo ? ' has-photo' : ''}" data-seed="${esc(t.seed)}">${photo(t.photo, '')}<small>${esc(t.small)}</small><b>${esc(t.big)}</b></span><span class="pl-face back"><small>${esc(t.backSmall)}</small><b>${esc(t.backBig)}</b></span></span>`).join('');
+  const mosaic = () => tiles().map(t => `<span class="pl-tile"><span class="pl-face pl-cv${t.photo ? ' has-photo' : ''}" data-seed="${esc(t.seed)}">${t.photo ? `<img src="${esc(t.photo)}" alt="" decoding="async">` : ''}<small>${esc(t.small)}</small><b>${esc(t.big)}</b></span><span class="pl-face back"><small>${esc(t.backSmall)}</small><b>${esc(t.backBig)}</b></span></span>`).join('');
 
   function introHtml() {
     let songDone = false;
