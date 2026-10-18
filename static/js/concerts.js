@@ -368,13 +368,28 @@
     $$('.pl-about [role="tabpanel"]').forEach(el => { el.hidden = el.dataset.panel !== name; });
     fitAbout();
   }
-  // the intro should fit one screen: if it makes about taller than the screen, the text steps down a size (twice at most).
-  // About is a screen tall at least, so it only grows when the text doesn't fit (its height ignores the opening slide-in).
+  // the intro should fit one screen: if it runs past the bottom, the text steps down a size (twice at most).
+  // The screen is measured with the browser's bars showing (100svh), and the size is picked again only when the width
+  // changes: picking it on every height change made it flip back and forth in Instagram's browser, whose top bar slides
+  // in and out as the page changes height, which changed the size again.
+  function screenHeight() {
+    const probe = document.createElement('div');
+    probe.style.cssText = 'height: 100svh; left: 0; pointer-events: none; position: fixed; top: 0; visibility: hidden;';
+    document.body.append(probe);
+    const h = probe.offsetHeight || window.innerHeight;
+    probe.remove();
+    return h;
+  }
+  let fitWidth = 0;
   function fitAbout() {
     root.classList.remove('is-tight', 'is-tighter');
-    const intro = $('#ab-intro');
-    if (!intro || intro.hidden) return;
-    const over = () => $('.pl-about').offsetHeight > window.innerHeight + 1;
+    const intro = $('#ab-intro'), foot = intro && intro.lastElementChild;
+    if (!intro || intro.hidden || !foot) return;
+    fitWidth = window.innerWidth;
+    const about = $('.pl-about'), before = foot.previousElementSibling, h = screenHeight();
+    // about is a screen tall at least and pushes the footnote to its bottom; the text fits if it would without that push
+    const push = () => Math.max(0, foot.offsetTop - (before ? before.offsetTop + before.offsetHeight + (parseFloat(getComputedStyle(intro).rowGap) || 0) : intro.offsetTop));
+    const over = () => about.offsetHeight - push() > h + 1;
     if (over()) root.classList.add('is-tight');
     if (over()) root.classList.add('is-tighter');
   }
@@ -590,7 +605,7 @@
     if (!$('.mx-sheet').hidden) { e.preventDefault(); closeSheet(); }
     else if (aboutOpen()) { e.preventDefault(); closeAbout(); }
   });
-  window.addEventListener('resize', () => { if (D && aboutOpen()) fitAbout(); });
+  window.addEventListener('resize', () => { if (D && aboutOpen() && window.innerWidth !== fitWidth) fitAbout(); });
 
   /* ---------- load ---------- */
   // a preview can hand the files over in window.CONCERTS_FILES instead of the page fetching them
