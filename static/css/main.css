@@ -62,28 +62,29 @@ body { background: #121212; margin: 0; }
 
 /* header: four tiles that turn over to the all-time numbers */
 .pl-head { background: var(--head); padding: 54px 16px 6px; }
-.pl-mosaic { background: none; border: 0; border-radius: var(--rc); box-shadow: 0 16px 40px rgba(0,0,0,.4); cursor: pointer; display: grid; grid-template-columns: 1fr 1fr; height: 200px; margin: 0 auto 18px; overflow: hidden; padding: 0; perspective: 600px; width: 200px; }
-.pl-tile { height: 100px; position: relative; transform-style: preserve-3d; transition: transform .6s cubic-bezier(.3,.7,.2,1); }
-.pl-mosaic.is-turned .pl-tile { transform: rotateY(180deg); }
-.pl-mosaic.is-turned .pl-tile:nth-child(2) { transition-delay: .08s; }
-.pl-mosaic.is-turned .pl-tile:nth-child(3) { transition-delay: .16s; }
-.pl-mosaic.is-turned .pl-tile:nth-child(4) { transition-delay: .24s; }
-.pl-face { align-content: end; -webkit-backface-visibility: hidden; backface-visibility: hidden; display: grid; inset: 0; justify-items: start; padding: 8px 9px; position: absolute; text-align: left; }
-/* Safari can't be trusted to hide the back of a turning tile (the front's words show through, mirrored), so each
-   face is also switched off halfway through the turn (0.11s in, with this easing), when the tile is edge-on */
-.pl-face { transition: visibility 0s linear .11s; }
+.pl-mosaic { background: none; border: 0; border-radius: var(--rc); box-shadow: 0 16px 40px rgba(0,0,0,.4); cursor: pointer; display: grid; grid-template-columns: 1fr 1fr; height: 200px; margin: 0 auto 18px; overflow: hidden; padding: 0; width: 200px; }
+.pl-tile { height: 100px; position: relative; }
+.pl-face { align-content: end; display: grid; inset: 0; justify-items: start; padding: 8px 9px; position: absolute; text-align: left; }
+/* turning a tile: it swings to edge-on and back (never past, so nothing ever faces away, which Safari drew mirrored),
+   and its sides swap at the edge, halfway through. The tiles go one after another. */
+.pl-mosaic.is-flipping .pl-tile { animation: swing .4s ease-in-out both; }
+.pl-mosaic.is-flipping .pl-tile:nth-child(2) { animation-delay: .08s; }
+.pl-mosaic.is-flipping .pl-tile:nth-child(3) { animation-delay: .16s; }
+.pl-mosaic.is-flipping .pl-tile:nth-child(4) { animation-delay: .24s; }
+.pl-face { transition: visibility 0s linear .2s; }
+.pl-tile:nth-child(2) .pl-face { transition-delay: .28s; }
+.pl-tile:nth-child(3) .pl-face { transition-delay: .36s; }
+.pl-tile:nth-child(4) .pl-face { transition-delay: .44s; }
 .pl-face.back, .pl-mosaic.is-turned .pl-face:not(.back) { visibility: hidden; }
 .pl-mosaic.is-turned .pl-face.back { visibility: visible; }
-.pl-mosaic.is-turned .pl-tile:nth-child(2) .pl-face { transition-delay: .19s; }
-.pl-mosaic.is-turned .pl-tile:nth-child(3) .pl-face { transition-delay: .27s; }
-.pl-mosaic.is-turned .pl-tile:nth-child(4) .pl-face { transition-delay: .35s; }
+@keyframes swing { 50% { transform: perspective(500px) rotateY(90deg); } }
 .pl-face small { font-size: 9.5px; font-weight: 700; letter-spacing: .02em; }
 .pl-face b { font-family: var(--cv-font); font-size: 28px; font-weight: var(--cv-w); letter-spacing: var(--disp-ls); line-height: .95; }
 .pl-face.has-photo { color: #ffffff; overflow: hidden; }
 .pl-face.has-photo img { height: 100%; inset: 0; object-fit: cover; position: absolute; width: 100%; }
 .pl-face.has-photo::before { background: linear-gradient(180deg, rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, .78)); content: ""; inset: 0; position: absolute; z-index: 1; }
 .pl-face.has-photo :is(small, b) { position: relative; text-shadow: 0 1px 8px rgba(0, 0, 0, .45); z-index: 2; }
-.pl-face.back { background: var(--s1); color: var(--fg); transform: rotateY(180deg); }
+.pl-face.back { background: var(--s1); color: var(--fg); }
 .pl-face.back small { color: var(--mut); }
 .pl-title { font-family: var(--disp); font-size: 40px; font-weight: var(--disp-w); letter-spacing: var(--disp-ls); line-height: 1; margin: 0 0 12px; }
 .pl-desc { color: var(--soft); display: grid; font-size: 14.5px; gap: 10px; line-height: 1.52; }
