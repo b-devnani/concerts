@@ -368,12 +368,13 @@
     $$('.pl-about [role="tabpanel"]').forEach(el => { el.hidden = el.dataset.panel !== name; });
     fitAbout();
   }
-  // the intro should fit one screen: if its last line falls below the fold, the text steps down a size (twice at most)
+  // the intro should fit one screen: if it makes about taller than the screen, the text steps down a size (twice at most).
+  // About is a screen tall at least, so it only grows when the text doesn't fit (its height ignores the opening slide-in).
   function fitAbout() {
     root.classList.remove('is-tight', 'is-tighter');
     const intro = $('#ab-intro');
     if (!intro || intro.hidden) return;
-    const over = () => intro.getBoundingClientRect().bottom + 16 > window.innerHeight;
+    const over = () => $('.pl-about').offsetHeight > window.innerHeight + 1;
     if (over()) root.classList.add('is-tight');
     if (over()) root.classList.add('is-tighter');
   }
