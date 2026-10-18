@@ -217,7 +217,7 @@
     const sets = [];
     if (s.highlights) sets.push(`<div><dt>The highlights</dt><dd>${esc(asText(s.highlights))}</dd></div>`);
     if (s.wishlist) sets.push(`<div><dt>${wish}</dt><dd>${esc(asText(s.wishlist))}</dd></div>`);
-    const review = s.review ? `<details class="mx-rev"><summary>Read my review</summary>${String(s.review).split('\n').filter(l => l.trim()).map(l => `<p>${esc(l)}</p>`).join('')}</details>` : '';
+    if (s.review) sets.push(`<div><dt>Review</dt><dd>${String(s.review).split('\n').filter(l => l.trim()).map(l => `<p>${esc(l)}</p>`).join('')}</dd></div>`);
     const sh = $('.mx-sheet');
     sh.innerHTML = `<div class="mx-grab" aria-hidden="true"></div>
       <button type="button" class="mx-x" aria-label="Close">✕</button>
@@ -227,9 +227,10 @@
       <span class="mx-meta">${esc(s.venue)}, ${esc(s.city)} · ${esc(when(s))}</span>
       <div class="mx-shscore"><b>${sc || '–'}</b><span>/10</span></div>
       ${story(s) ? `<p class="mx-said">${story(s)}</p>` : ''}
-      ${sets.length ? `<dl class="mx-sets">${sets.join('')}</dl>` : ''}
-      ${review}`;
+      ${sets.length ? `<dl class="mx-sets">${sets.join('')}</dl>` : ''}`;
     recolor(sh);
+    // the blurred copy behind the picture; a full address, since a url() in a variable resolves against the stylesheet's folder
+    if (s.photo) $('.mx-shcov', sh).style.setProperty('--ph', `url(${JSON.stringify(new URL(s.photo, document.baseURI).href)})`);
     sheetFrom = from || null;
     sh.hidden = false; sh.scrollTop = 0;
     $('.mx-x', sh).focus({ preventScroll: true });
