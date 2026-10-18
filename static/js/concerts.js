@@ -368,12 +368,13 @@
     $$('.pl-about [role="tabpanel"]').forEach(el => { el.hidden = el.dataset.panel !== name; });
     fitAbout();
   }
-  // the intro should fit one screen: if its last line falls below the fold, the text steps down a size (twice at most)
+  // the intro should fit one screen: if it makes about taller than the screen, the text steps down a size (twice at most).
+  // About is a screen tall at least, so it only grows when the text doesn't fit (its height ignores the opening slide-in).
   function fitAbout() {
     root.classList.remove('is-tight', 'is-tighter');
     const intro = $('#ab-intro');
     if (!intro || intro.hidden) return;
-    const over = () => intro.getBoundingClientRect().bottom + 16 > window.innerHeight;
+    const over = () => $('.pl-about').offsetHeight > window.innerHeight + 1;
     if (over()) root.classList.add('is-tight');
     if (over()) root.classList.add('is-tighter');
   }
@@ -561,7 +562,12 @@
     if (favBtn) return toggleFavReview(favBtn);
     const abTab = t.closest('.pl-ab-tab');
     if (abTab) return showAboutPanel(abTab.dataset.panel);
-    if (t.closest('.pl-mosaic')) return t.closest('.pl-mosaic').classList.toggle('is-turned');
+    const mosaicBtn = t.closest('.pl-mosaic');
+    if (mosaicBtn) {
+      // restart the swing, and swap sides (the CSS does the swap halfway through each tile's swing)
+      mosaicBtn.classList.remove('is-flipping'); void mosaicBtn.offsetWidth; mosaicBtn.classList.add('is-flipping');
+      return mosaicBtn.classList.toggle('is-turned');
+    }
     if (t.closest('.mx-x')) return closeSheet();
     const row = t.closest('.mx-past');
     if (row) return openSheet(Number(row.dataset.i), row);
