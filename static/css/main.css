@@ -68,7 +68,15 @@ body { background: #121212; margin: 0; }
 .pl-mosaic.is-turned .pl-tile:nth-child(2) { transition-delay: .08s; }
 .pl-mosaic.is-turned .pl-tile:nth-child(3) { transition-delay: .16s; }
 .pl-mosaic.is-turned .pl-tile:nth-child(4) { transition-delay: .24s; }
-.pl-face { align-content: end; backface-visibility: hidden; display: grid; inset: 0; justify-items: start; padding: 8px 9px; position: absolute; text-align: left; }
+.pl-face { align-content: end; -webkit-backface-visibility: hidden; backface-visibility: hidden; display: grid; inset: 0; justify-items: start; padding: 8px 9px; position: absolute; text-align: left; }
+/* Safari can't be trusted to hide the back of a turning tile (the front's words show through, mirrored), so each
+   face is also switched off halfway through the turn (0.11s in, with this easing), when the tile is edge-on */
+.pl-face { transition: visibility 0s linear .11s; }
+.pl-face.back, .pl-mosaic.is-turned .pl-face:not(.back) { visibility: hidden; }
+.pl-mosaic.is-turned .pl-face.back { visibility: visible; }
+.pl-mosaic.is-turned .pl-tile:nth-child(2) .pl-face { transition-delay: .19s; }
+.pl-mosaic.is-turned .pl-tile:nth-child(3) .pl-face { transition-delay: .27s; }
+.pl-mosaic.is-turned .pl-tile:nth-child(4) .pl-face { transition-delay: .35s; }
 .pl-face small { font-size: 9.5px; font-weight: 700; letter-spacing: .02em; }
 .pl-face b { font-family: var(--cv-font); font-size: 28px; font-weight: var(--cv-w); letter-spacing: var(--disp-ls); line-height: .95; }
 .pl-face.has-photo { color: #ffffff; overflow: hidden; }
