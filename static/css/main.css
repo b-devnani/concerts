@@ -58,6 +58,11 @@ body { background: #121212; margin: 0; }
 .pl-who-face img { display: block; height: 100%; object-fit: cover; width: 100%; }
 .pl-who:hover .pl-who-face { transform: rotate(-8deg); }
 .app[data-side="b"] .pl-who, .app.is-about .pl-who { visibility: hidden; }
+/* side B reached from the intro's "click here" gets a back button in the about button's place, styled like about's close */
+.pl-back { align-items: center; background: var(--chip); border: 0; border-radius: 999px; box-shadow: 0 4px 14px rgba(0,0,0,.18); color: var(--chip-ink); cursor: pointer; display: none; font-family: "Oswald", "Arial Narrow", Impact, sans-serif; font-size: 13px; font-weight: 500; gap: 6px; height: 44px; padding: 0 16px 0 13px; pointer-events: auto; }
+.pl-back b { font-size: 22px; font-weight: 500; line-height: 1; margin-top: -2px; }
+.app.has-back .pl-back { display: inline-flex; }
+.app.has-back .pl-who { display: none; }
 .pl-rec { background: repeating-radial-gradient(circle at 50% 50%, #0b0b0c 0 2px, #1f1f22 2px 3px); border: 0; border-radius: 50%; box-shadow: 0 4px 14px rgba(0,0,0,.45), 0 0 0 1px rgba(255,255,255,.1); cursor: pointer; display: grid; height: 44px; place-items: center; pointer-events: auto; width: 44px; }
 .pl-rec span { background: var(--hot); border-radius: 50%; color: var(--hot-ink); display: grid; font-family: var(--disp); font-size: 12px; font-weight: 800; height: 18px; place-items: center; width: 18px; }
 .pl-rec.is-turning { animation: turn .5s cubic-bezier(.2,.8,.2,1); }
@@ -154,7 +159,11 @@ body { background: #121212; margin: 0; }
 /* the close button sits 8px inside the cover's top-right corner */
 .mx-x { background: rgba(0, 0, 0, .55); border: 0; border-radius: 50%; color: #fff; cursor: pointer; display: grid; height: 40px; place-items: center; position: absolute; right: 26px; top: 30px; width: 40px; z-index: 1; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
 .mx-shcov { border-radius: var(--rc); box-shadow: 0 12px 30px rgba(0,0,0,.28); display: grid; font-family: var(--cv-font); font-size: 34px; font-weight: var(--cv-w); height: 132px; margin: 6px 0 14px; overflow: hidden; place-items: center; width: 132px; }
-.mx-shcov.has-photo { aspect-ratio: 16 / 10; height: auto; width: 100%; }
+/* a show's picture is shown whole (many are posters), over a blurred copy of itself that fills the rest of the frame */
+.mx-shcov.has-photo { display: block; height: 240px; width: 100%; }
+.mx-shcov.has-photo::before { background: var(--ph) center / cover; content: ""; filter: blur(20px) brightness(.55); inset: -40px; position: absolute; }
+.mx-shcov.has-photo b { display: none; }
+.mx-shcov.has-photo img { object-fit: contain; }
 .mx-kick { color: var(--mut); font-size: 11px; font-weight: 800; letter-spacing: .1em; margin: 0; text-transform: uppercase; }
 .mx-shtitle { font-family: var(--ui); font-size: 26px; font-weight: 700; letter-spacing: -.01em; line-height: 1.15; margin: 4px 0; padding-right: 44px; }
 .mx-shscore { align-items: baseline; display: flex; gap: 6px; margin: 10px 0 4px; }
@@ -165,9 +174,8 @@ body { background: #121212; margin: 0; }
 .mx-sets { display: grid; gap: 12px; margin: 14px 0; }
 .mx-sets dt { color: var(--mut); font-size: 11px; font-weight: 800; letter-spacing: .12em; margin-bottom: 3px; text-transform: uppercase; }
 .mx-sets dd { font-size: 14.5px; margin: 0; }
-.mx-rev summary { cursor: pointer; font-weight: 800; list-style: none; min-height: 40px; padding: 10px 0; text-decoration: underline; text-decoration-color: var(--hot); text-underline-offset: 3px; }
-.mx-rev summary::-webkit-details-marker { display: none; }
-.mx-rev p { font-size: 14.5px; margin: 0 0 10px; }
+.mx-sets dd p { margin: 0 0 10px; }
+.mx-sets dd p:last-child { margin-bottom: 0; }
 
 /* the player: swipe the song for another; play plays the song's 30-second clip */
 .pl-mini-in { align-items: center; background: var(--mini); border-radius: var(--r); box-shadow: 0 8px 24px rgba(0,0,0,.35); color: var(--mini-ink); display: grid; gap: 10px; grid-template-columns: 40px minmax(0, 1fr) auto auto; min-height: 56px; overflow: hidden; padding: 8px; position: relative; transition: background .35s; }
