@@ -413,7 +413,24 @@
     aboutOpener = null;
   }
 
+  // the intro's "click here" goes to side B with a back button, which reopens about over the side it was opened from;
+  // flipping the record any other way drops it
+  let backTo = null;
+  function flipFromAbout() {
+    const from = { side: root.dataset.side, opener: aboutOpener, scroll: aboutScroll };
+    flip('b');
+    backTo = from; root.classList.add('has-back');
+  }
+  function goBack() {
+    const from = backTo;
+    if (!from) return;
+    flip(from.side);
+    openAbout(from.opener);
+    aboutScroll = from.scroll;
+  }
+
   function flip(to) {
+    backTo = null; root.classList.remove('has-back');
     closeAbout(false); closeSheet(false);
     const side = to || (root.dataset.side === 'a' ? 'b' : 'a');
     root.dataset.side = side;
@@ -569,7 +586,8 @@
     const t = e.target;
     if (!D) return;
     if (t.closest('.pl-rec')) return flip();
-    if (t.closest('[data-flip="b"]')) return flip('b');
+    if (t.closest('[data-flip="b"]')) return aboutOpen() ? flipFromAbout() : flip('b');
+    if (t.closest('.pl-back')) return goBack();
     if (t.closest('[data-song]')) return playSong(songFor(t.closest('[data-song]').dataset.song));
     if (t.closest('.pl-who')) return openAbout(t.closest('.pl-who'));
     if (t.closest('.pl-about-close')) return closeAbout();
