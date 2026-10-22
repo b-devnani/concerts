@@ -14,7 +14,7 @@
 #   photo         a picture for a past show, e.g. static/img/shows/dave.jpg (your own photos are best)
 #   highlights    standout songs or moments
 #   wishlist      songs you wish the artist played
-#   review        your write-up; shown behind "Read review", exactly as typed
+#   review        your write-up; shown under "Review" when the show is opened, exactly as typed
 #   notes         short info shown on the card (e.g. "Doors 7 PM, 16+.")
 #   link          tickets or event page
 #   pronoun       he or she, for "Wish He Performed" / "Wish She Performed" (leave out for bands and festivals)
@@ -98,6 +98,21 @@ concerts:
     spotify: https://open.spotify.com/track/4mwiRPRAUSSFD6lJ86m98B
     preview: "https://p.scdn.co/mp3-preview/d0056d615a9424260de01a36bb3e1ea570056fef"
     length: "3:27"
+  - artist: Cleo Sol
+    pronoun: she
+    date: 2027-04-13
+    time: "20:00"
+    venue: Madison Square Garden
+    city: New York
+    place: MSG
+    country: USA
+    genre: R&B, Soul
+    companions: TBD
+    link: https://www.ticketmaster.com/cleo-sol-tickets/artist/2979303
+    song: When I'm in Your Arms
+    spotify: https://open.spotify.com/track/47s5hKfwGXliAAB8wKMiNo
+    preview: "https://p.scdn.co/mp3-preview/30bf2de7a248132c15e4ac9e32893a8407643841"
+    length: "5:35"
   - artist: Dave
     pronoun: he
     date: 2026-05-01
