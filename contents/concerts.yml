@@ -231,10 +231,11 @@ concerts:
     country: USA
     genre: Jazz
     status: Attended
-    hook: "Fela Kuti lives on with our generation and it's great to see."
+    hook: "God gave me feet for dancing and that's exactly what I'll do 😌"
     seen_as: Ezra Collective
     photo: static/img/artists/ezra-collective.jpg
     rating: 8
+    price: "$110"
     highlights: "Ajala, No One's Watching Me, God Gave Me Feet for Dancing"
     review: |-
       I was a lil nervous going into a concert where it would be entirely the band and no lyrics but had an amazing time. The drummer was insaneee. I knew 3 songs and they did extended versions of these 3 songs. Fela Kuti lives on with our generation and it's great to see.
