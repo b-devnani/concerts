@@ -23,20 +23,6 @@
 #   preview       Spotify's 30-second clip of that song, which the player plays; python3 tools/clips.py fills it in
 #   length        that song's length, e.g. "3:27" (shown on the player before it plays)
 concerts:
-  - artist: Ezra Collective
-    date: 2026-11-18
-    time: "20:00"
-    venue: Webster Hall
-    city: New York
-    place: NYC
-    country: USA
-    genre: Jazz
-    companions: TBD
-    link: https://www.axs.com/events/1493867/ezra-collective-tickets?skin=websterhall
-    song: No One's Watching Me (feat. Olivia Dean)
-    spotify: https://open.spotify.com/track/1omK6ocXd3Z19wiFpJmQ4J
-    preview: "https://p.scdn.co/mp3-preview/099548f886b3490272c450477add5cfddf9548b8"
-    length: "4:22"
   - artist: Jorja Smith
     pronoun: she
     date: 2026-11-21
@@ -236,3 +222,19 @@ concerts:
     companions: Kwesi Adwoa & more
     highlights: "Rapid Fire, Murvlana and Sparky"
     wishlist: "Gangsta Fear, Dime In The Winter, RX"
+  - artist: Ezra Collective
+    date: 2026-11-18
+    time: "20:00"
+    venue: Webster Hall
+    city: New York
+    place: NYC
+    country: USA
+    genre: Jazz
+    status: Attended
+    hook: "Fela Kuti lives on with our generation and it's great to see."
+    seen_as: Ezra Collective
+    photo: static/img/artists/ezra-collective.jpg
+    rating: 8
+    highlights: "Ajala, No One's Watching Me, God Gave Me Feet for Dancing"
+    review: |-
+      I was a lil nervous going into a concert where it would be entirely the band and no lyrics but had an amazing time. The drummer was insaneee. I knew 3 songs and they did extended versions of these 3 songs. Fela Kuti lives on with our generation and it's great to see.
