@@ -6,7 +6,7 @@ A personal live-music diary, laid out like a playlist. Side A has the shows comi
 
 Everything on the page comes from the files in [`contents/`](contents); edit one, commit, and the page picks it up. The comment at the top of each file lists its fields.
 
-- [`concerts.yml`](contents/concerts.yml): every show. Shows dated today or later are **upcoming**; earlier ones move to **been there**. A past show's `seen_as` names the artist it counts for in `artists.yml`, and `photo` points at its picture.
+- [`concerts.yml`](contents/concerts.yml): every show. Shows dated today or later are **upcoming**; earlier ones move to **been there**, and so does a show marked `status: Attended`, even on the night itself. A past show's `seen_as` names the artist it counts for in `artists.yml`, and `photo` points at its picture.
 - [`artists.yml`](contents/artists.yml): every artist I've seen (`(x3)` for three times) and what I remember about each performance, the need-to-see and tag-along lists, and fav artists and fav concerts.
 - [`intro.yml`](contents/intro.yml): the intro, the song "Hollup" plays, my photo, and the photo credits.
 - [`playlist.yml`](contents/playlist.yml): the songs the bottom player shuffles through.
