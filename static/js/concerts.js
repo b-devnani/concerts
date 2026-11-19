@@ -60,7 +60,8 @@
   /* ---------- the data, from the YAML files in contents/ ---------- */
   function build(showsDoc, lists, introDoc, playlistDoc) {
     const shows = (Array.isArray(showsDoc) ? showsDoc : showsDoc.concerts || []).map(c => ({ ...c, date: iso(c.date), end_date: iso(c.end_date) }));
-    const isUp = c => (c.end_date || c.date) >= TODAY;
+    // a show you've marked Attended is past even on its own date, so a review shows up the same night
+    const isUp = c => String(c.status || '').toLowerCase() !== 'attended' && (c.end_date || c.date) >= TODAY;
     const up = shows.filter(isUp).sort((a, b) => utc(a.date) - utc(b.date)).map(c => ({
       artist: c.artist, date: c.date, time: c.time, venue: c.venue, city: c.city,
       maybe: String(c.status || '').toLowerCase() === 'maybe', friends: c.companions, tickets: c.link,

@@ -1,11 +1,11 @@
 # Every show lives here. The page reads this file.
-# Shows dated today or later appear under "Upcoming"; earlier ones become reviews.
+# Shows dated today or later appear under "Upcoming"; earlier ones become reviews (so does a show marked Attended, even on its own day).
 #
 # Fields (all optional except artist and date):
 #   artist, date (YYYY-MM-DD), end_date (multi-day festivals), time ("20:00"),
 #   venue, city, country, genre,
 #   place         short label for punch cards: MSG, BK, NYC, NJ, DC, CHI, LOS, OAK, SF, India, VMAs, Afro+, Stanford, Coachella, Lolla, LID (Lost in Riddim), UIUC, SOB's, Soulection, Central Park, Barclays, Red Bull
-#   status        Maybe for a show you might go to (it gets a "Maybe" tag); leave out when you're definitely going
+#   status        Maybe for a show you might go to (it gets a "Maybe" tag); leave out when you're definitely going; Attended once you've been
 #   rating        score out of 10
 #   price         what you paid, e.g. "$35" or Free
 #   companions    your friends, exactly as you typed them ("Alone" shows as "I went solo")
