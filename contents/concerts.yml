@@ -23,21 +23,6 @@
 #   preview       Spotify's 30-second clip of that song, which the player plays; python3 tools/clips.py fills it in
 #   length        that song's length, e.g. "3:27" (shown on the player before it plays)
 concerts:
-  - artist: Jorja Smith
-    pronoun: she
-    date: 2026-11-21
-    time: "20:00"
-    venue: Kings Theatre
-    city: Brooklyn
-    place: BK
-    country: USA
-    genre: R&B, Soul
-    companions: TBD
-    link: https://www.ticketmaster.com/event/Z7r9jZ1AAZbbt
-    song: On My Mind (Jorja Smith X Preditah)
-    spotify: https://open.spotify.com/track/1OxL1FWSEd7QmJoWLRP2NO
-    preview: "https://p.scdn.co/mp3-preview/7a3522c99853c3cf6758ebe2037775b2a3ba4581"
-    length: "3:02"
   - artist: Maleek Berry
     pronoun: he
     date: 2026-11-25
@@ -239,3 +224,22 @@ concerts:
     highlights: "Ajala, No One's Watching Me, God Gave Me Feet for Dancing"
     review: |-
       I was a lil nervous going into a concert where it would be entirely the band and no lyrics but had an amazing time. The drummer was insaneee. I knew 3 songs and they did extended versions of these 3 songs. Fela Kuti lives on with our generation and it's great to see.
+  - artist: Jorja Smith
+    pronoun: she
+    date: 2026-11-21
+    time: "20:00"
+    venue: Kings Theatre
+    city: Brooklyn
+    place: BK
+    country: USA
+    genre: R&B, Soul
+    status: Attended
+    hook: "Heard my cleaning apt and folding laundry playlist live"
+    seen_as: Jorja Smith
+    photo: static/img/artists/jorja-smith.jpg
+    rating: 7
+    price: "$90"
+    highlights: "Feelings, Blue Lights, On My Mind, Be Honest"
+    wishlist: "Lost & Found, Coming Home"
+    review: |-
+      Furthest back I've been at a concert in a while ngl but Jorja makes music that I clean my apt and fold my laundry to so it was lowkey better that it was smth I just vibe to in the back. Voice of an angel frrrr. Big negative was that the instrumentals were overpowering the vocals. Could literally feel the drummer's beats in your chest. Jorja doesn't need all that.
