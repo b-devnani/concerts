@@ -23,21 +23,6 @@
 #   preview       Spotify's 30-second clip of that song, which the player plays; python3 tools/clips.py fills it in
 #   length        that song's length, e.g. "3:27" (shown on the player before it plays)
 concerts:
-  - artist: Maleek Berry
-    pronoun: he
-    date: 2026-11-25
-    # time: "20:00"
-    venue: SOB's
-    city: New York
-    place: NYC
-    country: USA
-    genre: Afrobeats
-    companions: TBD
-    link: https://posh.vip/f/ef604
-    song: Lost In The World
-    spotify: https://open.spotify.com/track/6W2oq6ZRRnxNc1Pdpm1XKC
-    preview: "https://p.scdn.co/mp3-preview/1a8374d83ca654e20e717ca40d4246d94f7d7053"
-    length: "3:17"
   - artist: Brent Faiyaz
     pronoun: he
     date: 2026-12-03
@@ -243,3 +228,24 @@ concerts:
     wishlist: "Lost & Found, Coming Home"
     review: |-
       Furthest back I've been at a concert in a while ngl but Jorja makes music that I clean my apt and fold my laundry to so it was lowkey better that it was smth I just vibe to in the back. Voice of an angel frrrr. Big negative was that the instrumentals were overpowering the vocals. Could literally feel the drummer's beats in your chest. Jorja doesn't need all that.
+  - artist: Maleek Berry
+    pronoun: he
+    date: 2026-11-25
+    venue: SOB's
+    city: New York
+    place: NYC
+    country: USA
+    genre: Afrobeats
+    status: Attended
+    hook: "10 years since Last Daze of Summer made me very nostalgic"
+    seen_as: Maleek Berry
+    photo: static/img/artists/maleek-berry.jpg
+    rating: 9
+    price: "$30"
+    companions: Alone
+    highlights: "Flexin', Let Me Know, Nuh Let Go, Pon My Mind, Sisi Maria"
+    wishlist: "Lost in the World, Own It, Pulling Me Back, What If"
+    review: |-
+      I am completely separating this review from the nonsense 7 openers they put like it was a talent show before he showed up at 1am but here it goes
+
+      There were sooo many songs I had forgotten how much I loved and knew all the lyrics to. Afrobeats used to be so soulful and Maleek Berry was truly in his lover boy era (LDOS) and then yearning era (FDOW). Band was 10/10 and it was a great singalong. My minus pts are for not performing Lost in the World (my fav song) and all excessive dry humping of the air around him 😭😭😭
